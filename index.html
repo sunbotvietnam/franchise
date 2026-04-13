@@ -3,34 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunbot Business System | Cổng Thông Tin Đầu Tư</title>
+    <title>Sunbot Franchise | Cổng Thông Tin Đối Tác</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --brand-orange: #ea580c;
-            --bg-slate: #0f172a;
-        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0b1120;
             color: #f8fafc;
             -webkit-font-smoothing: antialiased;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #f97316, #ea580c); border-radius: 10px; }
-
-        h1, h2, h3, h4, h5, h6 { line-height: 1.5 !important; padding-top: 0.15em; padding-bottom: 0.15em; overflow: visible; }
 
         .text-gradient-3d {
-            background: linear-gradient(to bottom, #fdba74, #ea580c);
+            background: linear-gradient(135deg, #ea580c, #f59e0b);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: transparent;
             filter: drop-shadow(0px 2px 2px rgba(234, 88, 12, 0.2));
             display: inline-block;
+            padding-bottom: 0.1em;
         }
 
         .portal-card {
@@ -44,15 +34,18 @@
             display: flex;
             flex-direction: column;
         }
+
         .portal-card::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: transparent; transition: all 0.4s ease;
         }
+
         .portal-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 25px 50px -12px rgba(234, 88, 12, 0.15);
             border-color: #475569;
             background: rgba(30, 41, 59, 0.8);
         }
+
         .portal-card:hover::before { background: linear-gradient(to right, #ea580c, #fb923c); }
 
         .icon-wrapper {
@@ -61,189 +54,177 @@
             background: #0f172a; color: #94a3b8; border: 1px solid #334155;
             transition: all 0.4s ease;
         }
+
         .portal-card:hover .icon-wrapper { background: #ea580c; color: #ffffff; border-color: #ea580c; }
 
-        .glass-nav { background: rgba(11, 17, 32, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-
+        .toast-show { opacity: 1 !important; transform: translate(-50%, 0) !important; }
+        
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="relative">
+<body class="relative min-h-screen flex flex-col">
 
-    <!-- LỚP MẶT NẠ BẢO MẬT ĐẦU TƯ (PASSCODE OVERLAY) -->
-    <div id="auth-overlay" class="fixed inset-0 z-[100] bg-[#0b1120] flex items-center justify-center p-6">
+    <!-- LỚP BẢO MẬT HUB (invest2026) -->
+    <div id="hub-auth-overlay" class="fixed inset-0 z-[100] bg-[#0b1120] flex items-center justify-center p-6">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-600 rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
-        
         <div class="bg-slate-900/80 backdrop-blur-xl border border-slate-700 p-10 rounded-3xl shadow-2xl w-full max-w-md text-center relative overflow-hidden fade-in">
             <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600"></div>
             
-            <img src="../assets/img/logo-sunbot.png" alt="Sunbot" class="h-14 mx-auto mb-8 drop-shadow-md" onerror="this.src='https://placehold.co/150x50/transparent/ea580c?text=SUNBOT+LOGO'">
+            <img src="../assets/img/logo-sunbot.png" alt="Sunbot" class="h-14 mx-auto mb-8 drop-shadow-md" onerror="this.src='https://placehold.co/150x50/transparent/ea580c?text=SUNBOT'">
             
-            <h2 class="text-2xl font-black text-white mb-2 uppercase tracking-widest">Nhà Đầu Tư & Nhượng Quyền</h2>
-            <p class="text-slate-400 text-[13px] mb-8 leading-relaxed">Tài liệu định hướng kinh doanh và mô hình tài chính bảo mật. Vui lòng nhập mã truy cập.</p>
+            <h2 class="text-2xl font-black text-white mb-2 uppercase tracking-widest">Cổng Đối Tác Sunbot</h2>
+            <p class="text-slate-400 text-[13px] mb-8 leading-relaxed">Không gian làm việc lưu hành nội bộ. Vui lòng nhập mã bảo mật hệ thống.</p>
             
-            <form id="auth-form" class="space-y-5">
+            <form id="hub-auth-form" class="space-y-5">
                 <div class="relative">
-                    <input type="password" id="auth-pass" class="w-full px-5 py-4 rounded-xl bg-[#0f172a] border border-slate-600 text-white font-bold tracking-widest focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-center placeholder:text-slate-600 placeholder:font-normal placeholder:tracking-normal transition-all outline-none" placeholder="Mã truy cập hệ thống..." required>
-                    <p id="auth-error" class="text-red-400 text-[12px] font-bold mt-2 hidden text-left px-2">⚠️ Mã truy cập không chính xác!</p>
+                    <input type="password" id="hub-pass" class="w-full px-5 py-4 rounded-xl bg-[#0f172a] border border-slate-600 text-white font-bold tracking-widest focus:outline-none focus:border-orange-500 text-center placeholder:text-slate-600 transition-all outline-none" placeholder="Mã truy cập hệ thống..." required>
+                    <p id="hub-error" class="text-red-400 text-[12px] font-bold mt-2 hidden text-left px-2">⚠️ Mã truy cập không chính xác!</p>
                 </div>
-                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black uppercase tracking-widest hover:from-orange-500 hover:to-orange-400 transition-colors shadow-[0_10px_20px_-10px_rgba(234,88,12,0.5)] outline-none">
-                    Vào Không Gian Đầu Tư
+                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black uppercase tracking-widest hover:from-orange-500 hover:to-orange-400 transition-colors shadow-lg outline-none">
+                    Mở Khóa Không Gian
                 </button>
             </form>
-            <div class="mt-8 pt-6 border-t border-slate-800">
-                <a href="../index.html" class="text-xs text-slate-500 hover:text-orange-500 transition-colors font-medium">← Quay lại Cổng thông tin</a>
-            </div>
         </div>
     </div>
 
-    <!-- KHUNG CHỨA NỘI DUNG CHÍNH -->
-    <div id="main-wrapper" class="hidden flex-col min-h-screen w-full">
+    <!-- MAIN HUB CONTENT -->
+    <div id="main-hub" class="hidden flex-col flex-1 w-full relative z-10">
         
-        <!-- STICKY TOP NAV -->
-        <nav class="fixed w-full z-50 glass-nav shadow-sm">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex justify-between items-center h-20">
-                    <div class="flex items-center gap-6">
-                        <div class="flex items-center gap-4 group">
-                            <img src="../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-8 object-contain drop-shadow-[0_4px_8px_rgba(234,88,12,0.3)]" onerror="this.src='https://placehold.co/120x40/transparent/ea580c?text=SUNBOT'"/>
-                            <span class="hidden md:block text-slate-400 font-medium text-sm border-l border-slate-700 pl-4 uppercase tracking-widest">Business System</span>
-                        </div>
+        <!-- Navbar -->
+        <nav class="w-full bg-[rgba(11,17,32,0.8)] backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+                <img src="../assets/img/logo-sunbot.png" alt="Sunbot" class="h-8" onerror="this.src='https://placehold.co/120x40/transparent/ea580c?text=SUNBOT'">
+                <div class="flex gap-4 items-center">
+                    <div class="flex items-center gap-2 bg-slate-800 rounded-full px-4 py-1.5 border border-slate-700">
+                        <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <span class="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Partner Mode</span>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <div class="flex items-center gap-2 bg-slate-800 rounded-full px-4 py-1.5 border border-slate-700 cursor-pointer hover:bg-slate-700 transition-colors" title="Khóa màn hình" id="btn-logout">
-                            <div class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></div>
-                            <span class="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-widest">Chế độ Nhà đầu tư</span>
-                        </div>
-                    </div>
+                    <button onclick="lockHub()" class="text-slate-400 hover:text-white outline-none" title="Khóa màn hình">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </button>
                 </div>
             </div>
         </nav>
 
-        <!-- HERO SECTION -->
-        <header class="pt-32 pb-20 px-6 relative overflow-hidden flex-shrink-0">
-            <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600 rounded-full blur-[150px] opacity-10 pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
-
-            <div class="max-w-5xl mx-auto text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-700 bg-slate-800/50 shadow-sm text-amber-400 font-bold tracking-widest text-[10px] mb-8 uppercase">
-                    Cơ Hội Mở Rộng Dài Hạn
-                </div>
-                <h1 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
-                    Mô Hình Kinh Doanh <br><span class="text-gradient-3d mt-2 block">Sunbot Franchise</span>
-                </h1>
-                <p class="text-slate-400 text-lg font-medium max-w-2xl mx-auto leading-relaxed">
-                    Khám phá hệ sinh thái đầu tư tạo dòng tiền bền vững hàng tháng, quy trình chuẩn hóa và khả năng nhân bản điểm trường.
-                </p>
-            </div>
+        <!-- Header -->
+        <header class="pt-20 pb-16 px-6 text-center relative">
+            <div class="absolute top-0 right-1/4 w-[400px] h-[400px] bg-orange-600 rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
+            <h1 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">Hệ Sinh Thái <span class="text-gradient-3d">Tài Liệu Sunbot</span></h1>
+            <p class="text-slate-400 font-medium max-w-2xl mx-auto">Chọn phân hệ tài liệu bạn muốn truy cập. Các tài liệu lõi sẽ yêu cầu mã xác thực cấp 2.</p>
         </header>
 
-        <!-- MAIN NAVIGATION CARDS -->
-        <main class="flex-grow max-w-5xl mx-auto px-6 w-full relative z-20 mb-24">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <!-- Card 1: Hồ Sơ Nhượng Quyền -->
-                <a href="./document/index.html" class="portal-card p-8 group outline-none">
-                    <div class="flex items-start justify-between mb-6">
-                        <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-[17px] font-bold text-white mb-2 uppercase tracking-wide">Hồ Sơ Nhượng Quyền</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">Bản thuyết minh chi tiết: Câu chuyện thương hiệu, Bảng chi phí nhượng quyền, Lộ trình nhân bản và Quản trị rủi ro.</p>
-                    <span class="text-xs font-bold text-amber-500 group-hover:text-orange-500 transition-colors uppercase tracking-widest mt-auto">Xem hồ sơ ➔</span>
-                </a>
+        <!-- Grid 5 Cards -->
+        <main class="max-w-6xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+            
+            <!-- 1. Tính toán ROI -->
+            <a href="./roi-calculator/index.html" class="portal-card p-6 group outline-none">
+                <div class="icon-wrapper mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16.01" y1="10" y2="10"/><line x1="12" x2="12.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="10" y2="10"/><line x1="8" x2="8.01" y1="14" y2="14"/><line x1="12" x2="12.01" y1="14" y2="14"/><line x1="16" x2="16.01" y1="14" y2="14"/><line x1="8" x2="8.01" y1="18" y2="18"/><line x1="12" x2="12.01" y1="18" y2="18"/><line x1="16" x2="16.01" y1="18" y2="18"/></svg>
+                </div>
+                <h3 class="text-[16px] font-bold text-white mb-2 uppercase">Công Cụ Dự Toán</h3>
+                <p class="text-slate-400 text-sm mb-6 flex-1">Máy tính tự động mô phỏng dòng tiền, lợi nhuận ròng và tốc độ hoàn vốn của điểm trường.</p>
+                <span class="text-xs font-bold text-slate-500 group-hover:text-orange-500 uppercase tracking-widest mt-auto">Mở công cụ ➔</span>
+            </a>
 
-                <!-- Card 2: Pitch Deck -->
-                <a href="./pitch-deck/index.html" class="portal-card p-8 group outline-none">
-                    <div class="flex items-start justify-between mb-6">
-                        <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-[17px] font-bold text-white mb-2 uppercase tracking-wide">Bản Thuyết Trình (Pitch Deck)</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">Tài liệu thuyết trình chiến lược dạng Slide 16:9 ngang, tập trung vào giải pháp vận hành hệ điều hành Sunbot OS.</p>
-                    <span class="text-xs font-bold text-amber-500 group-hover:text-orange-500 transition-colors uppercase tracking-widest mt-auto">Mở bản thuyết trình ➔</span>
-                </a>
+            <!-- 2. Hồ sơ nhượng quyền -->
+            <a href="./document/index.html" class="portal-card p-6 group outline-none">
+                <div class="icon-wrapper mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                </div>
+                <h3 class="text-[16px] font-bold text-white mb-2 uppercase">Hồ Sơ Nhượng Quyền</h3>
+                <p class="text-slate-400 text-sm mb-6 flex-1">Bản thuyết minh chi tiết dạng văn bản A4: Câu chuyện, triết lý, chi phí và quản trị rủi ro.</p>
+                <span class="text-xs font-bold text-slate-500 group-hover:text-orange-500 uppercase tracking-widest mt-auto">Xem hồ sơ ➔</span>
+            </a>
 
-                <!-- Card 3: ROI Calculator -->
-                <a href="./roi-calculator/index.html" class="portal-card p-8 group outline-none">
-                    <div class="flex items-start justify-between mb-6">
-                        <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-[17px] font-bold text-white mb-2 uppercase tracking-wide">Bảng Tính Lợi Nhuận</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">Công cụ thông minh mô phỏng dòng tiền, phân tích điểm hòa vốn, chi phí và lợi nhuận ròng mỗi tháng của một cơ sở.</p>
-                    <span class="text-xs font-bold text-amber-500 group-hover:text-orange-500 transition-colors uppercase tracking-widest mt-auto">Khởi chạy máy tính ➔</span>
-                </a>
+            <!-- 3. Pitch Deck -->
+            <a href="./pitch-deck/index.html" class="portal-card p-6 group outline-none">
+                <div class="icon-wrapper mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <h3 class="text-[16px] font-bold text-white mb-2 uppercase">Bản Thuyết Trình (Pitch)</h3>
+                <p class="text-slate-400 text-sm mb-6 flex-1">Tài liệu chiến lược dạng Slide ngang (16:9) hỗ trợ sales chốt deal thuyết phục.</p>
+                <span class="text-xs font-bold text-slate-500 group-hover:text-orange-500 uppercase tracking-widest mt-auto">Mở Slide ➔</span>
+            </a>
 
-                <!-- Card 4: Học Thuật (Bảo mật cấp 2) -->
-                <a href="./materials/index.html" class="portal-card p-8 group outline-none border-orange-500/30">
-                    <div class="absolute top-0 right-0 bg-orange-600 text-white text-[9px] font-black px-3 py-1 rounded-bl-lg uppercase tracking-widest flex items-center gap-1 shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        Bảo Mật
+            <!-- 4. Profile Public (Có 2 nút) -->
+            <div class="portal-card p-6 outline-none hover:border-slate-500 transition-colors lg:col-span-2">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="icon-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                     </div>
-                    <div class="flex items-start justify-between mb-6">
-                        <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                        </div>
+                    <div>
+                        <h3 class="text-[16px] font-bold text-white uppercase">Profile Sunbot (Public)</h3>
+                        <p class="text-[11px] text-green-400 font-bold uppercase tracking-widest">Trang sạch (Dành cho trường)</p>
                     </div>
-                    <h3 class="text-[17px] font-bold text-white mb-2 uppercase tracking-wide text-orange-400">Tài Liệu Chuyên Môn Lõi</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">Khung chương trình 3 năm và toàn bộ giáo án chi tiết các chủ đề. Yêu cầu mã xác thực cấp 2 để truy cập tài sản trí tuệ.</p>
-                    <span class="text-xs font-bold text-orange-500 group-hover:text-orange-400 transition-colors uppercase tracking-widest mt-auto flex items-center gap-1">
-                        Mở kho tài liệu ➔
-                    </span>
-                </a>
-
+                </div>
+                <p class="text-slate-400 text-sm mb-6 flex-1">Landing page giới thiệu năng lực, giải thưởng và video thực tế. Không chứa thông tin hoa hồng, thiết kế siêu đẹp để gửi trực tiếp cho Khách hàng.</p>
+                <div class="flex gap-3 mt-auto">
+                    <a href="https://sunbotvietnam.github.io/portal/" target="_blank" class="flex-1 bg-slate-800 hover:bg-slate-700 text-white text-center text-xs font-bold py-3 rounded-lg transition-colors uppercase tracking-wider">Xem Trang</a>
+                    <button onclick="copyPublicLink()" class="flex-1 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white text-xs font-bold py-3 rounded-lg transition-colors flex justify-center items-center gap-2 uppercase tracking-wider outline-none">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        Copy Link Gửi Khách
+                    </button>
+                </div>
             </div>
+
+            <!-- 5. Tài liệu lõi (Bảo mật cấp 2) -->
+            <a href="./materials/index.html" class="portal-card p-6 group outline-none border-orange-500/40 bg-gradient-to-br from-slate-900 to-slate-800">
+                <div class="absolute top-0 right-0 bg-orange-600 text-white text-[9px] font-black px-3 py-1 rounded-bl-lg uppercase tracking-widest flex items-center gap-1 shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Bảo Mật Cấp 2
+                </div>
+                <div class="icon-wrapper mb-4 bg-orange-500/20 text-orange-500 border-orange-500/50 group-hover:bg-orange-500 group-hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <h3 class="text-[16px] font-bold text-orange-400 mb-2 uppercase">Kho Tài Liệu Lõi</h3>
+                <p class="text-slate-400 text-sm mb-6 flex-1">Chứa 7 bộ văn bản pháp lý, khung chương trình, Hợp đồng và Playbook hoa hồng.</p>
+                <span class="text-xs font-bold text-orange-500 group-hover:text-orange-400 uppercase tracking-widest mt-auto">Mở Kho Tài Liệu ➔</span>
+            </a>
+
         </main>
-
-        <!-- FOOTER -->
-        <footer class="bg-black py-8 text-center border-t border-slate-800 flex-shrink-0">
-            <div class="max-w-7xl mx-auto px-6">
-                <img src="../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-6 object-contain mx-auto mb-4 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer" onclick="window.location.href='../index.html'" onerror="this.src='https://placehold.co/200x60/transparent/ea580c?text=SUNBOT+LOGO'"/>
-                <p class="text-slate-500 text-[11px] font-bold uppercase tracking-widest">&copy; 2026 Kiro Vietnam Education Technology JSC.</p>
-            </div>
+        
+        <footer class="bg-black py-6 text-center mt-auto border-t border-slate-800">
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">&copy; 2026 Kiro Vietnam. Internal Use Only.</p>
         </footer>
+    </div>
 
-    </div> 
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 translate-y-10 bg-slate-800 text-white px-6 py-3 rounded-full font-bold shadow-2xl flex items-center gap-3 opacity-0 transition-all duration-300 pointer-events-none z-[200]">
+        <svg class="text-green-400 w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Đã Copy Link Public!
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // MẬT KHẨU KHU VỰC NHÀ ĐẦU TƯ (Cấp 1)
-            const CORRECT_PASSCODE = "invest2026"; 
-            
-            const authOverlay = document.getElementById('auth-overlay');
-            const mainWrapper = document.getElementById('main-wrapper');
-            const authForm = document.getElementById('auth-form');
-            const authPassInput = document.getElementById('auth-pass');
-            const authError = document.getElementById('auth-error');
-            const btnLogout = document.getElementById('btn-logout');
+            const HUB_PASSCODE = "invest2026"; 
+            const authOverlay = document.getElementById('hub-auth-overlay');
+            const mainHub = document.getElementById('main-hub');
+            const authForm = document.getElementById('hub-auth-form');
+            const authPassInput = document.getElementById('hub-pass');
+            const authError = document.getElementById('hub-error');
 
-            if (sessionStorage.getItem('franchise_authenticated') === 'true') {
+            if (sessionStorage.getItem('hub_auth') === 'true') {
                 authOverlay.classList.add('hidden');
-                mainWrapper.classList.remove('hidden');
-                mainWrapper.classList.add('flex');
+                mainHub.classList.remove('hidden');
+                mainHub.classList.add('flex');
             }
 
             authForm.addEventListener('submit', (e) => {
                 e.preventDefault(); 
-                const enteredPass = authPassInput.value.trim();
-
-                if (enteredPass === CORRECT_PASSCODE) {
-                    sessionStorage.setItem('franchise_authenticated', 'true');
+                if (authPassInput.value.trim() === HUB_PASSCODE) {
+                    sessionStorage.setItem('hub_auth', 'true');
                     authOverlay.style.opacity = '0';
-                    authOverlay.style.transition = 'opacity 0.4s ease';
                     setTimeout(() => {
                         authOverlay.classList.add('hidden');
-                        mainWrapper.classList.remove('hidden');
-                        mainWrapper.classList.add('flex');
+                        mainHub.classList.remove('hidden');
+                        mainHub.classList.add('flex');
                     }, 400);
                 } else {
                     authError.classList.remove('hidden');
                     authPassInput.classList.add('border-red-500', 'ring-1', 'ring-red-500');
                     authPassInput.value = ''; 
+                    
                     authPassInput.style.transform = 'translateX(5px)';
                     setTimeout(() => authPassInput.style.transform = 'translateX(-5px)', 100);
                     setTimeout(() => authPassInput.style.transform = 'translateX(5px)', 200);
@@ -255,14 +236,27 @@
                 authError.classList.add('hidden');
                 authPassInput.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
             });
-
-            if(btnLogout) {
-                btnLogout.addEventListener('click', () => {
-                    sessionStorage.removeItem('franchise_authenticated');
-                    window.location.reload(); 
-                });
-            }
         });
+
+        function lockHub() {
+            sessionStorage.removeItem('hub_auth');
+            sessionStorage.removeItem('materials_auth'); // Reset cả pass lõi
+            window.location.reload(); 
+        }
+
+        function copyPublicLink() {
+            navigator.clipboard.writeText('https://sunbotvietnam.github.io/portal/').then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('toast-show');
+                toast.style.transform = 'translate(-50%, 0)';
+                toast.style.opacity = '1';
+                setTimeout(() => {
+                    toast.style.transform = 'translate(-50%, 40px)';
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.classList.remove('toast-show'), 300);
+                }, 2500);
+            });
+        }
     </script>
 </body>
 </html>
