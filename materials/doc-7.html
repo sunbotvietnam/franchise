@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunbot – Chính sách Hoa hồng Đối tác 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --orange:   #E8541A;
+  --amber:    #F5A623;
+  --cream:    #FFF8F3;
+  --cream2:   #FFF0E4;
+  --green:    #1A9E6A;
+  --green-lt: #E8F8F1;
+  --text:     #1A1A2E;
+  --mid:      #4A4A6A;
+  --soft:     #8A8AAA;
+  --white:    #FFFFFF;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', -apple-system, 'Segoe UI', sans-serif;
+  background: #F0EDE8;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page {
+  width: 794px;
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, var(--orange) 0%, #F07030 50%, var(--amber) 100%);
+  padding: 28px 36px 24px;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+}
+
+.header::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+
+.header::after {
+  content: '';
+  position: absolute; bottom: -40px; left: 30%;
+  width: 120px; height: 120px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+
+.header-left { position: relative; z-index: 1; }
+
+.logo-row {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+}
+
+.logo-box {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: rgba(255,255,255,0.20);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+
+.logo-text { font-size: 22px; font-weight: 900; color: white; letter-spacing: -0.03em; }
+
+.header-title { font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 500; letter-spacing: 0.02em; }
+
+.header-right {
+  position: relative; z-index: 1; text-align: right;
+}
+
+.header-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.30);
+  color: white; font-size: 11px; font-weight: 700;
+  padding: 5px 14px; border-radius: 20px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.header-tagline { font-size: 11.5px; color: rgba(255,255,255,0.80); font-weight: 400; line-height: 1.5; max-width: 200px; text-align: right; }
+
+/* ── BODY ── */
+.body { padding: 22px 28px 20px; }
+
+/* ── ROLES ── */
+.roles-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+
+.role-card {
+  border-radius: 12px; padding: 14px 16px;
+  border: 1.5px solid;
+  position: relative; overflow: hidden;
+}
+
+.role-card.connector {
+  background: #F8F8FD; border-color: #D8D8EE;
+}
+.role-card.sales {
+  background: linear-gradient(145deg, #FFF5EF, #FFEAD9); border-color: #F5B890;
+}
+.role-card.system {
+  background: linear-gradient(145deg, var(--green-lt), #D0F4E6); border-color: #90D9BB;
+}
+
+.role-badge {
+  display: inline-block; font-size: 9.5px; font-weight: 800;
+  padding: 3px 9px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.connector .role-badge { background: #E8E8F4; color: #5050A0; }
+.sales     .role-badge { background: rgba(232,84,26,0.14); color: var(--orange); }
+.system    .role-badge { background: rgba(26,158,106,0.14); color: var(--green); }
+
+.role-name { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 5px; }
+
+.role-commission {
+  font-size: 26px; font-weight: 900; letter-spacing: -0.03em; line-height: 1;
+  margin-bottom: 6px;
+}
+
+.connector .role-commission { color: #5050A0; }
+.sales     .role-commission { color: var(--orange); }
+.system    .role-commission { color: var(--green); }
+
+.role-desc { font-size: 10.5px; color: var(--mid); line-height: 1.5; font-weight: 400; }
+
+.role-tag {
+  font-size: 9px; font-weight: 700;
+  display: inline-block; padding: 2px 7px;
+  border-radius: 10px; margin-top: 6px;
+}
+
+.connector .role-tag { background: #EEEEF8; color: #7070B0; }
+.sales     .role-tag { background: rgba(232,84,26,0.10); color: var(--orange); }
+.system    .role-tag { background: rgba(26,158,106,0.10); color: var(--green); }
+
+/* ── TWO-COL ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+
+/* ── SECTION CARD ── */
+.section-card {
+  border-radius: 12px; padding: 14px 16px;
+  background: var(--cream);
+  border: 1px solid rgba(232,84,26,0.10);
+}
+
+.section-card.full { grid-column: 1 / -1; }
+
+.section-label {
+  font-size: 9.5px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--orange);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.section-label::before {
+  content: '';
+  width: 3px; height: 12px;
+  background: linear-gradient(to bottom, var(--orange), var(--amber));
+  border-radius: 2px; display: block; flex-shrink: 0;
+}
+
+/* Mini table */
+.mini-table { width: 100%; border-collapse: collapse; }
+.mini-table th {
+  font-size: 9.5px; font-weight: 700; color: var(--soft);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  padding: 0 0 6px; border-bottom: 1px solid rgba(0,0,0,0.07);
+  text-align: left;
+}
+.mini-table th:not(:first-child) { text-align: center; }
+.mini-table td {
+  font-size: 11px; padding: 5px 0;
+  color: var(--text); border-bottom: 1px solid rgba(0,0,0,0.04);
+  vertical-align: middle;
+}
+.mini-table tr:last-child td { border-bottom: none; }
+.mini-table td:not(:first-child) { text-align: center; }
+
+.pct { font-weight: 800; color: var(--orange); font-size: 13px; }
+.pct.green { color: var(--green); }
+.pct.soft  { color: var(--soft); }
+.dim { color: var(--soft); font-size: 10px; }
+
+/* Bonus pills row */
+.bonus-row { display: flex; flex-direction: column; gap: 7px; }
+
+.bonus-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 10.5px; color: var(--mid);
+}
+
+.bonus-chip {
+  font-size: 11px; font-weight: 800; color: var(--orange);
+  background: rgba(232,84,26,0.09);
+  padding: 3px 10px; border-radius: 20px;
+  white-space: nowrap; min-width: 44px; text-align: center;
+  flex-shrink: 0;
+}
+
+.bonus-chip.green { color: var(--green); background: rgba(26,158,106,0.10); }
+.bonus-chip.soft  { color: var(--soft);  background: rgba(0,0,0,0.05); }
+
+.bonus-note {
+  font-size: 9px; color: var(--soft); margin-top: 2px;
+  padding-top: 7px; border-top: 1px dashed rgba(0,0,0,0.08);
+  line-height: 1.5;
+}
+
+/* ── LEAD TIMELINE ── */
+.timeline { display: flex; align-items: flex-start; gap: 0; }
+
+.tl-step { flex: 1; position: relative; text-align: center; }
+
+.tl-step::before {
+  content: '';
+  position: absolute; top: 14px; left: 50%; right: -50%;
+  height: 1.5px;
+  background: linear-gradient(to right, rgba(232,84,26,0.4), rgba(245,166,35,0.2));
+}
+.tl-step:last-child::before { display: none; }
+
+.tl-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--amber));
+  color: white; font-size: 10px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 7px; position: relative; z-index: 1;
+}
+
+.tl-title { font-size: 10px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.tl-val   { font-size: 11.5px; font-weight: 800; color: var(--orange); margin-bottom: 2px; }
+.tl-desc  { font-size: 9px; color: var(--soft); line-height: 1.4; }
+
+/* ── TIERS ── */
+.tiers-row { display: flex; gap: 8px; }
+
+.tier {
+  flex: 1; border-radius: 10px; padding: 10px 12px;
+  border: 1.5px solid;
+}
+
+.tier.t1 { background: #F8F8FA; border-color: #DDDDE8; }
+.tier.t2 { background: linear-gradient(145deg, #F0F4FF, #E4ECFF); border-color: #B8C8F4; }
+.tier.t3 { background: linear-gradient(145deg, #FFFAEC, #FFF0CC); border-color: #F5C84A; }
+
+.tier-icon { font-size: 16px; margin-bottom: 5px; }
+.tier-name { font-size: 10.5px; font-weight: 800; color: var(--text); margin-bottom: 2px; }
+.tier-cond { font-size: 9px; color: var(--mid); line-height: 1.4; margin-bottom: 5px; }
+.tier-perk { font-size: 9px; color: var(--soft); line-height: 1.4; }
+
+/* ── SPLIT BOX ── */
+.split-box {
+  background: linear-gradient(135deg, var(--green-lt), #D8F4EB);
+  border-radius: 10px; padding: 11px 14px;
+  border: 1px solid rgba(26,158,106,0.18);
+  font-size: 10.5px; color: var(--mid); line-height: 1.6;
+}
+
+.split-box strong { color: var(--text); font-weight: 700; }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--text);
+  padding: 10px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.footer-left { font-size: 9.5px; color: rgba(255,255,255,0.40); }
+.footer-right { font-size: 9.5px; color: rgba(255,255,255,0.40); }
+
+/* ── PRINT ── */
+@media print {
+  body { background: white; padding: 0; }
+  .page { border-radius: 0; box-shadow: none; width: 100%; }
+  @page { margin: 0; size: A4; }
+}
+
+/* ── SCREEN CTA ── */
+.print-cta {
+  text-align: center; margin-top: 20px;
+}
+.print-btn {
+  background: var(--orange); color: white;
+  border: none; border-radius: 30px;
+  padding: 10px 28px; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 4px 16px rgba(232,84,26,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.print-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,84,26,0.40); }
+
+@media print { .print-cta { display: none; } }
+</style>
+</head>
+<body>
+
+<div>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo-row">
+        <div class="logo-box">🤖</div>
+        <div class="logo-text">SUNBOT</div>
+      </div>
+      <div class="header-title">Chính sách Hoa hồng Đối tác Phân phối · Phiên bản 2.0 – 2026</div>
+    </div>
+    <div class="header-right">
+      <div class="header-badge">Tài liệu đối tác · Bảo mật</div>
+      <div class="header-tagline">Mức cụ thể xác nhận bằng Phụ lục Hợp tác ký kèm với từng đối tác</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- ROW 1: 3 VAI TRÒ -->
+    <div class="roles-row">
+
+      <div class="role-card connector">
+        <div class="role-badge">Connector</div>
+        <div class="role-name">Đối tác Kết nối</div>
+        <div class="role-commission">5%</div>
+        <div class="role-desc">Cố định trên License Fee.<br>Không áp dụng bonus thêm.</div>
+        <div class="role-tag">Giới thiệu đầu mối trường</div>
+      </div>
+
+      <div class="role-card sales">
+        <div class="role-badge">Sales Partner</div>
+        <div class="role-name">Đối tác Bán hàng</div>
+        <div class="role-commission">12 – 22%</div>
+        <div class="role-desc">Theo gói ký kết.<br>Có thể cộng thêm bonus.</div>
+        <div class="role-tag">Tư vấn & chốt deal trực tiếp</div>
+      </div>
+
+      <div class="role-card system">
+        <div class="role-badge">System Dev</div>
+        <div class="role-name">Đối tác Phát triển HT</div>
+        <div class="role-commission">Cơ chế riêng</div>
+        <div class="role-desc">Tối thiểu không thấp hơn<br>Sales Partner cùng gói.</div>
+        <div class="role-tag">≥ 3 điểm trường / 6 tháng</div>
+      </div>
+
+    </div><!-- /roles-row -->
+
+    <!-- ROW 2: 2 cols -->
+    <div class="two-col">
+
+      <!-- Bảng hoa hồng cơ bản -->
+      <div class="section-card">
+        <div class="section-label">Hoa hồng cơ bản – Sales Partner</div>
+        <table class="mini-table">
+          <tr>
+            <th>Gói</th>
+            <th>Giá trị HĐ</th>
+            <th>Hoa hồng</th>
+          </tr>
+          <tr>
+            <td><span class="dim">Basic *</span></td>
+            <td><span class="dim">~130 tr</span></td>
+            <td><span class="pct soft">12%</span></td>
+          </tr>
+          <tr>
+            <td><strong>Standard</strong></td>
+            <td>~180 tr</td>
+            <td><span class="pct">18%</span></td>
+          </tr>
+          <tr>
+            <td><strong>Premium</strong></td>
+            <td>~230 tr</td>
+            <td><span class="pct">22%</span></td>
+          </tr>
+        </table>
+        <div class="bonus-note">
+          * Giá trị HĐ = phí cấp phép ban đầu (License Fee), không tính phí vận hành tháng.<br>
+          * Basic là gói mở cửa, không khuyến khích bán diện rộng.
+        </div>
+      </div>
+
+      <!-- Thưởng bổ sung -->
+      <div class="section-card">
+        <div class="section-label">Thưởng bổ sung (Sales Partner trở lên)</div>
+        <div class="bonus-row">
+
+          <div class="bonus-item">
+            <div class="bonus-chip">+3→8%</div>
+            <div><strong>Accelerator</strong> – theo từng deal<br>
+              <span style="font-size:9.5px;color:var(--soft);">≥180tr→+3% · ≥300tr→+5% · ≥500tr→+8%<br>Tối đa +8%/deal (lũy tiến thay thế)</span>
+            </div>
+          </div>
+
+          <div class="bonus-item">
+            <div class="bonus-chip">+5→8%</div>
+            <div><strong>Mix Bonus</strong> – theo quý (≥3 deals)<br>
+              <span style="font-size:9.5px;color:var(--soft);">≥60% giá trị là Standard/Premium → +5%<br>≥70% → +8% · Tối đa +8%/quý</span>
+            </div>
+          </div>
+
+          <div class="bonus-item">
+            <div class="bonus-chip green">5%</div>
+            <div><strong>Retention</strong> – khi trường gia hạn/mở rộng<br>
+              <span style="font-size:9.5px;color:var(--soft);">Tối đa 3 năm/điểm · Cần ký ≥1 deal mới/12 tháng</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="bonus-note">
+          Accelerator (tính/deal) và Mix Bonus (tính/quý) có trần riêng biệt — không cộng dồn vào cùng một cơ sở.
+        </div>
+      </div>
+
+    </div><!-- /two-col -->
+
+    <!-- ROW 3: FULL - split + lead + tiers -->
+    <div class="two-col">
+
+      <!-- Cột trái: split + clawback -->
+      <div style="display:flex; flex-direction:column; gap:10px;">
+
+        <div class="section-card">
+          <div class="section-label">Khi 1 deal có 2 vai trò</div>
+          <div class="split-box">
+            <strong>Connector + Sales Partner:</strong><br>
+            Connector nhận <strong>5% cố định</strong>.<br>
+            Sales Partner nhận <strong>hoa hồng theo gói trừ 5%</strong>.<br>
+            VD: Standard → SP nhận 18% – 5% = <strong>13%</strong>.<br>
+            Tổng Sunbot chi ra không vượt mức SP độc lập.
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-label">Thanh toán & Clawback</div>
+          <div class="bonus-row">
+            <div class="bonus-item" style="align-items:flex-start;">
+              <div class="bonus-chip" style="font-size:9px;padding:3px 6px;min-width:52px;">Tháng</div>
+              <div style="font-size:10px;color:var(--mid);">Hoa hồng cơ bản + Accelerator<br><span class="dim">Theo tiến độ thực thu – không ứng trước</span></div>
+            </div>
+            <div class="bonus-item" style="align-items:flex-start;">
+              <div class="bonus-chip" style="font-size:9px;padding:3px 6px;min-width:52px;">Quý</div>
+              <div style="font-size:10px;color:var(--mid);">Mix Bonus<br><span class="dim">Sau khi kết thúc quý và xác nhận số liệu</span></div>
+            </div>
+            <div class="bonus-item" style="align-items:flex-start;">
+              <div class="bonus-chip soft" style="font-size:9px;padding:3px 6px;min-width:52px;">Clawback</div>
+              <div style="font-size:10px;color:var(--mid);">HĐ hủy trong 6 tháng đầu → thu hồi hoa hồng phần chưa thực thu</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Cột phải: Lead timeline -->
+      <div class="section-card" style="display:flex;flex-direction:column;gap:10px;">
+        <div class="section-label">Quy trình Lead</div>
+        <div class="timeline">
+
+          <div class="tl-step">
+            <div class="tl-dot">1</div>
+            <div class="tl-title">Đăng ký</div>
+            <div class="tl-val">48h</div>
+            <div class="tl-desc">Sunbot xác nhận<br>hoặc từ chối</div>
+          </div>
+
+          <div class="tl-step">
+            <div class="tl-dot">2</div>
+            <div class="tl-title">Bảo lưu</div>
+            <div class="tl-val">90 ngày</div>
+            <div class="tl-desc">Thời hạn hiệu lực<br>lead (gia hạn +30)</div>
+          </div>
+
+          <div class="tl-step">
+            <div class="tl-dot">3</div>
+            <div class="tl-title">Cảnh báo</div>
+            <div class="tl-val">7 ngày</div>
+            <div class="tl-desc">Thông báo trước<br>khi phân bổ lại</div>
+          </div>
+
+          <div class="tl-step">
+            <div class="tl-dot">✓</div>
+            <div class="tl-title">Chốt deal</div>
+            <div class="tl-val">Hoa hồng</div>
+            <div class="tl-desc">Giải ngân theo<br>tiến độ thực thu</div>
+          </div>
+
+        </div>
+
+        <div class="bonus-note" style="margin-top:4px;">
+          <strong>Tranh chấp lead:</strong> Ưu tiên timestamp đăng ký sớm hơn. Sunbot xử lý trong 5 ngày làm việc. Quyết định của Sunbot là cuối cùng.
+        </div>
+
+        <!-- Tier cấp bậc -->
+        <div class="section-label" style="margin-top:6px;">Lộ trình cấp bậc đối tác</div>
+        <div class="tiers-row">
+          <div class="tier t1">
+            <div class="tier-icon">🥉</div>
+            <div class="tier-name">Chuẩn</div>
+            <div class="tier-cond">≥ 1 hợp đồng</div>
+            <div class="tier-perk">Bảng chiết khấu tiêu chuẩn</div>
+          </div>
+          <div class="tier t2">
+            <div class="tier-icon">🥈</div>
+            <div class="tier-name">Bạc</div>
+            <div class="tier-cond">≥ 3 HĐ / 6 tháng</div>
+            <div class="tier-perk">Ưu tiên hỗ trợ + tài liệu độc quyền</div>
+          </div>
+          <div class="tier t3">
+            <div class="tier-icon">🥇</div>
+            <div class="tier-name">Vàng</div>
+            <div class="tier-cond">≥ 6 HĐ / 6T hoặc ≥1 tỷ/năm</div>
+            <div class="tier-perk">Ưu đãi khu vực, cơ chế riêng</div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /two-col -->
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">© Kiro Việt Nam 2026 · Tài liệu bảo mật – Không phát tán ra ngoài</div>
+    <div class="footer-right">Mức hoa hồng cụ thể được xác nhận bằng Phụ lục Hợp tác ký kèm</div>
+  </div>
+
+</div><!-- /page -->
+
+<div class="print-cta">
+  <button class="print-btn" onclick="window.print()">🖨️ &nbsp;In / Xuất PDF</button>
+</div>
+
+</div>
+
+</body>
+</html>

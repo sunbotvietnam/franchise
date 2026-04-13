@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="vi" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hợp Đồng Triển Khai Sunbot 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-orange: #ea580c;
+            --brand-amber: #f59e0b;
+            --text-main: #0f172a;
+            --text-doc: #1e293b;
+            --page-width: 210mm;
+            --page-min-height: 297mm; 
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #64748b; 
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Xử lý lẹm dấu Tiếng Việt */
+        h1, h2, h3, h4, h5, h6 { 
+            line-height: 1.5 !important; 
+            padding-top: 0.15em; 
+            padding-bottom: 0.15em; 
+            overflow: visible; 
+            margin: 0; 
+        }
+
+        /* Khung trang A4 chuẩn */
+        .a4-page {
+            width: var(--page-width);
+            min-height: var(--page-min-height);
+            background-color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            box-sizing: border-box;
+            padding: 24mm 24mm 20mm 24mm; /* Tinh chỉnh lề chuẩn */
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .page-content { flex: 1 1 auto; position: relative; z-index: 10; }
+
+        .page-footer {
+            flex: 0 0 auto; margin-top: 20px; padding-top: 15px; 
+            border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between;
+            align-items: center; font-size: 10px; color: #94a3b8; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        /* Typography cho Hợp đồng (Trang trọng, Gióng hàng hoàn hảo) */
+        .contract-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #0f172a; text-align: center; margin-bottom: 8px; line-height: 1.3;}
+        .contract-number { font-size: 13px; font-weight: 700; color: #64748b; text-align: center; margin-bottom: 36px; font-style: italic;}
+        
+        .contract-article { font-size: 14.5px; font-weight: 800; color: var(--brand-orange); text-transform: uppercase; margin-top: 28px; margin-bottom: 12px; border-bottom: 1.5px solid var(--brand-orange); padding-bottom: 6px; }
+        .clause { font-size: 14px; font-weight: 700; color: #0f172a; margin-top: 16px; margin-bottom: 8px; }
+        
+        /* Căn lề đều 2 bên (Justify) cho văn bản chuyên nghiệp */
+        .contract-text { font-size: 13.5px; line-height: 1.65; color: var(--text-doc); margin-bottom: 10px; text-align: justify; text-justify: inter-word; }
+        
+        /* Cấu trúc Lists thụt lề siêu chuẩn xác */
+        .list-dash { margin: 0 0 12px 0; padding: 0; list-style: none; }
+        .list-dash > li { position: relative; padding-left: 20px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.65; text-align: justify; color: var(--text-doc); }
+        .list-dash > li::before { content: "-"; position: absolute; left: 0; top: 0; font-weight: 700;}
+
+        .list-num { counter-reset: item; margin: 0 0 12px 0; padding: 0; list-style: none; }
+        .list-num > li { position: relative; padding-left: 24px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.65; text-align: justify; color: var(--text-doc); }
+        .list-num > li::before { content: counter(item) "."; counter-increment: item; position: absolute; left: 0; top: 0; font-weight: 700; }
+        
+        .list-alpha { counter-reset: alpha; margin: 4px 0 12px 0; padding: 0; list-style: none; }
+        .list-alpha > li { position: relative; padding-left: 24px; margin-bottom: 6px; font-size: 13.5px; line-height: 1.65; text-align: justify; color: var(--text-doc); }
+        .list-alpha > li::before { content: counter(alpha, lower-alpha) "."; counter-increment: alpha; position: absolute; left: 0; top: 0; font-weight: 700; }
+        
+        /* Dòng kẻ điền thông tin tự động co giãn */
+        .fill-row { display: flex; items-end; margin-bottom: 10px; }
+        .fill-label { font-weight: 700; font-size: 13.5px; margin-right: 8px; white-space: nowrap; }
+        .fill-line { flex-grow: 1; border-bottom: 1px dotted #94a3b8; min-width: 50px; }
+        .fill-line-short { width: 35%; border-bottom: 1px dotted #94a3b8; }
+
+        /* Bảng biểu chuẩn pháp lý */
+        table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; border: 1px solid #cbd5e1; }
+        th, td { padding: 10px 14px; text-align: left; line-height: 1.5; border: 1px solid #cbd5e1; vertical-align: top; }
+        th { background-color: #f1f5f9; font-weight: 700; color: #0f172a; text-transform: uppercase; font-size: 12px; letter-spacing: 0.02em;}
+
+        /* Ký kết */
+        .signature-box { display: flex; justify-content: space-between; margin-top: 40px; padding: 0 40px; text-align: center; }
+        .signature-title { font-weight: 800; color: #0f172a; font-size: 14px; margin-bottom: 4px; text-transform: uppercase;}
+        .signature-sub { font-style: italic; color: #64748b; font-size: 12px; margin-bottom: 100px; }
+
+        /* Cover Page styling */
+        .cover-page { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; justify-content: center; align-items: center; text-align: center; padding: 24mm;}
+        .cover-circle { position: absolute; top: -10%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, rgba(245,158,11,0) 60%); border-radius: 50%; z-index: 0; pointer-events: none;}
+
+        .print-btn-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
+
+        @page { size: A4 portrait; margin: 0; }
+        @media print {
+            body { background: none; padding: 0; gap: 0; }
+            .print-btn-container { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; height: 297mm; page-break-after: always; page-break-inside: avoid; }
+            .a4-page:last-child { page-break-after: auto; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nút điều khiển -->
+    <div class="print-btn-container no-print flex gap-3">
+        <a href="../../index.html" class="bg-white text-slate-800 px-6 py-4 rounded-full font-bold shadow-lg transition-all text-sm border border-slate-300 outline-none hover:bg-slate-50">Về Hub</a>
+        <button onclick="window.print()" class="bg-slate-900 hover:bg-black text-white px-8 py-4 rounded-full font-bold shadow-2xl transition-all flex items-center gap-3 text-sm uppercase tracking-wider outline-none border border-slate-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            In Hợp Đồng (PDF)
+        </button>
+    </div>
+
+    <!-- BÌA HỢP ĐỒNG -->
+    <div class="a4-page cover-page">
+        <div class="cover-circle"></div>
+        <div class="relative z-10 w-full h-full flex flex-col justify-between">
+            <div class="pt-10 flex justify-center">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-20 object-contain drop-shadow-lg" onerror="this.src='https://placehold.co/200x80/transparent/ea580c?text=SUNBOT'"/>
+            </div>
+            
+            <div class="my-auto">
+                <p class="text-orange-500 font-bold tracking-[0.3em] text-[13px] mb-6 uppercase">Văn Bản Pháp Lý Nội Bộ</p>
+                <div class="border-y-2 border-slate-700 py-10 my-6">
+                    <h1 class="text-[36px] font-black text-white leading-[1.3] uppercase tracking-tight mb-4">
+                        HỢP ĐỒNG HỢP TÁC TRIỂN KHAI<br>CHƯƠNG TRÌNH GIÁO DỤC SUNBOT
+                    </h1>
+                    <p class="text-slate-400 font-medium text-[16px] tracking-widest">SỐ: ......./2026/HĐHT-KIRO</p>
+                </div>
+                <div class="flex justify-center gap-16 mt-16 text-left">
+                    <div>
+                        <p class="text-slate-500 text-[11px] uppercase tracking-widest mb-1 font-bold">Bên A (Cấp Phép)</p>
+                        <p class="text-white font-bold text-[14px] leading-relaxed">CÔNG TY CP CÔNG NGHỆ<br>GIÁO DỤC KIRO VIỆT NAM</p>
+                    </div>
+                    <div class="w-px h-12 bg-slate-700 mt-2"></div>
+                    <div class="w-[200px]">
+                        <p class="text-slate-500 text-[11px] uppercase tracking-widest mb-1 font-bold">Bên B (Tiếp Nhận)</p>
+                        <div class="w-full border-b border-dotted border-slate-500 mt-4"></div>
+                        <div class="w-full border-b border-dotted border-slate-500 mt-4"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pb-10">
+                <p class="text-slate-500 text-[12px] uppercase tracking-widest font-medium">Bản Quyền 2026 © Kiro Vietnam</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRANG 1: ĐIỀU 1 - 4 -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h1 class="contract-title">HỢP ĐỒNG HỢP TÁC TRIỂN KHAI<br>CHƯƠNG TRÌNH GIÁO DỤC SUNBOT</h1>
+            <p class="contract-number">Số: ......./2026/HĐHT-KIRO</p>
+
+            <div class="clause uppercase">CĂN CỨ KÝ KẾT HỢP ĐỒNG</div>
+            <ul class="list-dash italic text-slate-600 mb-6">
+                <li>Căn cứ Bộ luật Dân sự số 91/2015/QH13 được Quốc hội nước Cộng hòa Xã hội Chủ nghĩa Việt Nam thông qua ngày 24/11/2015 và các văn bản hướng dẫn thi hành;</li>
+                <li>Căn cứ Luật Thương mại số 36/2005/QH11 và các quy định pháp luật có liên quan;</li>
+                <li>Căn cứ nhu cầu hợp tác, năng lực thực tế và sự tự nguyện thỏa thuận của các bên;</li>
+                <li>Căn cứ vào việc Bên A là đơn vị sở hữu chương trình giáo dục Sunbot và có quyền cấp quyền sử dụng có thời hạn đối với chương trình, tài liệu và hệ thống liên quan;</li>
+            </ul>
+            <p class="contract-text font-bold text-slate-800">Hai bên thống nhất ký kết Hợp đồng cấp quyền sử dụng chương trình và dịch vụ hỗ trợ triển khai (sau đây gọi là “Hợp đồng”), với các điều khoản sau:</p>
+
+            <div class="contract-article">ĐIỀU 1. THÔNG TIN CÁC BÊN</div>
+            
+            <div class="clause">1.1. BÊN A: CÔNG TY CỔ PHẦN CÔNG NGHỆ GIÁO DỤC KIRO VIỆT NAM</div>
+            <div class="pl-4 mb-4">
+                <div class="fill-row"><span class="fill-label w-24">Đại diện:</span><span class="fill-line"></span><span class="fill-label ml-4">Chức vụ:</span><span class="fill-line-short"></span></div>
+                <div class="fill-row"><span class="fill-label w-24">Địa chỉ:</span><span class="fill-line"></span></div>
+                <div class="fill-row"><span class="fill-label w-24">Mã số thuế:</span><span class="fill-line"></span><span class="fill-label ml-4">Điện thoại:</span><span class="fill-line-short"></span></div>
+                <p class="contract-text italic mt-2 text-slate-500">(Sau đây gọi tắt là “Bên A” hoặc “Bên Cung Cấp Dịch Vụ")</p>
+            </div>
+
+            <div class="clause flex items-end">
+                <span class="mr-2 whitespace-nowrap">1.2. BÊN B:</span>
+                <span class="flex-grow border-b border-dotted border-slate-400"></span>
+            </div>
+            <div class="pl-4 mb-4 mt-3">
+                <div class="fill-row"><span class="fill-label w-24">Đại diện:</span><span class="fill-line"></span><span class="fill-label ml-4">Chức vụ:</span><span class="fill-line-short"></span></div>
+                <div class="fill-row"><span class="fill-label w-24">Địa chỉ:</span><span class="fill-line"></span></div>
+                <div class="fill-row"><span class="fill-label w-24">Mã số thuế:</span><span class="fill-line"></span><span class="fill-label ml-4">Điện thoại:</span><span class="fill-line-short"></span></div>
+                <p class="contract-text italic mt-2 text-slate-500">(Sau đây gọi tắt là “Bên B”)</p>
+            </div>
+            
+            <p class="contract-text font-bold text-slate-800">Bên A và Bên B sau đây gọi chung là "Các Bên”, gọi riêng là “Bên”.</p>
+
+            <div class="contract-article">ĐIỀU 2. GIẢI THÍCH THUẬT NGỮ</div>
+            <p class="contract-text">Trong phạm vi Hợp đồng này, các thuật ngữ dưới đây được hiểu như sau:</p>
+            <ul class="list-num font-medium">
+                <li><strong class="text-slate-800">"Chương trình Sunbot":</strong> là hệ thống giáo dục tích hợp STEAM, robot và tư duy công nghệ do Bên A nghiên cứu, phát triển và sở hữu toàn bộ quyền liên quan.</li>
+                <li><strong class="text-slate-800">“Hệ thống Sunbot":</strong> bao gồm nhưng không giới hạn: giáo án, phương pháp giảng dạy, học cụ, tiêu chuẩn lớp học, tiêu chuẩn vận hành, tài liệu đào tạo và các cấu phần liên quan.</li>
+                <li><strong class="text-slate-800">“Giờ học chuẩn":</strong> là đơn vị tổ chức giảng dạy cơ bản của chương trình Sunbot, được quy định chi tiết tại Phụ lục 1.</li>
+                <li><strong class="text-slate-800">“Mô hình Sunbot":</strong> là mô hình triển khai và vận hành hệ thống Sunbot tại cơ sở của Bên B theo tiêu chuẩn do Bên A ban hành.</li>
+                <li><strong class="text-slate-800">“Phí dịch vụ hỗ trợ vận hành định kỳ":</strong> là khoản chi phí mà Bên B có trách nhiệm thanh toán nhằm duy trì quyền tham gia và vận hành trong hệ thống Sunbot.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 3. MỤC ĐÍCH VÀ PHẠM VI HỢP TÁC</div>
+            <p class="contract-text"><strong>3.1.</strong> Bên A đồng ý cho Bên B sử dụng nội dung giáo dục được cấp phép bởi Kiro Việt Nam và triển khai chương trình Sunbot tại cơ sở của Bên B theo các tiêu chuẩn do Bên A quy định.</p>
+            <p class="contract-text"><strong>3.2. Phạm vi hợp tác bao gồm:</strong> Bên A cung cấp dịch vụ giáo dục và cấp phép cho bên B sử dụng nội dung giáo dục thuộc sở hữu bên A. Trong đó có:</p>
+            <ul class="list-dash">
+                <li>Quyền triển khai chương trình Sunbot tại địa điểm đăng ký;</li>
+                <li>Quyền sử dụng hệ thống giáo án, học cụ và phương pháp giảng dạy;</li>
+                <li>Quyền nhận hỗ trợ đào tạo, hướng dẫn và kiểm soát chất lượng từ Bên A.</li>
+            </ul>
+            <p class="contract-text"><strong>3.3. Bên B cam kết không thực hiện các hành vi sau:</strong></p>
+            <ul class="list-dash">
+                <li>Sao chép, chỉnh sửa hoặc phát triển sản phẩm/phương pháp tương tự dựa trên hệ thống Sunbot;</li>
+                <li>Chuyển giao quyền triển khai cho bất kỳ bên thứ ba nào;</li>
+                <li>Sử dụng chương trình ngoài phạm vi đã được cho phép.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 4. THỜI HẠN HỢP ĐỒNG</div>
+            <div class="contract-text flex items-end mb-2">
+                <strong class="mr-2 whitespace-nowrap">4.1.</strong> Hợp đồng có hiệu lực trong thời hạn
+                <span class="w-12 border-b border-dotted border-slate-400 mx-2"></span> năm kể từ ngày ký.
+            </div>
+            <p class="contract-text"><strong>4.2.</strong> Trước khi hết hạn, hai bên có thể thỏa thuận gia hạn bằng văn bản.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>01</span>
+        </div>
+    </div>
+
+    <!-- TRANG 2: ĐIỀU 5 - 9 -->
+    <div class="a4-page">
+        <div class="page-content">
+            <div class="contract-article">ĐIỀU 5. NGUYÊN TẮC TRIỂN KHAI VÀ VẬN HÀNH</div>
+            <p class="contract-text"><strong>5.1.</strong> Bên B cam kết triển khai chương trình Sunbot theo đúng tiêu chuẩn hệ thống do Bên A ban hành.</p>
+            <p class="contract-text"><strong>5.2. Các tiêu chuẩn triển khai bao gồm nhưng không giới hạn:</strong></p>
+            <ul class="list-dash">
+                <li>Chuẩn giờ học;</li>
+                <li>Chuẩn lớp học;</li>
+                <li>Chuẩn giáo viên;</li>
+                <li>Quy trình vận hành lớp.</li>
+            </ul>
+            <p class="contract-text"><strong>5.3. Các tiêu chuẩn chi tiết được quy định tại:</strong></p>
+            <ul class="list-dash">
+                <li>Phụ lục 1 - Giờ học chuẩn Sunbot;</li>
+                <li>Phụ lục 2 - Chuẩn triển khai & vận hành Sunbot.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 6. CƠ CHẾ DUY TRÌ HỆ THỐNG</div>
+            <p class="contract-text"><strong>6.1.</strong> Bên A cấp cho Bên B quyền sử dụng có giới hạn, không độc quyền đối với nội dung chương trình Sunbot tại địa điểm đăng ký, trong thời hạn hợp đồng, trên cơ sở đóng góp phí dịch vụ hỗ trợ vận hành định kỳ nhằm đảm bảo:</p>
+            <ul class="list-dash">
+                <li>Cập nhật chương trình;</li>
+                <li>Hỗ trợ vận hành;</li>
+                <li>Giám sát chất lượng dịch vụ.</li>
+            </ul>
+            <p class="contract-text"><strong>6.2. Cấu trúc chi phí bao gồm:</strong></p>
+            <ul class="list-dash">
+                <li>Chi phí vận hành theo quy mô lớp;</li>
+                <li>Chi phí theo số lượng trẻ tham gia;</li>
+                <li>Chi phí cho các dịch vụ bổ sung (nếu có).</li>
+            </ul>
+            <p class="contract-text"><strong>6.3. Nguyên tắc xác định chi phí:</strong> Phù hợp với quy mô triển khai thực tế; Được tính toán minh bạch theo công thức thống nhất. Chi tiết được quy định tại: <em>Phụ lục 4 - Cơ chế phí & Duy trì hệ thống Sunbot</em>.</p>
+            <p class="contract-text"><strong>6.4. Chu kỳ thanh toán:</strong> Thanh toán định kỳ theo tháng; Thời hạn thanh toán: trước ngày 10 hàng tháng.</p>
+            <p class="contract-text"><strong>6.5. Đối soát và xác nhận số liệu:</strong> Bên B có trách nhiệm cung cấp số liệu trung thực; Bên A có quyền kiểm tra và đối soát.</p>
+            <p class="contract-text"><strong>6.6. Xử lý chậm thanh toán:</strong></p>
+            <ul class="list-dash">
+                <li>Trường hợp chậm thanh toán quá 10 ngày: Bên A có quyền tạm dừng hỗ trợ;</li>
+                <li>Trường hợp chậm thanh toán quá 30 ngày: Bên A có quyền tạm dừng quyền triển khai.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 7. GIÁM SÁT CHẤT LƯỢNG DỊCH VỤ VÀ ĐÁNH GIÁ</div>
+            <p class="contract-text"><strong>7.1.</strong> Bên B đồng ý chịu sự kiểm soát chất lượng thông qua hệ thống:</p>
+            <ul class="list-dash">
+                <li>Chỉ số đánh giá hiệu suất (KPI);</li>
+                <li>Hoạt động kiểm tra, đánh giá (Audit).</li>
+            </ul>
+            <p class="contract-text"><strong>7.2. Các tiêu chí đánh giá được quy định tại:</strong></p>
+            <ul class="list-dash">
+                <li>Phụ lục 3 - Hệ thống KPI đánh giá vận hành Sunbot;</li>
+                <li>Phụ lục 6 - Checklist Audit hệ thống Sunbot.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 8. QUYỀN VÀ NGHĨA VỤ CỦA BÊN A</div>
+            <p class="contract-text"><strong>8.1. Quyền:</strong> Kiểm soát việc triển khai hệ thống; Yêu cầu Bên B tuân thủ tiêu chuẩn; Tạm dừng hợp tác khi có vi phạm.</p>
+            <p class="contract-text"><strong>8.2. Nghĩa vụ:</strong> Cung cấp chương trình và tài liệu; Đào tạo ban đầu; Hỗ trợ vận hành trong phạm vi hợp đồng với các cam kết cụ thể sau:</p>
+            <table class="my-4">
+                <thead>
+                    <tr><th class="w-1/2">Hạng mục</th><th>Cam kết cụ thể</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-semibold">Đào tạo ban đầu</td><td>02-03 ngày / tối đa 10 giáo viên</td></tr>
+                    <tr><td class="font-semibold">Cập nhật chương trình</td><td>Tối thiểu 02 lần/năm</td></tr>
+                    <tr><td class="font-semibold">Hỗ trợ kỹ thuật</td><td>SLA ≤ 24h</td></tr>
+                    <tr><td class="font-semibold">Audit</td><td>Báo cáo trong vòng 07 ngày</td></tr>
+                </tbody>
+            </table>
+
+            <div class="contract-article">ĐIỀU 9. QUYỀN VÀ NGHĨA VỤ CỦA BÊN B</div>
+            <p class="contract-text"><strong>9.1. Quyền:</strong> Triển khai chương trình tại cơ sở; Nhận hỗ trợ từ Bên A.</p>
+            <p class="contract-text"><strong>9.2. Nghĩa vụ:</strong> Tuân thủ toàn bộ hệ thống Sunbot; Thanh toán đầy đủ và đúng hạn; Bảo vệ uy tín và hình ảnh chương trình.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>02</span>
+        </div>
+    </div>
+
+    <!-- TRANG 3: ĐIỀU 10 - 15 & KÝ KẾT -->
+    <div class="a4-page">
+        <div class="page-content flex flex-col h-full">
+            <div class="contract-article">ĐIỀU 10. SỞ HỮU TRÍ TUỆ</div>
+            <p class="contract-text"><strong>10.1.</strong> Toàn bộ quyền sở hữu trí tuệ đối với chương trình Sunbot thuộc Bên A.</p>
+            <p class="contract-text"><strong>10.2. Bên B không được:</strong> Sao chép, tái sử dụng; Phát triển sản phẩm tương tự; Sử dụng sau khi chấm dứt hợp đồng.</p>
+
+            <div class="contract-article">ĐIỀU 11. CHẤM DỨT HỢP ĐỒNG</div>
+            <p class="contract-text">Hợp đồng chấm dứt trong các trường hợp:</p>
+            <ul class="list-dash">
+                <li>Hết thời hạn;</li>
+                <li>Hai bên thỏa thuận;</li>
+                <li>Một bên vi phạm nghiêm trọng nghĩa vụ.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 12. XỬ LÝ SAU CHẤM DỨT</div>
+            <p class="contract-text">Sau khi hợp đồng chấm dứt, Bên B:</p>
+            <ul class="list-dash">
+                <li>Phải dừng toàn bộ hoạt động liên quan đến Sunbot;</li>
+                <li>Không được tiếp tục sử dụng giáo án, phương pháp, thương hiệu;</li>
+                <li>Hoàn tất nghĩa vụ tài chính còn tồn đọng.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 13. BẢO MẬT</div>
+            <ul class="list-dash">
+                <li>Các thông tin, tài liệu thuộc hệ thống Sunbot được coi là thông tin mật.</li>
+                <li>Bên B không được tiết lộ cho bên thứ ba dưới bất kỳ hình thức nào.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 14. GIẢI QUYẾT TRANH CHẤP</div>
+            <ul class="list-dash">
+                <li>Ưu tiên thương lượng.</li>
+                <li>Nếu không đạt được thỏa thuận, tranh chấp sẽ được giải quyết tại Tòa án có thẩm quyền.</li>
+            </ul>
+
+            <div class="contract-article">ĐIỀU 15. ĐIỀU KHOẢN CHUNG</div>
+            <p class="contract-text"><strong>15.1.</strong> Hợp đồng này có hiệu lực kể từ ngày ký.</p>
+            <p class="contract-text"><strong>15.2. Hợp đồng bao gồm:</strong> Nội dung chính; Các phụ lục kèm theo.</p>
+            <p class="contract-text"><strong>15.3.</strong> Các phụ lục là bộ phận không tách rời của hợp đồng.</p>
+
+            <div class="contract-article">DANH MỤC PHỤ LỤC</div>
+            <ul class="list-num font-bold text-slate-800">
+                <li>Phụ lục 1 - Giờ học chuẩn Sunbot</li>
+                <li>Phụ lục 2 - Chuẩn triển khai & vận hành Sunbot</li>
+                <li>Phụ lục 3 - Hệ thống KPI đánh giá vận hành</li>
+                <li>Phụ lục 4 - Cơ chế duy trì hệ thống Sunbot (Kèm Bảng mức đầu tư)</li>
+                <li>Phụ lục 5 - Mô hình triển khai</li>
+                <li>Phụ lục 6 - Checklist Audit</li>
+                <li>Phụ lục 7 - Bàn giao & Nghiệm thu</li>
+            </ul>
+
+            <!-- Phần Ký kết -->
+            <div class="signature-box mt-auto">
+                <div class="w-1/2">
+                    <p class="signature-title">ĐẠI DIỆN BÊN A</p>
+                    <p class="signature-sub">(Ký, đóng dấu và ghi rõ họ tên)</p>
+                </div>
+                <div class="w-1/2">
+                    <p class="signature-title">ĐẠI DIỆN BÊN B</p>
+                    <p class="signature-sub">(Ký, đóng dấu và ghi rõ họ tên)</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>03</span>
+        </div>
+    </div>
+
+    <!-- TRANG 4: PHỤ LỤC 1 (P1) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">PHỤ LỤC 1<br>GIỜ HỌC CHUẨN SUNBOT</h2>
+            
+            <div class="clause">1.1. ĐỊNH NGHĨA GIỜ HỌC SUNBOT</div>
+            <ul class="list-num">
+                <li>Giờ học Sunbot là một đơn vị vận hành tiêu chuẩn, bao gồm:
+                    <ul class="list-dash mt-2">
+                        <li>1 lớp học;</li>
+                        <li>1 giáo viên phụ trách;</li>
+                        <li>1 nội dung bài học xác định;</li>
+                        <li>1 phiên học độc lập.</li>
+                    </ul>
+                </li>
+                <li>Mỗi giờ học phải đảm bảo:
+                    <ul class="list-dash mt-2">
+                        <li>Có mục tiêu rõ ràng;</li>
+                        <li>Có cấu trúc triển khai chuẩn;</li>
+                        <li>Có kết quả đầu ra quan sát được.</li>
+                    </ul>
+                </li>
+                <li>Thời lượng: 30 - 45 phút / buổi.</li>
+            </ul>
+
+            <div class="clause">1.2. NGUYÊN TẮC ECONOMIC UNIT</div>
+            <ul class="list-num">
+                <li>Giờ học Sunbot được xác định là đơn vị vận hành tối thiểu: <strong>1 buổi - 1 lớp - 1 giáo viên - 1 báo cáo</strong>.</li>
+                <li>Quy định bắt buộc:
+                    <ul class="list-dash mt-2">
+                        <li>Không gộp lớp trong 1 buổi học;</li>
+                        <li>Không chia nhỏ 1 buổi học thành nhiều phần độc lập;</li>
+                        <li>Không có buổi học không giáo viên phụ trách rõ ràng.</li>
+                    </ul>
+                </li>
+                <li>Mỗi giờ học phải có đầy đủ: Log giờ học, Báo cáo sau buổi, Minh chứng (ảnh hoặc video).</li>
+                <li>Một giờ học chỉ được công nhận khi: Đã diễn ra thực tế và Có báo cáo hợp lệ.</li>
+            </ul>
+
+            <div class="clause">1.3. CẤU TRÚC CHƯƠNG TRÌNH</div>
+            <ul class="list-num">
+                <li>Chương trình Sunbot vận hành theo tháng: 8 buổi / tháng / lớp.</li>
+                <li>Gồm 2 phân môn:
+                    <ul class="list-alpha mt-2">
+                        <li><strong>Robot:</strong> Mục tiêu làm quen tư duy logic, hiểu nguyên lý điều khiển, phát triển kỹ năng thao tác.</li>
+                        <li><strong>STEAM tái chế:</strong> Mục tiêu phát triển sáng tạo, hiểu khoa học cơ bản, hình thành ý thức môi trường.</li>
+                    </ul>
+                </li>
+                <li>Phân bổ: 4 buổi Robot, 4 buổi STEAM tái chế.</li>
+            </ul>
+
+            <div class="clause">1.4. CẤU TRÚC MỘT GIỜ HỌC</div>
+            <p class="contract-text font-bold text-slate-800">Tổng thời lượng: 30 - 45 phút</p>
+            <table class="mb-4">
+                <tbody>
+                    <tr>
+                        <td class="font-bold w-[30%] bg-slate-50">Giai đoạn 1 - Khởi động<br>(5 phút)</td>
+                        <td>- Ổn định lớp, giới thiệu nội dung, tạo hứng thú.<br><strong>Yêu cầu:</strong> Trẻ tập trung, hiểu chủ đề buổi học.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-slate-50">Giai đoạn 2 - Khám phá<br>(10-15 phút)</td>
+                        <td>- <strong>Với Robot:</strong> Giới thiệu robot, hướng dẫn thao tác cơ bản.<br>- <strong>Với STEAM:</strong> Giới thiệu vật liệu, gợi mở vấn đề.<br><strong>Yêu cầu:</strong> Trẻ hiểu nhiệm vụ, có tương tác ban đầu.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-slate-50">Giai đoạn 3 - Thực hành<br>(15-20 phút)</td>
+                        <td>- <strong>Với Robot:</strong> Lắp ráp/điều khiển, thực hiện nhiệm vụ.<br>- <strong>Với STEAM:</strong> Tạo sản phẩm, thử nghiệm.<br><strong>Yêu cầu:</strong> Trẻ tham gia trực tiếp, có sản phẩm/kết quả.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-slate-50">Giai đoạn 4 - Tổng kết<br>(5 phút)</td>
+                        <td>- Nhận xét, củng cố kiến thức, kết thúc buổi học.<br><strong>Yêu cầu:</strong> Trẻ hiểu mình đã làm gì, có cảm xúc tích cực.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>04</span>
+        </div>
+    </div>
+
+    <!-- TRANG 5: PHỤ LỤC 1 (P2) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <div class="clause">1.5. CHUẨN GIÁO VIÊN</div>
+            <ul class="list-num">
+                <li>Giáo viên phải: Hiểu nội dung bài học, Nắm rõ flow giờ học, Có khả năng quản lý lớp.</li>
+                <li>Không bắt buộc: Bằng sư phạm mầm non.</li>
+                <li>Bắt buộc: Đã qua đào tạo Sunbot, Dạy demo đạt chuẩn.</li>
+            </ul>
+
+            <div class="clause">1.6. CHUẨN LỚP HỌC</div>
+            <ul class="list-num">
+                <li>Quy mô lớp: Phù hợp với khả năng quản lý của giáo viên, Đảm bảo tất cả trẻ được tham gia.</li>
+                <li>Tổ chức: Trẻ học theo nhóm, Có phân công rõ ràng.</li>
+            </ul>
+
+            <div class="clause">1.7. CHUẨN THIẾT BỊ & HỌC CỤ</div>
+            <ul class="list-num">
+                <li><strong>Robot:</strong> Hoạt động ổn định, được kiểm tra trước buổi học.</li>
+                <li><strong>Học cụ STEAM:</strong> Chuẩn bị trước buổi học, không sử dụng lại học cụ tiêu hao.</li>
+            </ul>
+
+            <div class="clause">1.8. CHUẨN TRIỂN KHAI PHÂN MÔN</div>
+            <ul class="list-num">
+                <li><strong>Robot:</strong> Có thao tác thực tế, Có nhiệm vụ rõ ràng, Có kết quả quan sát được.</li>
+                <li><strong>STEAM tái chế:</strong> Có sản phẩm cụ thể, Có quá trình làm, Có giải thích đơn giản.</li>
+            </ul>
+
+            <div class="clause">1.9. CHUẨN ĐÁNH GIÁ GIỜ HỌC</div>
+            <p class="contract-text">Một giờ học đạt chuẩn khi:</p>
+            <ol class="list-num">
+                <li>Đúng cấu trúc 4 giai đoạn.</li>
+                <li>Trẻ tham gia tích cực.</li>
+                <li>Có kết quả đầu ra.</li>
+                <li>Giáo viên dẫn dắt đúng.</li>
+                <li>Không có lỗi nghiêm trọng.</li>
+            </ol>
+
+            <div class="clause">1.10. CHUẨN BÁO CÁO GIỜ HỌC</div>
+            <p class="contract-text">Mỗi giờ học phải có 1 báo cáo gồm:</p>
+            <ol class="list-num">
+                <li>Thông tin: Lớp, Giáo viên, Thời gian.</li>
+                <li>Nội dung: Tên bài học, Phân môn.</li>
+                <li>Đánh giá: Mức độ tham gia, Vấn đề phát sinh.</li>
+                <li>Minh chứng: Ảnh hoặc video.</li>
+            </ol>
+            <p class="contract-text font-bold italic text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">Quy định: Báo cáo hoàn thành trong 24 giờ. Không có báo cáo = buổi học không hợp lệ.</p>
+
+            <div class="clause">1.11. CHUẨN KIỂM SOÁT CHẤT LƯỢNG</div>
+            <ol class="list-num">
+                <li>Giờ học có thể bị audit bất kỳ lúc nào.</li>
+                <li>Nội dung kiểm tra: Flow giờ học, Giáo viên, Trẻ tham gia, Thiết bị.</li>
+                <li>Kết quả: Đạt / Không đạt.</li>
+            </ol>
+
+            <div class="clause">1.12. VI PHẠM CHUẨN GIỜ HỌC</div>
+            <p class="contract-text">Các trường hợp vi phạm: Không có báo cáo, Không có minh chứng, Dạy sai cấu trúc, Không có hoạt động thực hành.</p>
+            <p class="contract-text font-bold text-slate-800">Xử lý: Nhắc nhở → Đào tạo lại → Dừng giảng dạy nếu tái phạm.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>05</span>
+        </div>
+    </div>
+
+    <!-- TRANG 6: PHỤ LỤC 2 (P1) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">PHỤ LỤC 2<br>CHUẨN TRIỂN KHAI & VẬN HÀNH SUNBOT</h2>
+            
+            <div class="clause">2.1. NGUYÊN TẮC VẬN HÀNH CỐT LÕI</div>
+            <ol class="list-num">
+                <li>Mọi hoạt động vận hành phải xoay quanh Economic Unit: <strong>1 buổi - 1 lớp - 1 giáo viên - 1 báo cáo.</strong></li>
+                <li>Không tồn tại khái niệm vận hành theo "trường" hoặc "chương trình tổng". Chỉ tồn tại đơn vị vận hành: BUỔI HỌC.</li>
+                <li>Mọi dữ liệu quản trị đều được ghi nhận theo từng buổi học.</li>
+            </ol>
+
+            <div class="clause">2.2. QUY TRÌNH TRIỂN KHAI 1 ĐIỂM MỚI</div>
+            <table class="mb-6">
+                <tbody>
+                    <tr>
+                        <td class="font-bold w-[25%] bg-slate-50">Giai đoạn 1:<br>Khảo sát</td>
+                        <td>
+                            <ul class="list-dash mb-0">
+                                <li><strong>Xác định:</strong> Số lớp, Số trẻ, Không gian học, Thiết bị sẵn có.</li>
+                                <li><strong>Output:</strong> Danh sách lớp triển khai, Số buổi/tháng, Cấu hình robot - học cụ.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-slate-50">Giai đoạn 2:<br>Setup</td>
+                        <td>
+                            <ul class="list-dash mb-0">
+                                <li><strong>Cài đặt:</strong> App Sunbot, Nội dung bài học, Robot + học cụ.</li>
+                                <li><strong>Kiểm tra:</strong> Robot hoạt động, Bài học load đúng, Thiết bị trình chiếu.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-slate-50">Giai đoạn 3:<br>Đào tạo GV</td>
+                        <td>
+                            <ul class="list-dash mb-0">
+                                <li><strong>Nội dung:</strong> Chuẩn giờ học, Flow lớp học, Cách sử dụng robot, Cách làm báo cáo.</li>
+                                <li><strong>Điều kiện pass:</strong> Dạy demo đạt checklist ≥ 80%.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-slate-50">Giai đoạn 4:<br>Dạy thử (Pilot)</td>
+                        <td>
+                            <ul class="list-dash mb-0">
+                                <li>1-2 buổi/lớp. Có giám sát trực tiếp.</li>
+                                <li><strong>Đánh giá:</strong> Flow đúng chuẩn, Trẻ tham gia tốt, Không lỗi thiết bị.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold bg-orange-50 text-orange-700">Giai đoạn 5:<br>Vận hành chính thức</td>
+                        <td class="font-bold text-slate-800">Bắt đầu tính: Doanh thu, KPI, Audit.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="clause">2.3. CHUẨN VẬN HÀNH THEO THÁNG</div>
+            <ul class="list-num">
+                <li><strong>Cấu trúc chương trình:</strong> 8 buổi/tháng (4 buổi Robot, 4 buổi STEAM tái chế).</li>
+                <li><strong>Lịch vận hành (Mỗi lớp):</strong> 2 buổi/tuần, 30-45 phút/buổi.</li>
+                <li><strong>Phân bổ tài nguyên:</strong> 1 robot/1 nhóm trẻ. Học cụ STEAM chuẩn bị trước buổi học, không dùng lại học cụ tiêu hao.</li>
+            </ul>
+
+            <div class="clause">2.4. CHUẨN BÁO CÁO (BẮT BUỘC)</div>
+            <p class="contract-text">Mỗi buổi học phải có 1 báo cáo. Nội dung báo cáo:</p>
+            <ol class="list-num">
+                <li>Thông tin: Lớp, Giáo viên, Thời gian.</li>
+                <li>Nội dung dạy: Tên bài học, Phân môn (Robot / STEAM).</li>
+                <li>Đánh giá: Mức độ tham gia của trẻ, Vấn đề phát sinh.</li>
+                <li>Minh chứng: Ảnh hoặc video.</li>
+            </ol>
+            <p class="contract-text font-bold italic text-red-600 bg-red-50 p-3 rounded-lg border border-red-200">Quy định: Báo cáo phải hoàn thành trong vòng 24h. Không có báo cáo = buổi học không hợp lệ.</p>
+
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>06</span>
+        </div>
+    </div>
+
+    <!-- TRANG 7: PHỤ LỤC 2 (P2) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <div class="clause">2.5. CHUẨN KIỂM SOÁT CHẤT LƯỢNG (AUDIT)</div>
+            <p class="contract-text font-bold">Hình thức:</p>
+            <ul class="list-dash">
+                <li>Audit định kỳ: 2 lần/năm.</li>
+                <li>Báo cáo đánh giá chất lượng sử dụng dịch vụ theo yêu cầu của Bên A, nhằm đảm bảo Bên B sử dụng đúng phạm vi và điều kiện giấy phép.</li>
+                <li>Khi có phản hồi đột xuất.</li>
+            </ul>
+            <p class="contract-text font-bold">Nội dung audit:</p>
+            <ul class="list-dash">
+                <li>Đúng flow giờ học.</li>
+                <li>Giáo viên đúng chuẩn.</li>
+                <li>Robot hoạt động.</li>
+                <li>Trẻ tham gia thực tế.</li>
+            </ul>
+            <p class="contract-text font-bold">Kết quả (Chấm điểm):</p>
+            <ul class="list-dash font-medium text-slate-800">
+                <li>≥ 85%: <span class="text-green-600">Đạt</span></li>
+                <li>70% - 84%: <span class="text-orange-500">Cần cải thiện</span></li>
+                <li>&lt; 70%: <span class="text-red-600">Không đạt</span></li>
+            </ul>
+
+            <div class="clause">2.6. QUẢN LÝ GIÁO VIÊN</div>
+            <ul class="list-num">
+                <li><strong>Nguyên tắc:</strong> Không bắt buộc bằng mầm non. Bắt buộc đạt chuẩn Sunbot.</li>
+                <li><strong>Yêu cầu:</strong> Đã qua đào tạo, đã dạy demo đạt chuẩn, có khả năng quản lý lớp.</li>
+                <li><strong>Phân công:</strong> 1 giáo viên không dạy quá 6-8 buổi/ngày.</li>
+            </ul>
+
+            <div class="clause">2.7. QUẢN LÝ THIẾT BỊ</div>
+            <ul class="list-num">
+                <li><strong>Robot:</strong> Mỗi buổi kiểm tra trước giờ học. Nếu lỗi: Ghi nhận và báo về hệ thống.</li>
+                <li><strong>Học cụ STEAM:</strong> Chuẩn bị trước. Không tái sử dụng học cụ tiêu hao.</li>
+            </ul>
+
+            <div class="clause">2.8. XỬ LÝ SỰ CỐ</div>
+            <ol class="list-num">
+                <li><strong>Robot lỗi:</strong> Đổi robot dự phòng, Ghi nhận sự cố.</li>
+                <li><strong>Giáo viên dạy sai chuẩn:</strong> Nhắc nhở → Đào tạo lại → Nếu tái phạm: dừng giảng dạy.</li>
+                <li><strong>Phản hồi từ trường:</strong> Ghi nhận, Phản hồi trong 24h.</li>
+            </ol>
+
+            <div class="clause">2.9. CHỈ SỐ ĐÁNH GIÁ MỨC ĐỘ SỬ DỤNG DỊCH VỤ (KPI)</div>
+            <p class="contract-text">KPI đánh giá theo chu kỳ: 6 tháng. Các chỉ số chính tối thiểu:</p>
+            <ol class="list-num font-bold text-slate-800">
+                <li>Tỷ lệ buổi có báo cáo: 100%</li>
+                <li>Tỷ lệ audit đạt chuẩn: ≥ 85%</li>
+                <li>Tỷ lệ duy trì lớp: ≥ 80%</li>
+                <li>Số buổi vận hành đúng kế hoạch: ≥ 95%</li>
+            </ol>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>07</span>
+        </div>
+    </div>
+
+    <!-- TRANG 8: PHỤ LỤC 3 (P1) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">PHỤ LỤC 3<br>HỆ THỐNG KPI ĐÁNH GIÁ VẬN HÀNH SUNBOT</h2>
+            
+            <div class="clause">Điều 1. Mục đích</div>
+            <p class="contract-text">Phụ lục này quy định hệ thống chỉ số đánh giá (KPI) nhằm:</p>
+            <ol class="list-num">
+                <li>Đảm bảo chất lượng vận hành đồng bộ trên toàn hệ thống Sunbot.</li>
+                <li>Đánh giá toàn diện hiệu quả hoạt động của Bên B.</li>
+                <li>Tạo cơ sở cho các cơ chế hỗ trợ, điều chỉnh và phát triển.</li>
+                <li>Khuyến khích đối tác phát triển bền vững, không chạy theo số lượng đơn thuần.</li>
+            </ol>
+
+            <div class="clause">Điều 2. Nguyên tắc đánh giá</div>
+            <p class="contract-text"><strong>2.1. KPI được xây dựng theo 4 nhóm:</strong> KPI kinh doanh (Business), KPI vận hành lớp học (Operation), KPI chất lượng chuyên môn (Academic), KPI tuân thủ điều kiện sử dụng (Terms of Use).</p>
+            <p class="contract-text"><strong>2.2. Nguyên tắc chấm điểm:</strong> Tổng điểm tối đa: 100 điểm. Mỗi nhóm KPI có trọng số riêng. Đánh giá theo chu kỳ tháng và tổng hợp theo quý.</p>
+            <p class="contract-text"><strong>2.3. Mức xếp loại:</strong></p>
+            <table>
+                <thead><tr><th>Mức</th><th>Điểm</th><th>Ý nghĩa</th></tr></thead>
+                <tbody>
+                    <tr><td class="font-bold text-green-600">Xuất sắc</td><td>≥ 90</td><td>Vận hành vượt chuẩn</td></tr>
+                    <tr><td class="font-bold text-blue-600">Tốt</td><td>75 - 89</td><td>Ổn định, có thể mở rộng</td></tr>
+                    <tr><td class="font-bold text-orange-500">Đạt chuẩn</td><td>60 - 74</td><td>Đạt yêu cầu tối thiểu</td></tr>
+                    <tr><td class="font-bold text-red-600">Cần cải thiện</td><td>&lt; 60</td><td>Nguy cơ mất chuẩn</td></tr>
+                </tbody>
+            </table>
+
+            <div class="clause">Điều 3. KPI KINH DOANH (30 điểm)</div>
+            <div class="flex gap-6">
+                <div class="w-1/2">
+                    <p class="contract-text font-bold">3.1. Quy mô lớp học (15 điểm)</p>
+                    <table>
+                        <thead><tr><th>Tiêu chí</th><th>Điểm</th></tr></thead>
+                        <tbody>
+                            <tr><td>≥ 25 trẻ/lớp (chuẩn)</td><td>15</td></tr>
+                            <tr><td>18 - 24 trẻ/lớp</td><td>10</td></tr>
+                            <tr><td>&lt; 18 trẻ/lớp</td><td>5</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-1/2">
+                    <p class="contract-text font-bold">3.2. Số lượng lớp vận hành (10 điểm)</p>
+                    <table>
+                        <thead><tr><th>Tiêu chí</th><th>Điểm</th></tr></thead>
+                        <tbody>
+                            <tr><td>≥ kế hoạch</td><td>10</td></tr>
+                            <tr><td>70% - 99% kế hoạch</td><td>7</td></tr>
+                            <tr><td>&lt; 70% kế hoạch</td><td>3</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="contract-text font-bold mt-2">3.3. Tỷ lệ duy trì học sinh (Retention) (5 điểm)</p>
+            <table class="w-1/2 !mt-1">
+                <thead><tr><th>Tiêu chí</th><th>Điểm</th></tr></thead>
+                <tbody>
+                    <tr><td>≥ 85%</td><td>5</td></tr>
+                    <tr><td>70% - 84%</td><td>3</td></tr>
+                    <tr><td>&lt; 70%</td><td>1</td></tr>
+                </tbody>
+            </table>
+
+            <div class="clause">Điều 4. KPI VẬN HÀNH LỚP HỌC (25 điểm)</div>
+            <div class="flex gap-6">
+                <div class="w-1/2">
+                    <p class="contract-text font-bold">4.1. Tỷ lệ lớp học đúng chuẩn (10 điểm)<br><span class="text-xs font-normal italic text-slate-500">Tiêu chí: đủ số buổi, đúng thời lượng, đúng cấu trúc.</span></p>
+                    <table class="!mt-1">
+                        <thead><tr><th>Mức</th><th>Điểm</th></tr></thead>
+                        <tbody>
+                            <tr><td>≥ 95% lớp đạt chuẩn</td><td>10</td></tr>
+                            <tr><td>80% - 94%</td><td>7</td></tr>
+                            <tr><td>&lt; 80%</td><td>3</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-1/2">
+                    <p class="contract-text font-bold">4.2. Tỷ lệ giáo viên đạt chuẩn (10 điểm)<br><span class="text-xs font-normal italic text-slate-500">Đã qua sát hạch và cấp chứng nhận.</span></p>
+                    <table class="!mt-1">
+                        <thead><tr><th>Tiêu chí</th><th>Điểm</th></tr></thead>
+                        <tbody>
+                            <tr><td>≥ 90% GV đạt chuẩn</td><td>10</td></tr>
+                            <tr><td>70% - 89%</td><td>7</td></tr>
+                            <tr><td>&lt; 70%</td><td>3</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>08</span>
+        </div>
+    </div>
+
+    <!-- TRANG 9: PHỤ LỤC 3 (P2) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <p class="contract-text font-bold mt-2">4.3. Tỷ lệ lớp hoạt động ổn định (5 điểm)<br><span class="text-xs font-normal italic text-slate-500">Tiêu chí: không gián đoạn, không hủy lớp bất thường.</span></p>
+            <table class="w-1/2 !mt-1 mb-6">
+                <thead><tr><th>Mức</th><th>Điểm</th></tr></thead>
+                <tbody>
+                    <tr><td>≥ 95%</td><td>5</td></tr>
+                    <tr><td>80% - 94%</td><td>3</td></tr>
+                    <tr><td>&lt; 80%</td><td>1</td></tr>
+                </tbody>
+            </table>
+
+            <div class="clause">Điều 5. KPI CHẤT LƯỢNG CHUYÊN MÔN (25 điểm)</div>
+            <div class="flex gap-6">
+                <div class="w-1/3">
+                    <p class="contract-text font-bold">5.1. Đánh giá lớp học (Audit) (10 điểm)</p>
+                    <table class="!mt-1">
+                        <thead><tr><th>Mức</th><th>Điểm</th></tr></thead>
+                        <tbody><tr><td>Xuất sắc</td><td>10</td></tr><tr><td>Đạt chuẩn</td><td>7</td></tr><tr><td>Cần cải thiện</td><td>3</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="w-1/3">
+                    <p class="contract-text font-bold">5.2. Trải nghiệm HS (10 điểm)<br><span class="text-xs font-normal italic text-slate-500">Sự tham gia, hứng thú, PH.</span></p>
+                    <table class="!mt-1">
+                        <thead><tr><th>Mức</th><th>Điểm</th></tr></thead>
+                        <tbody><tr><td>Tốt</td><td>10</td></tr><tr><td>Trung bình</td><td>7</td></tr><tr><td>Thấp</td><td>3</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="w-1/3">
+                    <p class="contract-text font-bold">5.3. Tính nhất quán (5 điểm)<br><span class="text-xs font-normal italic text-slate-500">Theo sát lộ trình bài học.</span></p>
+                    <table class="!mt-1">
+                        <thead><tr><th>Tiêu chí</th><th>Điểm</th></tr></thead>
+                        <tbody><tr><td>Đúng lộ trình</td><td>5</td></tr><tr><td>Lệch nhẹ</td><td>3</td></tr><tr><td>Lệch nhiều</td><td>1</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="clause">Điều 6. KPI TUÂN THỦ ĐIỀU KIỆN SỬ DỤNG (20 điểm)</div>
+            <div class="flex gap-6">
+                <div class="w-1/3">
+                    <p class="contract-text font-bold">6.1. Báo cáo vận hành (10 đ)</p>
+                    <table class="!mt-1">
+                        <tbody><tr><td>Đầy đủ, đúng hạn</td><td>10</td></tr><tr><td>Chậm hoặc thiếu</td><td>5</td></tr><tr><td>Không báo cáo</td><td>0</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="w-1/3">
+                    <p class="contract-text font-bold">6.2. Tuân thủ quy định (5 đ)</p>
+                    <table class="!mt-1">
+                        <tbody><tr><td>Tuân thủ đầy đủ</td><td>5</td></tr><tr><td>Vi phạm nhẹ</td><td>3</td></tr><tr><td>VP nghiêm trọng</td><td>0</td></tr></tbody>
+                    </table>
+                </div>
+                <div class="w-1/3">
+                    <p class="contract-text font-bold">6.3. Hợp tác hệ thống (5 đ)</p>
+                    <table class="!mt-1">
+                        <tbody><tr><td>Tốt</td><td>5</td></tr><tr><td>Trung bình</td><td>3</td></tr><tr><td>Kém</td><td>1</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="clause">Điều 7. Giai đoạn khởi động</div>
+            <ul class="list-num">
+                <li><strong>Thời gian miễn KPI:</strong> 03 tháng đầu (Không áp dụng KPI đánh giá).</li>
+                <li><strong>Giai đoạn chuyển tiếp (tháng 4-6):</strong> KPI áp dụng ở mức 70% tiêu chuẩn.</li>
+                <li><strong>Chuẩn KPI chính thức (sau tháng 6):</strong>
+                    <table class="w-2/3 !my-2">
+                        <thead><tr><th>Tiêu chí</th><th>Giai đoạn đầu</th><th>Chuẩn chính thức</th></tr></thead>
+                        <tbody>
+                            <tr><td>Số trẻ/lớp</td><td>≥ 15</td><td class="font-bold">≥ 25</td></tr>
+                            <tr><td>Tỷ lệ duy trì</td><td>≥ 60%</td><td class="font-bold">≥ 80%</td></tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li>Không dùng KPI để chấm dứt hợp đồng trong 6 tháng đầu.</li>
+            </ul>
+
+            <div class="clause">Điều 8. Cơ chế áp dụng KPI</div>
+            <p class="contract-text"><strong>8.1. Nguyên tắc:</strong> KPI không nhằm mục đích “phạt", mà nhằm: duy trì chuẩn hệ thống, hỗ trợ đối tác cải thiện, xác định mức độ sẵn sàng mở rộng.</p>
+            <p class="contract-text"><strong>8.2. Ứng dụng theo mức KPI:</strong></p>
+            <ul class="list-dash">
+                <li><strong>Mức Xuất sắc:</strong> Ưu tiên mở rộng phạm vi áp dụng, hỗ trợ phát triển thêm điểm, ưu tiên tài nguyên hệ thống.</li>
+                <li><strong>Mức Tốt:</strong> Duy trì vận hành, được khuyến khích mở rộng.</li>
+                <li><strong>Mức Đạt chuẩn:</strong> Tiếp tục vận hành, cần cải thiện một số chỉ số.</li>
+                <li><strong>Mức Cần cải thiện:</strong> Yêu cầu kế hoạch cải thiện trong 1-3 tháng, tăng cường hỗ trợ/giám sát.</li>
+            </ul>
+            <p class="contract-text font-bold text-red-600 bg-red-50 p-2 rounded border border-red-200">8.3. Trường hợp không đạt KPI kéo dài: Nếu dưới 60 điểm trong 2 kỳ liên tiếp → Bên A có quyền tạm dừng mở rộng, điều chỉnh quyền sử dụng có giới hạn (Limited Use Right) hoặc xem xét chấm dứt hợp tác.</p>
+
+            <div class="clause">Điều 9. Điều chỉnh KPI</div>
+            <p class="contract-text">Hệ thống KPI có thể được điều chỉnh theo từng giai đoạn, bảo đảm phù hợp thực tế và không làm gián đoạn hoạt động của đối tác.</p>
+
+            <div class="clause">Điều 10. Hiệu lực</div>
+            <p class="contract-text">Phụ lục này là một phần không tách rời của Hợp đồng Hợp Tác Triển Khai Sunbot.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>09</span>
+        </div>
+    </div>
+
+    <!-- TRANG 10: PHỤ LỤC 4 (P1) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">PHỤ LỤC 4<br>CƠ CHẾ PHÍ & DUY TRÌ HỆ THỐNG SUNBOT</h2>
+            
+            <div class="clause">Điều 1. Mục đích</div>
+            <p class="contract-text">Phụ lục này quy định các loại phí và cơ chế tài chính áp dụng giữa Bên A và Bên B nhằm: Đảm bảo tính thống nhất bền vững của hệ thống; Duy trì chất lượng vận hành; Gắn trách nhiệm vận hành với việc tuân thủ điều kiện sử dụng; Tạo nền tảng mở rộng quy mô một cách kiểm soát và hiệu quả.</p>
+
+            <div class="clause">Điều 2. Nguyên tắc chung</div>
+            <p class="contract-text"><strong>2.1.</strong> Bên B được cấp quyền khai thác hệ thống Sunbot thông qua việc thanh toán các loại phí theo quy định tại Phụ lục này.</p>
+            <p class="contract-text"><strong>2.2.</strong> Cơ chế tài chính của Sunbot không áp dụng hình thức chia sẻ doanh thu, mà được xây dựng theo nguyên tắc: Phí theo quyền vận hành hệ thống; Phí theo quy mô vận hành thực tế (điểm, lớp, số lượng học sinh); Phí theo nhu cầu sử dụng dịch vụ bổ sung.</p>
+            <p class="contract-text"><strong>2.3.</strong> Việc thanh toán đầy đủ các loại phí là điều kiện bắt buộc để duy trì quyền khai thác hệ thống Sunbot.</p>
+
+            <div class="clause">Điều 3. Phí cấp phép sử dụng hệ thống (License Fee)</div>
+            <p class="contract-text"><strong>3.1.</strong> Là khoản phí Bên B thanh toán một lần khi ký kết Hợp đồng.</p>
+            <p class="contract-text"><strong>3.2. Mục đích:</strong> Cấp quyền sử dụng hệ thống Sunbot; chuyển giao chương trình, tài liệu và quy trình vận hành; đào tạo ban đầu cho đội ngũ giáo viên và vận hành; cung cấp học cụ, thiết bị và tài nguyên triển khai ban đầu.</p>
+            <p class="contract-text font-bold text-slate-800">3.3. Mức phí: Từ 130.000.000 VNĐ đến 230.000.000 VNĐ. Mức cụ thể được quy định tại Hợp đồng chính.</p>
+            <p class="contract-text text-red-600 font-bold italic">3.4. Khoản phí này không hoàn lại trong mọi trường hợp.</p>
+
+            <div class="clause">Điều 4. Phí dịch vụ hỗ trợ vận hành (Service Fee)</div>
+            <p class="contract-text"><strong>4.1.</strong> Là khoản phí định kỳ theo từng điểm triển khai (site).</p>
+            <p class="contract-text"><strong>4.2. Mức phí áp dụng theo quy mô lớp tại từng điểm:</strong></p>
+            <table class="w-2/3">
+                <thead><tr><th>Quy mô lớp</th><th>Mức phí</th></tr></thead>
+                <tbody>
+                    <tr><td>Dưới 4 lớp</td><td>3.000.000 VNĐ/tháng</td></tr>
+                    <tr class="bg-slate-50"><td class="font-bold text-slate-800">Từ 4 đến 6 lớp</td><td class="font-bold text-slate-800">4.000.000 VNĐ/tháng</td></tr>
+                    <tr><td>Trên 6 lớp</td><td>5.000.000 - 6.000.000 VNĐ/tháng</td></tr>
+                </tbody>
+            </table>
+            <p class="contract-text"><strong>4.3. Phí này bao gồm:</strong> Kiểm soát chất lượng vận hành; Hỗ trợ chuyên môn; Đào tạo định kỳ; Audit lớp học; Cập nhật chuẩn vận hành; Hỗ trợ xử lý các vấn đề phát sinh.</p>
+            <p class="contract-text"><strong>4.4.</strong> Phí được tính độc lập theo từng điểm triển khai; mỗi điểm phải sử dụng mã định danh (ID) riêng biệt.</p>
+
+            <div class="clause">Điều 5. Phí hệ thống học tập theo học sinh (Student System Fee)</div>
+            <p class="contract-text"><strong>5.1.</strong> Là khoản phí tính theo số lượng học sinh tham gia chương trình Sunbot tại từng điểm.</p>
+            <p class="contract-text"><strong>5.2. Mức phí áp dụng:</strong></p>
+            <table class="w-2/3">
+                <thead><tr><th>Quy mô học sinh tại điểm</th><th>Mức phí</th></tr></thead>
+                <tbody>
+                    <tr><td>Dưới 100 học sinh</td><td>35.000 VNĐ / học sinh / tháng</td></tr>
+                    <tr class="bg-slate-50"><td class="font-bold text-slate-800">Từ 100 học sinh trở lên</td><td class="font-bold text-slate-800">30.000 VNĐ / học sinh / tháng</td></tr>
+                </tbody>
+            </table>
+            <p class="contract-text"><strong>5.3. Phí này bao gồm:</strong> Quyền sử dụng chương trình Sunbot, Hệ thống chuẩn đầu ra, Cấu trúc bài học và lộ trình học tập, Quyền cấp chứng nhận Sunbot, Chuẩn hóa trải nghiệm học tập.</p>
+
+            <div class="clause">Điều 6. Các khoản phí tùy chọn (Optional Services)</div>
+            <p class="contract-text"><strong>6.1. Bên B có thể sử dụng thêm các dịch vụ sau:</strong> Đào tạo giáo viên nâng cao; Chương trình học nâng cấp/mở rộng; Tổ chức sự kiện (Sunbot Day, workshop); Chứng nhận nâng cao và báo cáo học tập chi tiết.</p>
+            <p class="contract-text"><strong>6.2.</strong> Mức phí cụ thể được Bên A công bố theo từng thời điểm. Việc sử dụng các dịch vụ này không mang tính bắt buộc.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>10</span>
+        </div>
+    </div>
+
+    <!-- TRANG 11: PHỤ LỤC 4 (P2) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <div class="clause">Điều 7. Cơ chế xác định quy mô vận hành</div>
+            <p class="contract-text"><strong>7.1.</strong> Quy mô vận hành được xác định dựa trên: Số lượng lớp đang triển khai; Số lượng học sinh thực tế; Dữ liệu báo cáo vận hành.</p>
+            <p class="contract-text"><strong>7.2.</strong> Mỗi điểm triển khai phải: có mã định danh riêng; được quản lý độc lập về dữ liệu và vận hành.</p>
+            <p class="contract-text"><strong>7.3.</strong> Không được phép sử dụng chung hệ thống giữa nhiều điểm nhằm tránh sai lệch dữ liệu và ảnh hưởng chất lượng vận hành.</p>
+
+            <div class="clause">Điều 8. Nghĩa vụ báo cáo và kiểm soát</div>
+            <ul class="list-dash">
+                <li><strong>Bên B có trách nhiệm:</strong> Cung cấp báo cáo số lượng lớp và học sinh định kỳ; Đảm bảo dữ liệu chính xác và đầy đủ.</li>
+                <li><strong>Bên A có quyền:</strong> Kiểm tra, đối soát dữ liệu vận hành; Yêu cầu cung cấp thông tin liên quan.</li>
+                <li><strong>Trường hợp phát hiện sai lệch:</strong> Bên B phải điều chỉnh và thanh toán bổ sung; Có thể áp dụng các biện pháp xử lý theo Hợp đồng.</li>
+            </ul>
+
+            <div class="clause">Điều 9. Thanh toán</div>
+            <p class="contract-text"><strong>9.1. Chu kỳ thanh toán:</strong> Theo tháng hoặc theo thỏa thuận cụ thể.</p>
+            <p class="contract-text"><strong>9.2. Hình thức thanh toán:</strong> Chuyển khoản ngân hàng.</p>
+            <p class="contract-text"><strong>9.3. Chậm thanh toán:</strong> Áp dụng lãi suất hoặc chế tài theo Hợp đồng chính.</p>
+            <p class="contract-text"><strong>9.4. Trường hợp vi phạm nghĩa vụ thanh toán:</strong> Bên A có quyền tạm dừng cung cấp hệ thống hoặc quyền khai thác.</p>
+
+            <div class="clause">Điều 10. Điều khoản điều chỉnh</div>
+            <p class="contract-text"><strong>10.1.</strong> Bên A có quyền điều chỉnh biểu phí theo từng giai đoạn.</p>
+            <p class="contract-text"><strong>10.2.</strong> Việc điều chỉnh được thực hiện trên nguyên tắc: Phù hợp với thực tế vận hành; Đảm bảo tính bền vững của hệ thống.</p>
+            <p class="contract-text"><strong>10.3.</strong> Các mức phí có thể được điều chỉnh theo: Khu vực; Quy mô triển khai; Loại hình đối tác.</p>
+
+            <div class="clause">Điều 11. Cơ chế điều chỉnh biểu phí cụ thể</div>
+            <ol class="list-num">
+                <li><strong>Nguyên tắc chung:</strong> Bên A không được điều chỉnh đơn phương biểu phí nếu không có sự đồng ý của Bên B.</li>
+                <li><strong>Cơ chế điều chỉnh:</strong> Mọi điều chỉnh phải: Thông báo trước tối thiểu 90 ngày; Có văn bản thỏa thuận hai bên.</li>
+                <li><strong>Giới hạn mức tăng:</strong> Mức điều chỉnh không vượt quá 15%/năm.</li>
+                <li><strong>Cơ chế từ chối:</strong> Nếu Bên B không đồng ý, có quyền: Giữ nguyên mức phí cũ đến hết chu kỳ hợp đồng HOẶC Chấm dứt hợp đồng không phạt.</li>
+            </ol>
+
+            <div class="clause">Điều 12. Cam kết ổn định giá</div>
+            <ol class="list-num">
+                <li><strong>Bên A cam kết:</strong> Không điều chỉnh biểu phí trong 12 tháng đầu tiên.</li>
+                <li>Sau 12 tháng, việc điều chỉnh tuân theo Điều 11.</li>
+            </ol>
+
+            <div class="clause">Điều 13. Hiệu lực</div>
+            <p class="contract-text">Phụ lục này là một phần không tách rời của Hợp đồng Hợp tác Triển khai Sunbot và có hiệu lực kể từ ngày ký.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>11</span>
+        </div>
+    </div>
+
+    <!-- TRANG 12: BẢNG MỨC ĐẦU TƯ (Đính kèm Phụ lục 4) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">BẢNG MỨC ĐẦU TƯ THAM GIA HỆ THỐNG SUNBOT<br><span class="text-[13px] text-slate-500 font-medium normal-case block mt-2">(Đính kèm Phụ lục 4)</span></h2>
+            
+            <p class="contract-text mb-6">Sunbot là hệ thống triển khai chương trình giáo dục công nghệ và STEAM dành cho trẻ mầm non, được thiết kế để vận hành trực tiếp tại nhà trường với mô hình linh hoạt, dễ triển khai và có khả năng mở rộng.</p>
+
+            <div class="clause">1. CÁC GÓI THAM GIA</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gói tham gia</th>
+                        <th>Quy mô vận hành</th>
+                        <th class="text-right">Mức đầu tư (VNĐ)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-bold">Khởi động (S)</td><td>5 - 10 lớp</td><td class="text-right font-bold text-slate-800">Từ 130.000.000</td></tr>
+                    <tr class="bg-orange-50"><td class="font-bold text-orange-700">Phát triển (M)</td><td class="font-bold text-orange-800">10 - 20 lớp</td><td class="text-right font-bold text-orange-700">Từ 230.000.000</td></tr>
+                    <tr><td class="font-bold">Mở rộng (L)</td><td>20 - 40 lớp hoặc theo khu vực</td><td class="text-right font-bold text-slate-800">Thiết kế riêng</td></tr>
+                </tbody>
+            </table>
+
+            <div class="clause">2. GIÁ TRỊ NHẬN ĐƯỢC</div>
+            <ul class="list-dash">
+                <li><strong>Quyền tham gia hệ thống:</strong> Triển khai chương trình Sunbot tại khu vực; Sử dụng thương hiệu và hệ thống tiêu chuẩn.</li>
+                <li><strong>Chương trình & nội dung:</strong> Sunbot Core (lộ trình theo độ tuổi); Sunbot Camp (STEAM theo dự án); Nền tảng phần mềm hỗ trợ giảng dạy.</li>
+                <li><strong>Đào tạo & chuyển giao:</strong> Đào tạo giáo viên và đội ngũ vận hành; Hướng dẫn triển khai tại trường; Đồng hành trong giai đoạn khởi động.</li>
+                <li><strong>Hệ thống vận hành:</strong> Quy trình tổ chức lớp học chuẩn; Mô hình triển khai linh hoạt (Mobile / Hybrid / Lab); Công cụ kiểm soát chất lượng.</li>
+            </ul>
+
+            <div class="clause">3. MÔ HÌNH TRIỂN KHAI LINH HOẠT</div>
+            <p class="contract-text">Sunbot cho phép lựa chọn mô hình phù hợp với điều kiện thực tế:</p>
+            <ul class="list-dash">
+                <li><strong>Mobile:</strong> Triển khai cơ động tại nhiều trường.</li>
+                <li><strong>Hybrid:</strong> Kết hợp cơ động và cố định.</li>
+                <li><strong>Lab:</strong> Phòng học chuyên biệt tại trường.</li>
+            </ul>
+
+            <div class="clause">4. LỘ TRÌNH PHÁT TRIỂN</div>
+            <ul class="list-dash">
+                <li>Bắt đầu với quy mô phù hợp năng lực hiện tại.</li>
+                <li>Từng bước mở rộng số lớp và số trường.</li>
+                <li>Phát triển thành hệ thống tại địa phương.</li>
+            </ul>
+
+            <div class="clause">5. LƯU Ý</div>
+            <ul class="list-dash">
+                <li>Mức đầu tư được thiết kế theo quy mô và điều kiện triển khai thực tế.</li>
+                <li>Các gói mở rộng sẽ được xây dựng theo đề án riêng.</li>
+                <li>Sunbot đồng hành cùng đối tác trong quá trình triển khai và phát triển.</li>
+            </ul>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>12</span>
+        </div>
+    </div>
+
+    <!-- TRANG 13: PHỤ LỤC 5 (P1) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">PHỤ LỤC 5<br>MÔ HÌNH TRIỂN KHAI CHƯƠNG TRÌNH SUNBOT</h2>
+            
+            <div class="clause">Điều 1. Mục đích</div>
+            <p class="contract-text">Phụ lục này quy định chi tiết mô hình triển khai chương trình Sunbot tại cơ sở của Bên B, bao gồm:</p>
+            <ol class="list-num">
+                <li>Cấu trúc lớp học Sunbot</li>
+                <li>Quy mô triển khai theo lớp, theo điểm</li>
+                <li>Tổ chức nhóm học sinh trong lớp</li>
+                <li>Yêu cầu về nhân sự, học cụ, thiết bị và không gian học tập</li>
+                <li>Nguyên tắc mở rộng quy mô triển khai</li>
+                <li>Cơ sở liên kết với cơ chế vận hành, đánh giá và tài chính của hệ thống Sunbot</li>
+            </ol>
+
+            <div class="clause">Điều 2. Nguyên tắc triển khai chung</div>
+            <p class="contract-text"><strong>2.1.</strong> Chương trình Sunbot được ứng dụng giải pháp giáo dục lớp học định kỳ tại cơ sở của Bên B, theo đúng tiêu chuẩn hệ thống do Bên A ban hành.</p>
+            <p class="contract-text"><strong>2.2.</strong> Việc triển khai phải bảo đảm đồng thời các yếu tố sau: Đúng cấu trúc giờ học chuẩn; Đúng lộ trình chương trình; Đúng yêu cầu về sĩ số, tổ chức nhóm và trải nghiệm học tập; Đúng yêu cầu về học cụ, thiết bị và nhân sự phụ trách.</p>
+            <p class="contract-text font-bold text-red-600 italic">2.3. Bên B không được triển khai chương trình theo hình thức tùy tiện, rút gọn, cắt xén hoặc biến đổi bản chất lớp học Sunbot mà không có sự chấp thuận bằng văn bản của Bên A.</p>
+
+            <div class="clause">Điều 3. Định nghĩa lớp học Sunbot</div>
+            <p class="contract-text"><strong>3.1.</strong> "Lớp học Sunbot" là một đơn vị triển khai cơ bản trong hệ thống, bao gồm: Một nhóm học sinh cùng độ tuổi/năng lực; Lịch học cố định; Giáo viên phụ trách; Bộ học cụ, robot, tài nguyên và nội dung tương ứng.</p>
+            <p class="contract-text"><strong>3.2.</strong> Mỗi lớp học Sunbot được coi là một đơn vị vận hành độc lập để tính toán: Tổ chức giảng dạy; Chất lượng triển khai; Hiệu quả vận hành; Cơ chế duy trì hệ thống.</p>
+
+            <div class="clause">Điều 4. Quy mô lớp học</div>
+            <p class="contract-text"><strong>4.1. Sĩ số lớp tiêu chuẩn: 25 trẻ/lớp.</strong> Đây là cơ sở thiết kế hoạt động, phân bổ học cụ và mô hình tài chính.</p>
+            <p class="contract-text"><strong>4.2. Biên độ sĩ số cho phép:</strong></p>
+            <table>
+                <thead><tr><th>Mức sĩ số</th><th>Đánh giá</th></tr></thead>
+                <tbody>
+                    <tr><td>Dưới 18 trẻ/lớp</td><td>Không phải cấu hình chuẩn; chỉ áp dụng TH đặc biệt.</td></tr>
+                    <tr><td>Từ 18 đến dưới 25 trẻ</td><td>Có thể vận hành, nhưng chưa đạt mức tối ưu.</td></tr>
+                    <tr class="bg-orange-50"><td class="font-bold text-orange-700">25 trẻ/lớp</td><td class="font-bold text-orange-700">Mức chuẩn</td></tr>
+                    <tr><td>Từ 26 đến 30 trẻ</td><td>Có thể triển khai nếu đảm bảo giáo viên, học cụ.</td></tr>
+                    <tr><td class="text-red-600 font-bold">Trên 30 trẻ/lớp</td><td class="text-red-600">Không khuyến nghị.</td></tr>
+                </tbody>
+            </table>
+
+            <div class="clause">Điều 5. Tổ chức nhóm trong lớp học</div>
+            <p class="contract-text"><strong>5.1.</strong> Mỗi lớp học phải tổ chức theo mô hình nhóm nhỏ nhằm: tăng tham gia trực tiếp, tạo cơ hội thực hành, hỗ trợ tương tác và hợp tác.</p>
+            <p class="contract-text"><strong>5.2. Quy mô nhóm:</strong> Từ 3 đến 6 trẻ / nhóm.</p>
+            <p class="contract-text"><strong>5.3. Số nhóm:</strong> 4 đến 8 nhóm/lớp (Tùy sĩ số). Phân nhóm phải cân bằng, phù hợp độ tuổi.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>13</span>
+        </div>
+    </div>
+
+    <!-- TRANG 14: PHỤ LỤC 5 (P2) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <div class="clause">Điều 6. Cấu trúc điểm triển khai</div>
+            <p class="contract-text"><strong>6.1. Định nghĩa:</strong> "Điểm triển khai" là một cơ sở giáo dục hoặc một đơn vị vận hành cụ thể của Bên B. Mỗi điểm phải có: Danh sách lớp/HS riêng, Lịch học riêng, Dữ liệu vận hành riêng, Mã nhận diện (ID) riêng.</p>
+            <p class="contract-text"><strong>6.2. Quy mô điểm triển khai:</strong></p>
+            <table class="w-2/3 !my-2">
+                <thead><tr><th>Mức triển khai</th><th>Số lớp</th></tr></thead>
+                <tbody>
+                    <tr><td>Mức vận hành tối thiểu</td><td>3 lớp</td></tr>
+                    <tr class="bg-slate-50"><td class="font-bold text-slate-800">Mức triển khai chuẩn</td><td class="font-bold text-slate-800">4 - 6 lớp</td></tr>
+                    <tr><td>Mức mở rộng</td><td>7 - 12 lớp</td></tr>
+                </tbody>
+            </table>
+            <p class="contract-text mt-2"><strong>6.3. Nguyên tắc:</strong> Điểm có dưới 3 lớp không được coi là cấu hình chuẩn để vận hành bền vững.</p>
+
+            <div class="clause">Điều 7. Cấu trúc chương trình triển khai theo lớp</div>
+            <ul class="list-num">
+                <li><strong>Tần suất học:</strong> 8 buổi / tháng.</li>
+                <li><strong>Thành phần:</strong> 4 buổi Robot + 4 buổi STEAM tái chế.</li>
+                <li><strong>Nguyên tắc bắt buộc:</strong> Không được bỏ một trong hai phân môn; Không được triển khai lệch quá mức; Mọi lớp học phải tổ chức theo đúng cấu trúc.</li>
+            </ul>
+
+            <div class="clause">Điều 8. Yêu cầu về nhân sự triển khai</div>
+            <p class="contract-text">Giáo viên phụ trách phải: Đã đào tạo theo chuẩn Sunbot; Nắm được cấu trúc; Có khả năng quản lý lớp. Giáo viên phải có khả năng triển khai đồng thời cả Robot và STEAM.</p>
+
+            <div class="clause">Điều 9. Yêu cầu về học cụ và thiết bị</div>
+            <p class="contract-text"><strong>9.1.</strong> Phải có đủ học cụ phù hợp với số lớp, số nhóm.</p>
+            <p class="contract-text"><strong>9.2. Bắt buộc:</strong> Robot Sunbot, Sa bàn/bản đồ, Bộ học cụ STEAM, Thiết bị trình chiếu.</p>
+            <p class="contract-text"><strong>9.3. Nguyên tắc:</strong> Học cụ phân bổ phù hợp số nhóm. Không để thiếu học cụ. Học cụ tiêu hao STEAM phải bổ sung định kỳ.</p>
+
+            <div class="clause">Điều 10. Yêu cầu về không gian lớp học</div>
+            <p class="contract-text">Điểm triển khai phải có không gian an toàn, đủ diện tích cho hoạt động nhóm, bố trí robot. Cho phép giáo viên quan sát toàn bộ lớp và điều phối dễ dàng.</p>
+
+            <div class="clause">Điều 11. Nguyên tắc mở rộng quy mô</div>
+            <p class="contract-text">Bên B được phép mở rộng khi: Đáp ứng tiêu chuẩn hiện tại, Đảm bảo chất lượng lớp học, Đủ nhân sự và học cụ. Bên A có quyền đánh giá mức độ sẵn sàng trước khi Bên B mở rộng.</p>
+
+            <div class="clause">Điều 12. Liên kết cơ chế vận hành & Tài chính</div>
+            <p class="contract-text">Quy mô lớp học và điểm triển khai là căn cứ áp dụng cơ chế duy trì hệ thống, KPI và Audit. Mọi thay đổi quy mô phải ghi nhận vào hệ thống để điều chỉnh tài chính tương ứng.</p>
+
+            <div class="clause">Điều 13. Hiệu lực áp dụng</div>
+            <p class="contract-text">Phụ lục này là một phần không tách rời của Hợp đồng. Mọi hoạt động triển khai phải tuân thủ đầy đủ. Sửa đổi phải được xác nhận bằng văn bản.</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>14</span>
+        </div>
+    </div>
+
+    <!-- TRANG 15: PHỤ LỤC 6 (CHECKLIST AUDIT) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">PHỤ LỤC 6<br>CHECKLIST AUDIT HỆ THỐNG SUNBOT</h2>
+            
+            <div class="clause">I. NGUYÊN TẮC XÂY DỰNG CHECKLIST</div>
+            <p class="contract-text">Checklist này được thiết kế theo 3 mục tiêu: Giám sát chất lượng dịch vụ tối thiểu; Phát hiện sớm rủi ro vận hành; Tạo không gian cải tiến, không gây áp lực quá mức.</p>
+            <p class="contract-text"><strong>Cấu trúc đánh giá 3 mức:</strong> Đạt chuẩn (Pass); Cần cải thiện (Improve); Không đạt (Fail).</p>
+
+            <div class="clause">II. CẤU TRÚC CHECKLIST AUDIT</div>
+            
+            <div class="font-bold text-orange-600 mt-4 mb-2 uppercase">1. NHÓM 1 - VẬN HÀNH LỚP HỌC (30%)</div>
+            <ul class="list-dash">
+                <li><strong>1.1 Tổ chức lớp:</strong> Có lịch học Sunbot rõ ràng theo tuần. Sĩ số lớp phù hợp. Phân nhóm trẻ hợp lý.</li>
+                <li><strong>1.2 Chuẩn bị lớp học:</strong> Thiết bị (robot, map) đầy đủ trước giờ học. Không gian gọn gàng, an toàn. Thiết bị hoạt động ổn định.</li>
+                <li><strong>1.3 Quản lý thời gian:</strong> Bắt đầu và kết thúc đúng giờ. Không cắt xén nội dung bài học.</li>
+            </ul>
+
+            <div class="font-bold text-orange-600 mt-4 mb-2 uppercase">2. NHÓM 2 - CHẤT LƯỢNG CHUYÊN MÔN (30%)</div>
+            <ul class="list-dash">
+                <li><strong>2.1 Giáo viên:</strong> Hiểu đúng mục tiêu bài học. Không biến tiết học thành "chơi robot đơn thuần”. Có khả năng dẫn dắt trẻ thay vì chỉ hướng dẫn thao tác.</li>
+                <li><strong>2.2 Phương pháp giảng dạy:</strong> Có phần khởi động - khám phá - thực hành - tổng kết. Khuyến khích trẻ tư duy, không làm thay. Tương tác 2 chiều.</li>
+                <li><strong>2.3 Trải nghiệm của trẻ:</strong> Trẻ tham gia tích cực. Trẻ hiểu được "ý nghĩa hoạt động".</li>
+            </ul>
+
+            <div class="font-bold text-orange-600 mt-4 mb-2 uppercase">3. NHÓM 3 - TUÂN THỦ HỆ THỐNG (20%)</div>
+            <ul class="list-dash">
+                <li><strong>3.1 Sử dụng chương trình chuẩn:</strong> Dạy đúng bài theo lộ trình. Không tự ý thay đổi nội dung lõi. Không sử dụng tài liệu ngoài.</li>
+                <li><strong>3.2 Quản lý học cụ & thiết bị:</strong> Không thất lạc học cụ. Bảo quản robot đúng quy định. Có kiểm kê định kỳ.</li>
+                <li><strong>3.3 Tuân thủ thương hiệu:</strong> Không sử dụng sai hình ảnh/nội dung Sunbot. Không truyền thông sai định vị.</li>
+            </ul>
+
+            <div class="font-bold text-orange-600 mt-4 mb-2 uppercase">4. NHÓM 4 - QUẢN LÝ & PHỐI HỢP (10%)</div>
+            <ul class="list-dash">
+                <li><strong>4.1 Làm việc với nhà trường:</strong> Có đầu mối phụ trách rõ ràng. Phối hợp tốt với giáo viên chủ nhiệm.</li>
+                <li><strong>4.2 Phối hợp với Kiro:</strong> Phản hồi khi có yêu cầu audit/hỗ trợ. Tham gia đầy đủ các buổi đào tạo/cập nhật.</li>
+            </ul>
+
+            <div class="font-bold text-orange-600 mt-4 mb-2 uppercase">5. NHÓM 5 - DỮ LIỆU & BÁO CÁO (10%)</div>
+            <ul class="list-dash">
+                <li><strong>5.1 Nhật ký học tập:</strong> Có ghi nhận hoạt động lớp học. Có hình ảnh/minh chứng.</li>
+                <li><strong>5.2 Báo cáo cơ bản:</strong> Số lớp, số trẻ được cập nhật, không sai lệch.</li>
+            </ul>
+
+            <div class="clause">III. CÁCH CHẤM ĐIỂM & IV. NGƯỠNG ĐÁNH GIÁ</div>
+            <div class="flex gap-8">
+                <table class="w-1/2 !mt-2">
+                    <thead><tr><th>Mức độ</th><th>Điểm</th></tr></thead>
+                    <tbody>
+                        <tr><td>Đạt chuẩn</td><td class="font-bold text-center">100%</td></tr>
+                        <tr><td>Cần cải thiện</td><td class="font-bold text-center">70%</td></tr>
+                        <tr><td>Không đạt</td><td class="font-bold text-center">0%</td></tr>
+                    </tbody>
+                </table>
+                <div class="w-1/2 mt-2 pt-2 text-[14px]">
+                    <p class="font-bold text-green-600 mb-2">≥ 85% - Hoạt động tốt</p>
+                    <p class="font-bold text-orange-500 mb-2">70% - 84% - Cần cải thiện nhẹ</p>
+                    <p class="font-bold text-red-600 mb-2">&lt; 70% - Cần can thiệp</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>15</span>
+        </div>
+    </div>
+
+    <!-- TRANG 16: PHỤ LỤC 7 (BÀN GIAO & NGHIỆM THU P1) -->
+    <div class="a4-page">
+        <div class="page-content">
+            <h2 class="text-center font-black text-xl uppercase mb-6 text-slate-900 border-b-[3px] border-orange-500 pb-4 inline-block">PHỤ LỤC 7<br>BÀN GIAO & NGHIỆM THU TRIỂN KHAI SUNBOT</h2>
+            
+            <div class="clause">Điều 1. Mục đích</div>
+            <p class="contract-text">Phụ lục này quy định: (1) Danh mục bàn giao cụ thể của Bên A; (2) Mốc thời gian thực hiện; (3) Tiêu chí nghiệm thu; (4) Cơ chế xác nhận hoàn thành; (5) Hệ quả pháp lý nếu không hoàn thành.</p>
+            <p class="contract-text">Nhằm đảm bảo: Minh bạch nghĩa vụ của Bên A; Bảo vệ quyền lợi của Bên B; Làm căn cứ ràng buộc đối với khoản phí triển khai.</p>
+
+            <div class="clause">Điều 2. Nguyên tắc bàn giao</div>
+            <ol class="list-num">
+                <li>Bàn giao được thực hiện theo từng giai đoạn (milestone-based), không cam kết chung chung.</li>
+                <li>Mỗi hạng mục bàn giao phải có: Nội dung cụ thể, Tiêu chí hoàn thành, Biên bản nghiệm thu.</li>
+                <li>Chỉ khi hoàn thành đủ các hạng mục theo phụ lục này thì nghĩa vụ triển khai ban đầu của Bên A mới được coi là hoàn tất.</li>
+                <li>Mọi bàn giao phải có xác nhận hai chiều và hồ sơ lưu trữ.</li>
+            </ol>
+
+            <div class="clause">Điều 3. Các giai đoạn bàn giao</div>
+            
+            <p class="contract-text font-bold text-slate-800 mt-6 mb-2 uppercase">Giai đoạn 1: Kích hoạt hệ thống (System Activation)</p>
+            <ul class="list-dash bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                <li><strong>Thời hạn:</strong> trong vòng 07 ngày làm việc kể từ khi Bên A nhận đủ phí triển khai.</li>
+                <li><strong>Nội dung bàn giao:</strong> (1) Cấp tài khoản hệ thống Sunbot; (2) Kích hoạt quyền sử dụng chương trình; (3) Bàn giao tài liệu: Giáo án số, Hướng dẫn sử dụng, Khung chương trình.</li>
+                <li><strong>Tiêu chí nghiệm thu:</strong> Bên B đăng nhập được hệ thống; Truy cập đầy đủ tài nguyên; Có biên bản bàn giao tài khoản.</li>
+            </ul>
+
+            <p class="contract-text font-bold text-slate-800 mt-6 mb-2 uppercase">Giai đoạn 2: Đào tạo & chuyển giao vận hành (Training & Handover)</p>
+            <ul class="list-dash bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                <li><strong>Thời hạn:</strong> trong vòng 21 ngày kể từ ngày hoàn thành Giai đoạn 1.</li>
+                <li><strong>Nội dung bàn giao:</strong> (1) Đào tạo giáo viên; (2) Đào tạo quản lý; (3) Demo lớp học mẫu (ít nhất 01 buổi).</li>
+                <li><strong>Tiêu chí nghiệm thu:</strong> Giáo viên thực hiện được 01 bài dạy mẫu đạt yêu cầu; Nhà trường hiểu quy trình vận hành; Có biên bản đào tạo.</li>
+            </ul>
+
+            <p class="contract-text font-bold text-slate-800 mt-6 mb-2 uppercase">Giai đoạn 3: Triển khai lớp học thực tế (Pilot Operation)</p>
+            <ul class="list-dash bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                <li><strong>Thời hạn:</strong> trong vòng 30 ngày kể từ khi hoàn thành Giai đoạn 2.</li>
+                <li><strong>Nội dung bàn giao:</strong> (1) Hỗ trợ mở lớp đầu tiên; (2) Đồng hành 01-02 buổi lớp thực tế; (3) Hướng dẫn xử lý tình huống.</li>
+                <li><strong>Tiêu chí nghiệm thu:</strong> Lớp học được tổ chức thực tế; Có học sinh tham gia; Giáo viên vận hành được lớp.</li>
+            </ul>
+
+            <p class="contract-text font-bold text-slate-800 mt-6 mb-2 uppercase">Giai đoạn 4: Ổn định vận hành (Stabilization)</p>
+            <ul class="list-dash bg-slate-50 p-4 border border-slate-200 rounded-lg">
+                <li><strong>Thời hạn:</strong> trong vòng 60 ngày kể từ ngày bắt đầu lớp.</li>
+                <li><strong>Nội dung bàn giao:</strong> (1) Hỗ trợ vận hành định kỳ; (2) Tư vấn điều chỉnh lớp học; (3) Kiểm tra chất lượng ban đầu (mini audit).</li>
+                <li><strong>Tiêu chí nghiệm thu:</strong> Lớp học duy trì ổn định; Không có lỗi vận hành nghiêm trọng; Có báo cáo đánh giá ban đầu.</li>
+            </ul>
+
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>16</span>
+        </div>
+    </div>
+
+    <!-- TRANG 17: PHỤ LỤC 7 (P2) & KÝ KẾT -->
+    <div class="a4-page">
+        <div class="page-content flex flex-col h-full">
+            <div class="clause">Điều 4. Biên bản nghiệm thu</div>
+            <ol class="list-num">
+                <li>Mỗi giai đoạn phải có Biên bản nghiệm thu riêng.</li>
+                <li>Nội dung biên bản gồm: Hạng mục đã bàn giao, Mức độ hoàn thành (Đạt/Chưa đạt), Ý kiến hai bên.</li>
+                <li>Biên bản phải có Chữ ký đại diện Bên A và Bên B hoặc xác nhận điện tử hợp lệ.</li>
+            </ol>
+
+            <div class="clause">Điều 5. Xử lý trường hợp chưa đạt</div>
+            <ol class="list-num">
+                <li>Nếu một hạng mục Chưa đạt, Bên A phải hoàn thiện trong vòng 07-14 ngày.</li>
+                <li>Nếu quá thời hạn mà vẫn không đạt, Bên B có quyền: Yêu cầu giảm trừ phí tương ứng HOẶC tạm dừng triển khai.</li>
+            </ol>
+
+            <div class="clause">Điều 6. Liên kết với khoản phí "không hoàn lại"</div>
+            <ol class="list-num">
+                <li>Khoản phí triển khai chỉ được coi là "không hoàn lại" khi Bên A đã hoàn thành đầy đủ 4 giai đoạn theo phụ lục này.</li>
+                <li>Trường hợp Bên A Không hoàn thành ≥ 02 giai đoạn hoặc không đạt tiêu chí nghiệm thu: Bên B có quyền Yêu cầu hoàn trả một phần hoặc toàn bộ phí. Tỷ lệ hoàn trả được xác định theo mức độ hoàn thành.</li>
+            </ol>
+
+            <div class="clause">Điều 7. Trường hợp chậm trễ do Bên B</div>
+            <p class="contract-text">Nếu việc bàn giao bị chậm do Bên B không bố trí nhân sự, không phối hợp triển khai hoặc không tổ chức lớp, thời gian sẽ được gia hạn tương ứng và không tính là vi phạm của Bên A.</p>
+
+            <div class="clause">Điều 8. Hiệu lực</div>
+            <p class="contract-text">Phụ lục này là một phần không tách rời của Hợp đồng chính và có giá trị pháp lý tương đương.</p>
+            
+            <div class="w-full border-t-2 border-slate-200 mt-12 mb-8"></div>
+
+            <!-- PHẦN CHỮ KÝ PHỤ LỤC/HỢP ĐỒNG KẾT THÚC -->
+            <p class="text-center italic text-slate-500 mb-8 text-[13.5px] font-medium">Hợp đồng này và các phụ lục đính kèm được lập thành 02 (hai) bản có giá trị pháp lý như nhau, mỗi bên giữ 01 (một) bản làm cơ sở thực hiện.</p>
+            
+            <div class="signature-box mt-auto">
+                <div class="w-1/2">
+                    <p class="signature-title">ĐẠI DIỆN BÊN A</p>
+                    <p class="signature-sub">(Ký, đóng dấu và ghi rõ họ tên)</p>
+                </div>
+                <div class="w-1/2">
+                    <p class="signature-title">ĐẠI DIỆN BÊN B</p>
+                    <p class="signature-sub">(Ký, đóng dấu và ghi rõ họ tên)</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-4 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3">Hợp Đồng Nhượng Quyền Sunbot 2026</span>
+            </div>
+            <span>17</span>
+        </div>
+    </div>
+
+</body>
+</html>

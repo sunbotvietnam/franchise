@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="vi" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUNBOT BUSINESS SYSTEM - Hồ Sơ Nhượng Quyền</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-orange: #ea580c;
+            --brand-orange-light: #fff7ed;
+            --brand-amber: #f59e0b;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --page-width: 210mm;
+            --page-min-height: 297mm; 
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #64748b; 
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* KHẮC PHỤC LỖI LẸM DẤU TIẾNG VIỆT */
+        h1, h2, h3, h4, h5, h6 { 
+            line-height: 1.5 !important; 
+            padding-top: 0.15em; 
+            padding-bottom: 0.15em; 
+            overflow: visible; 
+            margin: 0; 
+            position: relative; 
+            z-index: 10;
+        }
+
+        /* Cấu trúc Trang A4 */
+        .a4-page {
+            width: var(--page-width);
+            min-height: var(--page-min-height);
+            background-color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            box-sizing: border-box;
+            padding: 24mm; 
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+            page-break-after: always;
+            page-break-inside: avoid;
+        }
+
+        .page-content {
+            flex: 1 1 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-footer {
+            flex: 0 0 auto;
+            margin-top: auto;
+            padding-top: 15px; 
+            border-top: 1px solid #cbd5e1; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+
+        /* Typography & Cấu trúc văn bản */
+        p { line-height: 1.7; color: var(--text-muted); font-size: 13.5px; margin: 0 0 16px 0; text-align: left; position: relative; z-index: 10;}
+        
+        .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; position: relative; z-index: 10;}
+        .section-number { font-size: 36px; font-weight: 900; color: var(--brand-amber); line-height: 1; letter-spacing: -0.05em; }
+        .section-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #0f172a; letter-spacing: -0.02em; line-height: 1.2; }
+        
+        .sub-title { font-size: 16px; font-weight: 800; color: #1e293b; margin-top: 32px; margin-bottom: 12px; position: relative; padding-left: 16px; z-index: 10;}
+        .sub-title::before { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 5px; background-color: var(--brand-orange); border-radius: 2px; }
+        .kicker { font-size: 11px; font-weight: 800; color: var(--brand-orange); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px; position: relative; z-index: 10;}
+
+        ul, ol { margin: 0 0 20px 0; padding-left: 0; list-style-type: none; position: relative; z-index: 10;}
+        ul li { font-size: 13.5px; line-height: 1.7; color: var(--text-muted); margin-bottom: 8px; position: relative; padding-left: 24px; }
+        ul li::before { content: ""; position: absolute; left: 4px; top: 9px; width: 6px; height: 6px; background-color: var(--brand-orange); border-radius: 50%; }
+        
+        /* Bảng biểu */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; position: relative; z-index: 10; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;}
+        th, td { padding: 12px 16px; text-align: left; line-height: 1.6; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #f8fafc; font-weight: 800; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11px; border-bottom: 2px solid var(--brand-orange); }
+        tr:last-child td { border-bottom: none; }
+        .td-highlight { font-weight: 700; color: var(--brand-orange); background-color: var(--brand-orange-light); }
+
+        /* Hộp làm nổi bật */
+        .box-light { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; margin: 24px 0; border-radius: 12px; position: relative; overflow: hidden; z-index: 10;}
+        .box-light::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background-color: var(--brand-amber); }
+        .box-dark { background-color: #0f172a; color: white; border: none; padding: 24px; border-radius: 16px; margin: 24px 0; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); position: relative; z-index: 10;}
+        .box-dark p, .box-dark li { color: #cbd5e1; }
+
+        .page-watermark { position: absolute; top: 20mm; right: 20mm; font-size: 150px; font-weight: 900; color: #f1f5f9; line-height: 0.8; z-index: 0; user-select: none; pointer-events: none; letter-spacing: -0.05em; }
+
+        /* Bìa tài liệu */
+        .cover-page { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white; 
+            justify-content: space-between; 
+            padding: 24mm; 
+        }
+        .cover-circle-1 { position: absolute; top: -10%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, rgba(245,158,11,0) 60%); border-radius: 50%; z-index: 0; pointer-events: none;}
+        
+        /* Cấu trúc Mục lục (TOC) */
+        .toc-link { text-decoration: none; display: block; padding: 4px 8px; border-radius: 8px; transition: all 0.2s; position: relative; z-index: 10; }
+        .toc-link:hover { background-color: #f8fafc; transform: translateX(4px); }
+        .toc-item { display: flex; align-items: baseline; width: 100%; }
+        .toc-title { font-weight: 700; color: #1e293b; font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.02em; }
+        .toc-leader { flex-grow: 1; border-bottom: 2px dotted #cbd5e1; margin: 0 12px; position: relative; top: -4px;}
+        .toc-page { font-weight: 900; color: var(--brand-orange); font-size: 16px; min-width: 24px; text-align: right; }
+
+        .print-btn-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
+
+        @page { size: A4 portrait; margin: 0; }
+        @media print {
+            body { background: none; padding: 0; gap: 0; }
+            .print-btn-container { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; height: 297mm; page-break-after: always; page-break-inside: avoid; }
+            .a4-page:last-child { page-break-after: auto; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-btn-container no-print">
+        <button onclick="window.print()" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-full font-bold shadow-2xl transition-all flex items-center gap-3 text-sm uppercase tracking-wider cursor-pointer border border-orange-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            In Hồ Sơ / Xuất PDF
+        </button>
+    </div>
+
+    <div id="page-01" class="a4-page cover-page">
+        <div class="cover-circle-1"></div>
+
+        <div class="page-content flex flex-col justify-between">
+            <div class="w-full flex justify-end pt-4 relative z-10">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-20 object-contain drop-shadow-lg" onerror="this.src='https://placehold.co/200x80/transparent/ea580c?text=SUNBOT+LOGO'"/>
+            </div>
+
+            <div class="w-full mb-20 border-l-4 border-amber-500 pl-8 relative z-10">
+                <div class="bg-amber-500 text-slate-900 text-[11px] font-bold tracking-[0.2em] uppercase px-4 py-2 inline-block rounded mb-6 shadow-md">Tài Liệu Dành Cho Nhà Đầu Tư</div>
+                <h1 class="text-[52px] font-black text-white leading-[1.1] mb-6 uppercase tracking-tight drop-shadow-md">
+                    SUNBOT<br>BUSINESS<br><span class="text-amber-500">SYSTEM</span>
+                </h1>
+                <div class="w-[90%]">
+                    <p class="text-[16px] text-slate-300 font-medium leading-[1.6] mb-0 drop-shadow-sm">
+                        Mô hình lớp học STEAM tiêu chuẩn và Cơ hội triển khai nhượng quyền, mang lại dòng tiền định kỳ bền vững.
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full flex justify-between items-end border-t border-slate-700 pt-8 relative z-10">
+                <div>
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Đơn vị phát hành</p>
+                    <p class="text-[13px] font-black text-white tracking-widest uppercase mb-0">CÔNG TY CỔ PHẦN CÔNG NGHỆ<br>GIÁO DỤC KIRO VIỆT NAM</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Tài liệu</p>
+                    <p class="text-[13px] font-black text-amber-500 tracking-widest uppercase mb-0">Phiên Bản 2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-02" class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-title mb-0">Tài Liệu Này Gồm:</div>
+            </div>
+            
+            <div class="mt-10 flex flex-col gap-5">
+                
+                <a href="#page-03" class="toc-link group">
+                    <div class="toc-item">
+                        <span class="w-10 font-black text-amber-400 text-[18px]">01</span>
+                        <span class="toc-title group-hover:text-amber-600">Sunbot: Brand & Story + Why Sunbot Wins</span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page">03</span>
+                    </div>
+                </a>
+
+                <a href="#page-05" class="toc-link group">
+                    <div class="toc-item">
+                        <span class="w-10 font-black text-amber-400 text-[18px]">02</span>
+                        <span class="toc-title group-hover:text-amber-600">Bảng Chi Phí Nhượng Quyền Sunbot</span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page">05</span>
+                    </div>
+                </a>
+
+                <a href="#page-07" class="toc-link group">
+                    <div class="toc-item">
+                        <span class="w-10 font-black text-amber-400 text-[18px]">03</span>
+                        <span class="toc-title group-hover:text-amber-600">Sunbot - Mô Hình Doanh Thu Chuẩn</span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page">07</span>
+                    </div>
+                </a>
+
+                <a href="#page-08" class="toc-link group pl-10">
+                    <div class="toc-item">
+                        <span class="toc-title group-hover:text-amber-600 text-[13px] text-slate-500 normal-case tracking-normal font-semibold">↪ Case Study Vận Hành Thực Tế (Mẫu)</span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page text-slate-400 text-[14px]">08</span>
+                    </div>
+                </a>
+
+                <a href="#page-09" class="toc-link group">
+                    <div class="toc-item">
+                        <span class="w-10 font-black text-amber-400 text-[18px]">04</span>
+                        <span class="toc-title group-hover:text-amber-600">Lộ Trình Mở Rộng Từ 0 Đến 3 KIT <span class="normal-case text-[13px] text-slate-500 font-medium">(Trong 6 Tháng)</span></span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page">09</span>
+                    </div>
+                </a>
+
+                <a href="#page-10" class="toc-link group">
+                    <div class="toc-item">
+                        <span class="w-10 font-black text-amber-400 text-[18px]">05</span>
+                        <span class="toc-title group-hover:text-amber-600">Quản Trị Rủi Ro Trong Mô Hình Sunbot</span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page">10</span>
+                    </div>
+                </a>
+
+                <a href="#page-11" class="toc-link group">
+                    <div class="toc-item">
+                        <span class="w-10 font-black text-amber-400 text-[18px]">06</span>
+                        <span class="toc-title group-hover:text-amber-600">Lý Do Nên Bắt Đầu Sunbot Ngay Bây Giờ</span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page">11</span>
+                    </div>
+                </a>
+
+                <a href="#page-11" class="toc-link group pl-10">
+                    <div class="toc-item">
+                        <span class="toc-title group-hover:text-amber-600 text-[13px] text-slate-500 normal-case tracking-normal font-semibold">↪ So Sánh Mô Hình: Sunbot vs Tự Triển Khai Lớp STEAM</span>
+                        <span class="toc-leader"></span>
+                        <span class="toc-page text-slate-400 text-[14px]">11</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>02</span>
+        </div>
+    </div>
+
+    <div id="page-03" class="a4-page">
+        <div class="page-watermark">01</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">01</div>
+                <div class="section-title mb-0">Sunbot: Brand & Story<br><span class="text-[14px] text-slate-500 font-bold tracking-widest normal-case block mt-1">+ Why Sunbot Wins</span></div>
+            </div>
+            
+            <div class="sub-title mt-2">1. Câu chuyện Sunbot</div>
+            <p>Sunbot được xây dựng với một mục tiêu rõ ràng: <strong class="text-slate-900">Đưa tư duy công nghệ đến với trẻ em Việt Nam từ sớm, theo cách dễ hiểu, gần gũi và thực tế.</strong></p>
+            <p>Trong nhiều năm triển khai tại các trường mầm non: Trẻ em thích robot. Nhưng nếu chỉ dừng ở việc "chơi robot" thì sẽ không tạo ra giá trị giáo dục thực sự. Sunbot được phát triển để giải quyết vấn đề đó: Robot chỉ là công cụ. Điều quan trọng là:</p>
+            <ul class="mb-8">
+                <li>Tư duy logic</li>
+                <li>Khả năng giải quyết vấn đề</li>
+                <li>Kỹ năng hợp tác</li>
+            </ul>
+
+            <div class="sub-title">2. Triết lý giáo dục</div>
+            <div class="box-light mb-8">
+                <p class="font-black text-amber-600 text-[15px] mb-2 uppercase tracking-tight">Sunbot không dạy trẻ trở thành "người biết lập trình".</p>
+                <p class="mb-0 text-slate-700">Sunbot giúp trẻ: hiểu cách suy nghĩ, hiểu cách thử và sai, hiểu cách làm việc cùng người khác. Đây là nền tảng quan trọng cho: học tập sau này, thích nghi với công nghệ và phát triển lâu dài.</p>
+            </div>
+
+            <div class="sub-title">3. Định vị Sunbot</div>
+            <div class="grid grid-cols-2 gap-6 mb-8">
+                <div class="border border-slate-200 p-5 rounded-xl bg-slate-50">
+                    <p class="font-black text-slate-700 text-[13px] uppercase tracking-widest mb-3">Sunbot KHÔNG phải là:</p>
+                    <ul class="mb-0">
+                        <li>Một bộ robot</li>
+                        <li>Một khóa học ngắn hạn</li>
+                    </ul>
+                </div>
+                <div class="border border-amber-200 p-5 rounded-xl bg-amber-50">
+                    <p class="font-black text-amber-700 text-[13px] uppercase tracking-widest mb-3">Sunbot LÀ:</p>
+                    <p class="text-amber-900 font-bold mb-0 text-[13px] leading-relaxed">Một chương trình giáo dục có thể triển khai lâu dài trong nhà trường.</p>
+                </div>
+            </div>
+
+            <div class="sub-title">4. Vì sao Sunbot khác biệt</div>
+            <ol class="space-y-3">
+                <li><strong class="text-slate-900 text-[14px]">Không phụ thuộc vào thiết bị:</strong> Robot chỉ là phương tiện. Giá trị nằm ở chương trình. Không bị lỗi thời theo công nghệ.</li>
+                <li><strong class="text-slate-900 text-[14px]">Thiết kế cho mầm non (không copy từ cấp cao):</strong> Nội dung phù hợp 3-7 tuổi. Cách dạy phù hợp với giáo viên mầm non. Dễ triển khai thực tế.</li>
+                <li><strong class="text-slate-900 text-[14px]">Đã được kiểm chứng trong hệ thống:</strong> Triển khai tại nhiều trường. Phù hợp với điều kiện vận hành tại Việt Nam → Không phải mô hình thử nghiệm.</li>
+                <li><strong class="text-slate-900 text-[14px]">Mô hình kinh doanh rõ ràng:</strong> Có dòng tiền hàng tháng. Có thể mở rộng theo lớp và trường → Không phụ thuộc bán hàng một lần.</li>
+                <li><strong class="text-slate-900 text-[14px]">Hệ thống hỗ trợ đầy đủ:</strong> Đào tạo giáo viên, giáo án chuẩn, quy trình vận hành → Đối tác có thể triển khai ngay.</li>
+            </ol>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>03</span>
+        </div>
+    </div>
+
+    <div id="page-04" class="a4-page">
+        <div class="page-watermark">01</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Sunbot: Brand & Story (Tiếp)</div>
+            
+            <div class="sub-title mt-6">5. Why Sunbot Wins</div>
+            <p>Sunbot có lợi thế vì kết hợp được 3 yếu tố mà thị trường thường thiếu:</p>
+            <div class="space-y-4 mb-10">
+                <div class="flex gap-4 items-start">
+                    <div class="w-8 h-8 rounded bg-slate-100 text-slate-600 flex items-center justify-center font-black shrink-0 mt-0.5">1</div>
+                    <div>
+                        <p class="font-bold text-slate-800 mb-1">Giáo dục thật (không phải sản phẩm "trình diễn")</p>
+                        <p class="text-[13.5px] text-slate-600 m-0">Không chạy theo hình thức. Tập trung vào giá trị học.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 items-start">
+                    <div class="w-8 h-8 rounded bg-slate-100 text-slate-600 flex items-center justify-center font-black shrink-0 mt-0.5">2</div>
+                    <div>
+                        <p class="font-bold text-slate-800 mb-1">Vận hành được (không chỉ là ý tưởng)</p>
+                        <p class="text-[13.5px] text-slate-600 m-0">Phù hợp với trường mầm non, trung tâm. Có thể triển khai ngay.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 items-start">
+                    <div class="w-8 h-8 rounded bg-orange-100 text-orange-600 flex items-center justify-center font-black shrink-0 mt-0.5">3</div>
+                    <div>
+                        <p class="font-bold text-orange-700 mb-1">Kinh doanh được (có dòng tiền rõ ràng)</p>
+                        <p class="text-[13.5px] text-slate-600 m-0">Thu học phí hàng tháng. Khả năng nhân bản (Scale) dễ dàng theo lớp.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-title">6. Lợi thế cho đối tác</div>
+            <p>Khi triển khai Sunbot, đối tác có:</p>
+            <ul>
+                <li>Một chương trình giáo dục hoàn chỉnh.</li>
+                <li>Một mô hình kinh doanh rõ ràng.</li>
+                <li>Một hệ thống đã được kiểm chứng.</li>
+            </ul>
+
+            <div class="sub-title">7. Tầm nhìn & Lời Kết</div>
+            <p class="mb-6">Sunbot hướng tới trở thành chương trình công nghệ nền tảng trong mầm non, mở rộng trên toàn quốc, xây dựng hệ sinh thái học tập cho trẻ từ sớm.</p>
+            
+            <div class="box-dark mt-8 p-8">
+                <p class="font-black text-amber-400 text-[16px] mb-3 uppercase tracking-wide">Sunbot không chỉ là một sản phẩm.</p>
+                <p class="mb-0 text-[14px] font-medium leading-relaxed">Sunbot là: một mô hình giáo dục + một hệ thống kinh doanh + một cơ hội mở rộng dài hạn.</p>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>04</span>
+        </div>
+    </div>
+
+    <div id="page-05" class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">02</div>
+                <div class="section-title mb-0">Bảng Chi Phí<br>Nhượng Quyền Sunbot</div>
+            </div>
+            <p class="text-[12px] font-bold text-slate-400 uppercase tracking-widest mb-6 border-b border-slate-100 pb-3 inline-block">Chưa bao gồm VAT</p>
+            
+            <div class="sub-title mt-2 text-[18px]">1. Franchise Fee (Phí Nhượng Quyền - 1 Lần)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Quy mô vận hành</th>
+                        <th>Phạm vi triển khai</th>
+                        <th class="text-right">Phí (VNĐ)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-bold text-slate-800">S - Khởi điểm</td><td>5 - 10 lớp</td><td class="text-right font-bold text-slate-800">60.000.000</td></tr>
+                    <tr><td class="font-bold text-slate-800">M - Phát triển</td><td>10 - 20 lớp</td><td class="text-right font-bold text-slate-800">120.000.000</td></tr>
+                    <tr><td class="font-bold text-slate-800">L - Mở rộng</td><td>20 - 40 lớp</td><td class="text-right font-bold text-slate-800">200.000.000</td></tr>
+                </tbody>
+            </table>
+            <div class="box-light p-4 mt-2 mb-8">
+                <p class="font-bold text-slate-800 text-[13px] mb-2 uppercase">Bao gồm các quyền lợi:</p>
+                <div class="grid grid-cols-2 gap-2 text-[12.5px] text-slate-600">
+                    <div>1. Quyền triển khai và sử dụng thương hiệu Sunbot.</div>
+                    <div>2. Bộ chương trình: Sunbot Core (L1-9) & Sunbot Camp (STEAM).</div>
+                    <div>3. Bộ vận hành chuẩn: 3 mô hình (Mobile/Hybrid/Lab).</div>
+                    <div>4. Bộ công cụ kinh doanh, tài liệu bán hàng.</div>
+                    <div class="col-span-2">5. Đào tạo & chuyển giao: GV, quản lý và hỗ trợ mở 1-2 điểm đầu tiên.</div>
+                </div>
+            </div>
+
+            <div class="sub-title text-[18px]">2. System Fee (Phí Duy Trì Hệ Thống - Hàng Năm)</div>
+            <h4 class="text-[14px] font-bold text-slate-700 mb-2">2.1. Bản quyền nội dung (36 tháng)</h4>
+            <table class="mb-4">
+                <thead><tr><th>Hạng mục</th><th class="text-right">Chi phí (VNĐ)</th></tr></thead>
+                <tbody>
+                    <tr><td>Giáo án Sunbot (Level 1-9)</td><td class="text-right">18.000.000</td></tr>
+                    <tr><td>Phần mềm Sunbot (Level 1-9)</td><td class="text-right">27.000.000</td></tr>
+                    <tr><td>Giáo án STEAM Sunbot</td><td class="text-right">18.000.000</td></tr>
+                    <tr class="bg-slate-50"><td class="font-bold">Tổng 3 năm</td><td class="text-right font-bold">63.000.000</td></tr>
+                </tbody>
+            </table>
+            <p class="text-right font-bold text-amber-600 text-[14px] mb-6">➔ Bình quân: 21.000.000 / năm</p>
+
+            <h4 class="text-[14px] font-bold text-slate-700 mb-2">2.2. Gói đảm bảo vận hành (bắt buộc)</h4>
+            <table class="mb-4">
+                <thead><tr><th>Hạng mục</th><th class="text-right">Chi phí (VNĐ)</th></tr></thead>
+                <tbody>
+                    <tr><td>Mentoring (10 tháng)</td><td class="text-right">5.000.000</td></tr>
+                    <tr><td>Hotline kỹ thuật</td><td class="text-right">2.000.000</td></tr>
+                    <tr><td>Audit chất lượng</td><td class="text-right">5.000.000</td></tr>
+                    <tr class="bg-slate-50"><td class="font-bold">Tổng</td><td class="text-right font-bold text-orange-600">12.000.000 / năm</td></tr>
+                </tbody>
+            </table>
+            
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 flex justify-between items-center">
+                <span class="font-black text-amber-800 uppercase tracking-widest text-[14px]">2.3. TỔNG SYSTEM FEE</span>
+                <span class="font-black text-amber-600 text-[18px]">~ 33.000.000 / năm</span>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>05</span>
+        </div>
+    </div>
+
+    <div id="page-06" class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Bảng Chi Phí (Tiếp)</div>
+            
+            <div class="sub-title mt-6 text-[18px]">3. CAPEX (Chi Phí Đầu Tư Thiết Bị - Tự Chọn)</div>
+            <p class="mb-6">Nhà đầu tư chủ động mua sắm thiết bị tùy theo mô hình triển khai thực tế.</p>
+            
+            <div class="grid grid-cols-2 gap-6 mb-8">
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <div class="bg-slate-100 px-4 py-3 border-b border-slate-200">
+                        <h4 class="font-bold text-slate-800 text-[13px] mb-0 uppercase">3.1. Cấu hình Mobile / Hybrid</h4>
+                        <p class="text-[10px] text-slate-500 m-0">Khuyến nghị để dễ dàng scale</p>
+                    </div>
+                    <div class="p-4 flex flex-col h-full">
+                        <ul class="text-[12.5px] mb-4 space-y-1">
+                            <li class="before:!bg-slate-400">Robot (3-6 bộ): 13.8 - 27.6 tr</li>
+                            <li class="before:!bg-slate-400">Android Box: 1.5 tr</li>
+                            <li class="before:!bg-slate-400">Học cụ cơ bản: ~5-10 tr</li>
+                            <li class="before:!bg-slate-400">STEAM kit: 13-15 tr</li>
+                        </ul>
+                        <div class="bg-orange-50 text-center py-2 rounded border border-orange-100 mt-auto">
+                            <p class="font-bold text-orange-700 m-0 text-[13px]">Tổng: 30 - 45 triệu / KIT</p>
+                            <p class="text-[10px] text-slate-500 m-0">Phục vụ: 1 KIT = 6-9 lớp</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-slate-200 rounded-xl overflow-hidden">
+                    <div class="bg-slate-100 px-4 py-3 border-b border-slate-200">
+                        <h4 class="font-bold text-slate-800 text-[13px] mb-0 uppercase">3.2. Cấu hình Lab Cố định</h4>
+                        <p class="text-[10px] text-slate-500 m-0">Cấu hình Premium</p>
+                    </div>
+                    <div class="p-4 flex flex-col h-full">
+                        <ul class="text-[12.5px] mb-4 space-y-1">
+                            <li class="before:!bg-slate-400">Robot (6-10 bộ): 27 - 46 tr</li>
+                            <li class="before:!bg-slate-400">TV + tương tác: 12 tr</li>
+                            <li class="before:!bg-slate-400">Học cụ đầy đủ: 15-30 tr</li>
+                            <li class="before:!bg-slate-400">Nội thất (tùy chọn): ~60 tr</li>
+                        </ul>
+                        <div class="bg-slate-50 text-center py-2 rounded border border-slate-200 mt-auto">
+                            <p class="font-bold text-slate-700 m-0 text-[13px]">Tổng: 60 - 100+ triệu / Trường</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-[12.5px] italic text-slate-500 bg-slate-50 p-3 rounded border border-slate-100"><strong>Lưu ý quan trọng:</strong> TV có thể loại bỏ nếu trường đã có. Android Box là thiết bị khuyến nghị bắt buộc. Robot & Học cụ là chi phí đầu tư linh hoạt theo quy mô. STEAM kit là khoản đầu tư khởi tạo ở năm đầu, nhưng có tính tiêu hao cao và cần ngân sách bổ sung định kỳ theo năm học để duy trì chất lượng.</p>
+
+            <div class="sub-title text-[18px] mt-10">4. Tổng Cấu Trúc Đầu Tư Thực Tế</div>
+            <div class="grid grid-cols-2 gap-8 mt-6">
+                <div>
+                    <h4 class="text-[13px] font-bold uppercase tracking-wider text-slate-500 mb-3 border-b border-slate-200 pb-2">Entry tối thiểu để bắt đầu</h4>
+                    <table class="!mb-0 text-[13px]">
+                        <tbody>
+                            <tr><td>Franchise (Gói S)</td><td class="text-right font-medium">60 triệu</td></tr>
+                            <tr><td>System năm 1</td><td class="text-right font-medium">~33 triệu</td></tr>
+                            <tr><td>1 Mobile kit</td><td class="text-right font-medium">~35 triệu</td></tr>
+                            <tr class="bg-orange-50"><td class="font-bold text-orange-700">TỔNG ĐẦU TƯ</td><td class="text-right font-black text-orange-700 text-[15px]">~ 128 triệu</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h4 class="text-[13px] font-bold uppercase tracking-wider text-slate-500 mb-3 border-b border-slate-200 pb-2">Mô hình Scale chuẩn</h4>
+                    <table class="!mb-0 text-[13px]">
+                        <tbody>
+                            <tr><td>Franchise (Gói M)</td><td class="text-right font-medium">120 triệu</td></tr>
+                            <tr><td>System năm 1</td><td class="text-right font-medium">~33 triệu</td></tr>
+                            <tr><td>2-3 kit thiết bị</td><td class="text-right font-medium">~70-120 triệu</td></tr>
+                            <tr class="bg-slate-800"><td class="font-bold text-white">TỔNG ĐẦU TƯ</td><td class="text-right font-black text-amber-400 text-[15px]">~ 220 - 270 triệu</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>06</span>
+        </div>
+    </div>
+
+    <div id="page-07" class="a4-page">
+        <div class="page-watermark">03</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">03</div>
+                <div class="section-title mb-0">Mô Hình Doanh Thu Chuẩn<br><span class="text-[14px] text-slate-500 font-bold tracking-widest normal-case block mt-1">(Áp dụng thống nhất toàn hệ thống)</span></div>
+            </div>
+
+            <div class="sub-title mt-2 text-[18px]">1. Quy Mô Vận Hành Tiêu Chuẩn</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Sĩ số lớp</p>
+                    <p class="font-black text-slate-800 text-[16px] m-0">25 Trẻ (Chuẩn)</p>
+                    <p class="text-[10px] text-slate-500 m-0 mt-1">Tối thiểu: 18 | Tối đa: 30</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Học phí</p>
+                    <p class="font-black text-slate-800 text-[16px] m-0">35k - 50k</p>
+                    <p class="text-[10px] text-slate-500 m-0 mt-1">VNĐ / Buổi / Trẻ</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Tần suất</p>
+                    <p class="font-black text-slate-800 text-[16px] m-0">8 Buổi / Tháng</p>
+                    <p class="text-[10px] text-slate-500 m-0 mt-1">Thời lượng: 30-35 phút</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl text-center">
+                    <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Năng lực GV</p>
+                    <p class="font-black text-slate-800 text-[16px] m-0">~120 Buổi/Tháng</p>
+                    <p class="text-[10px] text-slate-500 m-0 mt-1">Tối đa 6 buổi / ngày</p>
+                </div>
+            </div>
+
+            <div class="sub-title text-[18px]">2. Doanh Thu 1 Lớp / Tháng</div>
+            <table class="mb-8">
+                <thead><tr><th>Chỉ số</th><th class="text-center">Mức Thấp</th><th class="text-center bg-orange-50 text-orange-700 border-b-2 border-orange-500">Mức Chuẩn</th><th class="text-center">Mức Cao</th></tr></thead>
+                <tbody>
+                    <tr><td class="font-bold">Sĩ số</td><td class="text-center">18</td><td class="text-center font-bold bg-orange-50/50">25</td><td class="text-center">30</td></tr>
+                    <tr><td class="font-bold">Doanh thu/trẻ</td><td class="text-center">280k</td><td class="text-center font-bold bg-orange-50/50">320k</td><td class="text-center">400k</td></tr>
+                    <tr><td class="font-bold">Doanh thu/lớp</td><td class="text-center">5.0 M</td><td class="text-center font-black text-orange-600 bg-orange-50">8.0 M</td><td class="text-center">12.0 M</td></tr>
+                </tbody>
+            </table>
+            <p class="text-right font-bold text-slate-700 italic text-[13px] -mt-4 mb-8">➔ Mức chuẩn để vận hành: 7 - 10 triệu / lớp</p>
+
+            <div id="case-study-target" class="sub-title text-[18px]">3. Doanh Thu 1 Điểm Trường (Chuẩn 6 Lớp)</div>
+            <table class="mb-8 w-1/2">
+                <tbody>
+                    <tr><td class="font-bold bg-slate-50 w-1/2">Số lớp</td><td class="font-bold text-center text-[15px]">6</td></tr>
+                    <tr><td class="font-bold bg-slate-50">Doanh thu / lớp</td><td class="font-bold text-center text-[15px]">7 - 10 triệu</td></tr>
+                    <tr><td class="font-bold bg-slate-800 text-white">DOANH THU / THÁNG</td><td class="font-black text-center text-amber-500 text-[18px] bg-slate-900">42 - 60 triệu</td></tr>
+                </tbody>
+            </table>
+
+            <div class="sub-title text-[18px]">4. Chi Phí Hệ Thống Sunbot</div>
+            <div class="grid grid-cols-2 gap-6">
+                <div>
+                    <h4 class="text-[13px] font-bold text-slate-700 mb-2">4.1. Phí theo trẻ</h4>
+                    <table class="!mb-2">
+                        <thead><tr><th>Quy mô</th><th>Mức phí</th></tr></thead>
+                        <tbody>
+                            <tr><td>< 100 trẻ</td><td>35.000 / trẻ / tháng</td></tr>
+                            <tr><td>≥ 100 trẻ</td><td>30.000 / trẻ / tháng</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="text-[11px] text-slate-500 italic m-0">Ví dụ: 1 lớp 25 trẻ = ~750k - 875k / tháng</p>
+                </div>
+                <div>
+                    <h4 class="text-[13px] font-bold text-slate-700 mb-2">4.2. Phí vận hành hệ thống (theo điểm)</h4>
+                    <table class="!mb-2">
+                        <thead><tr><th>Quy mô lớp</th><th>Chi phí</th></tr></thead>
+                        <tbody>
+                            <tr><td>< 4 lớp</td><td>3.000.000</td></tr>
+                            <tr><td>4 - 6 lớp</td><td>4.000.000</td></tr>
+                            <tr><td>> 6 lớp</td><td>5.000.000 - 6.000.000</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p class="mt-4 text-[13px]"><strong class="text-slate-800">4.3. Phí phát triển lớp (Lead Gen):</strong> 200.000 VNĐ / lớp / tháng</p>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>07</span>
+        </div>
+    </div>
+
+    <div id="page-08" class="a4-page">
+        <div class="page-watermark">03</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Mô Hình Doanh Thu Chuẩn (Tiếp)</div>
+            
+            <div class="sub-title mt-6 text-[18px]">5. Lợi Nhuận 1 Điểm Trường (Chuẩn 6 Lớp)</div>
+            
+            <div class="bg-slate-900 rounded-2xl p-8 shadow-xl text-white mb-10">
+                <div class="flex justify-between items-center border-b border-slate-700 pb-4 mb-4">
+                    <span class="text-[16px] font-bold text-slate-300">Tổng Doanh Thu Lớp Học</span>
+                    <span class="text-[22px] font-black text-amber-400">42 - 60 triệu</span>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-[12px] font-bold text-slate-500 uppercase tracking-widest mb-2">Chi phí hệ thống Sunbot</p>
+                    <div class="space-y-2 text-[13px]">
+                        <div class="flex justify-between"><span>• Phí theo trẻ:</span> <span>~4.5 - 5.5 Triệu</span></div>
+                        <div class="flex justify-between"><span>• Phí vận hành:</span> <span>~4 Triệu</span></div>
+                        <div class="flex justify-between"><span>• Phí phát triển lớp:</span> <span>~1.2 Triệu</span></div>
+                    </div>
+                    <div class="flex justify-between border-t border-slate-700/50 mt-2 pt-2">
+                        <span class="font-bold text-slate-300">Tổng chi phí Sunbot</span>
+                        <span class="font-bold text-orange-400">~9.5 - 11 triệu</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center bg-slate-800 p-4 rounded-lg mb-4">
+                    <span class="font-bold text-slate-200">Lợi Nhuận Trước Nhân Sự</span>
+                    <span class="font-black text-[18px] text-white">~32 - 49 triệu</span>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-[12px] font-bold text-slate-500 uppercase tracking-widest mb-2">Chi phí Giáo viên</p>
+                    <div class="flex justify-between text-[13px]">
+                        <span>1-2 giáo viên (Lương ~8-12M/người)</span>
+                        <span class="font-bold text-red-400">~10 - 18 triệu</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center border-t-2 border-slate-600 pt-6 mt-2">
+                    <span class="font-black text-[18px] text-white uppercase">LỢI NHUẬN THỰC TẾ</span>
+                    <span class="font-black text-[28px] text-green-400">20 - 35 triệu <span class="text-[12px] text-slate-400 font-medium">/điểm/tháng</span></span>
+                </div>
+            </div>
+
+            <div class="sub-title text-[18px]">6. Tầm Nhìn Mở Rộng & Scale</div>
+            <div class="grid grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h4 class="text-[14px] font-bold text-slate-800 mb-3 border-b border-slate-200 pb-2">Mô hình 1 KIT (Mobile)</h4>
+                    <ul class="text-[13px] space-y-1 mb-4">
+                        <li class="before:!bg-slate-400">Quy mô: 1 KIT = 6-9 Lớp</li>
+                        <li class="before:!bg-slate-400">Triển khai: 2-3 điểm trường</li>
+                    </ul>
+                    <table class="!mb-0 text-[12px]">
+                        <thead><tr><th>Mức độ</th><th class="text-right">Doanh thu</th></tr></thead>
+                        <tbody>
+                            <tr><td>Thấp</td><td class="text-right font-medium">42 Triệu</td></tr>
+                            <tr><td class="font-bold text-orange-600">Chuẩn</td><td class="text-right font-bold text-orange-600">60 - 72 Triệu</td></tr>
+                            <tr><td>Cao</td><td class="text-right font-medium">108 Triệu</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="mt-2 text-center bg-green-50 text-green-700 font-bold py-2 rounded text-[13px]">Lợi nhuận: 25 - 50 triệu/KIT/tháng</p>
+                </div>
+                <div>
+                    <h4 class="text-[14px] font-bold text-slate-800 mb-3 border-b border-slate-200 pb-2">Mô hình Mở Rộng Hệ Thống</h4>
+                    <table class="!mb-0 text-[12px]">
+                        <thead>
+                            <tr><th>Quy mô</th><th>Doanh Thu</th><th class="text-right">Lợi Nhuận</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="font-bold">1 KIT</td><td>42 - 108 M</td><td class="text-right font-bold text-slate-700">25 - 50 M</td></tr>
+                            <tr><td class="font-bold text-orange-600">2 KIT</td><td class="text-orange-700">84 - 216 M</td><td class="text-right font-black text-orange-600">50 - 90 M</td></tr>
+                            <tr><td class="font-bold text-amber-600">3 KIT</td><td class="text-amber-700">126 - 324 M</td><td class="text-right font-black text-amber-600">80 - 150 M</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box-light p-6">
+                <p class="font-black text-[14px] uppercase tracking-widest text-slate-800 border-b border-slate-200 pb-2 mb-3">Định vị cốt lõi</p>
+                <p class="mb-2 text-[14px] leading-relaxed">Sunbot là mô hình giáo dục có dòng tiền định kỳ theo tháng, không phụ thuộc bán thiết bị một lần. Có thể nhân bản nhanh chóng theo số lớp hoặc số điểm trường.</p>
+                <p class="mb-0 text-[14px] leading-relaxed"><strong class="text-orange-600">Bài toán đầu tư:</strong> Bỏ ra 130 - 230 triệu ➔ Sở hữu năng lực triển khai ➔ Tạo dòng tiền ròng 40 - 100 triệu/tháng/KIT.</p>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>08</span>
+        </div>
+    </div>
+
+    <div id="page-09" class="a4-page">
+        <div class="page-watermark">04</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">04</div>
+                <div class="section-title mb-0">Lộ Trình Mở Rộng 6 Tháng<br><span class="text-[14px] text-slate-500 font-bold tracking-widest normal-case block mt-1">(Scale từ 0 đến 3 KIT)</span></div>
+            </div>
+
+            <div class="relative pl-8 md:pl-0 mt-10">
+                <div class="absolute left-0 md:left-[50%] top-0 bottom-0 w-1 bg-slate-200 md:-translate-x-1/2 rounded"></div>
+
+                <div class="relative mb-10 w-full md:w-1/2 md:pr-12 md:text-right">
+                    <div class="absolute -left-10 md:left-auto md:-right-[26px] top-1/2 -translate-y-1/2 w-4 h-4 bg-slate-400 rounded-full border-4 border-white shadow-sm z-10"></div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                        <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Giai đoạn 1 (Tháng 1 - 2)</p>
+                        <h4 class="text-[18px] font-black text-slate-800 mb-2">Khởi Động: 1 KIT (4-6 Lớp)</h4>
+                        <p class="text-[13px] text-slate-600 mb-3">Trọng tâm là Test thị trường, hoàn thiện vận hành và tuyển sinh ban đầu. Đây là bước đệm tối quan trọng.</p>
+                        <div class="bg-white p-3 rounded border border-slate-100 text-left md:text-right text-[12px]">
+                            <span class="font-bold text-slate-700">DT: 30 - 50 triệu | LN: Hòa vốn/Thấp</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative mb-10 w-full md:w-1/2 md:ml-auto md:pl-12">
+                    <div class="absolute -left-10 md:-left-[6px] top-1/2 -translate-y-1/2 w-4 h-4 bg-orange-400 rounded-full border-4 border-white shadow-sm z-10"></div>
+                    <div class="bg-orange-50 p-6 rounded-2xl border border-orange-200">
+                        <p class="text-[11px] font-black text-orange-500 uppercase tracking-widest mb-1">Giai đoạn 2 (Tháng 3 - 4)</p>
+                        <h4 class="text-[18px] font-black text-orange-900 mb-2">Ổn Định: 1 KIT Full Tải (7-9 Lớp)</h4>
+                        <p class="text-[13px] text-orange-800 mb-3">Bắt đầu mở thêm trường. Tối ưu hóa lịch dạy của giáo viên. Bắt đầu có biên lợi nhuận rõ rệt.</p>
+                        <div class="bg-white p-3 rounded border border-orange-100 text-left text-[12px]">
+                            <span class="font-bold text-orange-700">DT: 60 - 90 triệu | LN: 15 - 25 triệu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative mb-10 w-full md:w-1/2 md:pr-12 md:text-right">
+                    <div class="absolute -left-10 md:left-auto md:-right-[26px] top-1/2 -translate-y-1/2 w-4 h-4 bg-blue-500 rounded-full border-4 border-white shadow-sm z-10"></div>
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-200">
+                        <p class="text-[11px] font-black text-blue-500 uppercase tracking-widest mb-1">Giai đoạn 3 (Tháng 5 - 6)</p>
+                        <h4 class="text-[18px] font-black text-blue-900 mb-2">Mở Rộng: Nhân Bản 2 KIT (12-18 Lớp)</h4>
+                        <p class="text-[13px] text-blue-800 mb-3">Mô hình đã được chứng minh, tập trung tuyển thêm giáo viên. Lợi nhuận tăng vọt.</p>
+                        <div class="bg-white p-3 rounded border border-blue-100 text-left md:text-right text-[12px]">
+                            <span class="font-bold text-blue-700">DT: 120 - 200 triệu | LN: 30 - 60 triệu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative w-full md:w-1/2 md:ml-auto md:pl-12">
+                    <div class="absolute -left-10 md:-left-[6px] top-1/2 -translate-y-1/2 w-4 h-4 bg-amber-500 rounded-full border-4 border-white shadow-sm z-10"></div>
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-700 shadow-lg text-white">
+                        <p class="text-[11px] font-black text-amber-400 uppercase tracking-widest mb-1">Giai đoạn 4 (Sau 6 tháng)</p>
+                        <h4 class="text-[18px] font-black text-white mb-2">Scale: Hệ Thống 3+ KITS (18-27+ Lớp)</h4>
+                        <p class="text-[13px] text-slate-300 mb-3">Tăng trưởng bứt phá không phụ thuộc vào Marketing lớn. Hệ thống tự vận hành.</p>
+                        <div class="bg-slate-800 p-3 rounded border border-slate-600 text-left text-[12px]">
+                            <span class="font-bold text-amber-400">DT: 180 - 300 triệu | LN: 50 - 100 triệu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-light p-6 mt-10">
+                <h4 class="font-black text-slate-800 uppercase tracking-wide text-[14px] border-b border-slate-200 pb-2 mb-3">Nguyên tắc mở rộng</h4>
+                <ul class="mb-0 text-[13px]">
+                    <li>Không mở KIT mới khi KIT cũ chưa được lấp đầy lớp.</li>
+                    <li>Luôn đảm bảo giáo viên đủ số tiết trong ngày (5-6 tiết/ngày).</li>
+                    <li>Mở theo cụm trường địa lý để tối ưu chi phí và thời gian di chuyển.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>09</span>
+        </div>
+    </div>
+
+    <div id="page-10" class="a4-page">
+        <div class="page-watermark">05</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">05</div>
+                <div class="section-title mb-0">Quản Trị Rủi Ro<br>Trong Mô Hình Sunbot</div>
+            </div>
+            
+            <p class="text-[14px] mb-8 font-medium">Sunbot không chỉ cung cấp chương trình, mà chuyển giao một mô hình vận hành đã được chuẩn hóa. Các rủi ro phổ biến đều đã được dự liệu và có phương án xử lý rõ ràng.</p>
+
+            <div class="grid grid-cols-1 gap-6">
+                <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center gap-4">
+                        <div class="bg-red-100 text-red-600 font-black px-3 py-1 rounded text-xs uppercase tracking-wider">Rủi Ro 1</div>
+                        <h4 class="font-bold text-slate-800 m-0 text-[15px]">Tuyển sinh không đủ lớp</h4>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[13px] text-slate-500 mb-3"><strong class="text-slate-800">Thực trạng:</strong> Không đạt đủ số lớp để tối ưu vận hành, doanh thu không đạt kỳ vọng.</p>
+                        <p class="text-[13px] text-slate-700 mb-0 leading-relaxed"><strong class="text-green-600">Giải pháp từ Sunbot:</strong> Cung cấp bộ tài liệu tuyển sinh chuẩn, kịch bản truyền thông và hội thảo phụ huynh. Hỗ trợ chuyên gia tổ chức Demo lớp học mẫu tạo tỷ lệ chuyển đổi lập tức. Nguyên tắc: Triển khai thử nghiệm quy mô nhỏ (4-6 lớp) trước khi mở rộng.</p>
+                    </div>
+                </div>
+
+                <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center gap-4">
+                        <div class="bg-orange-100 text-orange-600 font-black px-3 py-1 rounded text-xs uppercase tracking-wider">Rủi Ro 2</div>
+                        <h4 class="font-bold text-slate-800 m-0 text-[15px]">Giáo viên không đạt chuẩn</h4>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-[13px] text-slate-500 mb-3"><strong class="text-slate-800">Thực trạng:</strong> Chất lượng lớp không đồng đều, ảnh hưởng trải nghiệm phụ huynh.</p>
+                        <p class="text-[13px] text-slate-700 mb-0 leading-relaxed"><strong class="text-green-600">Giải pháp từ Sunbot:</strong> Đào tạo tập trung trước khi đứng lớp. Cung cấp giáo án chuẩn hóa 100%. Áp dụng quy chế: Chỉ giáo viên vượt qua bài sát hạch mới được đứng lớp. Audit định kỳ để kiểm tra chất lượng giảng dạy thực tế.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+                            <h4 class="font-bold text-slate-800 m-0 text-[13px] uppercase">Không lấp đầy lịch dạy</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-[12.5px] text-slate-700 mb-0"><strong class="text-green-600">Giải pháp:</strong> Thiết kế lịch dạy theo cụm trường địa lý. 1 KIT vận hành xoay vòng 2-3 trường. Đảm bảo hiệu suất GV đạt 5-6 tiết/ngày.</p>
+                        </div>
+                    </div>
+                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        <div class="bg-slate-50 px-4 py-3 border-b border-slate-200">
+                            <h4 class="font-bold text-slate-800 m-0 text-[13px] uppercase">Học cụ tiêu hao nhanh</h4>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-[12.5px] text-slate-700 mb-0"><strong class="text-green-600">Giải pháp:</strong> Thiết kế bộ học cụ có chu kỳ chuẩn (10 tháng). Hướng dẫn quy trình bảo quản. Có khả năng tái sử dụng ~20% qua các năm.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-dark mt-8 p-8">
+                <p class="font-black text-amber-400 uppercase tracking-widest text-[14px] mb-3 border-b border-slate-700 pb-2">Cam Kết Hệ Thống</p>
+                <p class="text-[14px] text-slate-300 leading-relaxed mb-0">Mô hình Sunbot không loại bỏ hoàn toàn rủi ro, nhưng giảm thiểu rủi ro vận hành xuống mức thấp nhất thông qua quy trình chuẩn. Sunbot cam kết đồng hành cùng đối tác trong suốt quá trình hoạt động, liên tục cập nhật giáo án và hỗ trợ xử lý ngay các vấn đề phát sinh.</p>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>10</span>
+        </div>
+    </div>
+
+    <div id="page-11" class="a4-page">
+        <div class="page-watermark">06</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">06</div>
+                <div class="section-title mb-0">Tại Sao Nên Bắt Đầu<br>Sunbot Ngay Bây Giờ?</div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-x-8 gap-y-6 mb-10">
+                <div>
+                    <h4 class="font-black text-slate-800 text-[15px] mb-1">1. Thị trường đang mở - Nhưng không mở mãi</h4>
+                    <p class="text-[13px] text-slate-600">Nhu cầu phụ huynh về giáo dục công nghệ mầm non tăng rất mạnh, nhưng cực hiếm trường có năng lực tổ chức bài bản. Giai đoạn này: Ai vào trước, chiếm vị trí trước.</p>
+                </div>
+                <div>
+                    <h4 class="font-black text-slate-800 text-[15px] mb-1">2. Lợi thế kẻ đi trước</h4>
+                    <p class="text-[13px] text-slate-600">Đối tác triển khai sớm sẽ chiếm lĩnh thị trường địa phương, tạo nhận diện mạnh với phụ huynh. Người đi sau sẽ vấp phải rào cản cực lớn.</p>
+                </div>
+                <div>
+                    <h4 class="font-black text-slate-800 text-[15px] mb-1">3. Mô hình đã sẵn sàng</h4>
+                    <p class="text-[13px] text-slate-600">Không cần xây từ đầu, không cần thử sai. Giáo án, quy trình, nền tảng đều đã sẵn sàng để bạn scale.</p>
+                </div>
+                <div>
+                    <h4 class="font-black text-slate-800 text-[15px] mb-1">4. Hoàn vốn nhanh</h4>
+                    <p class="text-[13px] text-slate-600">3 - 5 tháng là tốc độ thu hồi vốn hiếm có trong ngành giáo dục, tạo tiền đề sinh lời rất dài hạn.</p>
+                </div>
+            </div>
+
+            <div class="sub-title text-[18px]">So Sánh: Sunbot vs Tự Triển Khai</div>
+            <p class="text-[13.5px] mb-4">Tại sao không tự làm để tiết kiệm "Phí hệ thống"? Sự thật tàn khốc nằm ở "Chi phí sai lầm" (Hidden Costs).</p>
+            
+            <table class="border border-slate-200 shadow-sm rounded-xl overflow-hidden mb-8">
+                <thead>
+                    <tr>
+                        <th width="30%">Tiêu Chí</th>
+                        <th width="35%" class="bg-orange-50 text-orange-800 border-b-2 border-orange-500">Sunbot (Hệ thống chuẩn)</th>
+                        <th width="35%" class="bg-slate-100">Tự Triển Khai Lớp STEAM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-bold text-slate-800">Doanh Thu Cùng Sĩ Số</td><td class="font-bold text-orange-700 bg-orange-50/50">42 - 60 Triệu/Tháng</td><td class="text-slate-600">Tương đương (Nếu làm tốt)</td></tr>
+                    <tr><td class="font-bold text-slate-800">Chi Phí Hệ Thống</td><td class="font-bold text-orange-700 bg-orange-50/50">~ 9 - 10 Triệu/Tháng</td><td class="text-slate-600">0đ (Về mặt hình thức)</td></tr>
+                    <tr><td class="font-bold text-slate-800">Chi Phí SAI LẦM</td><td class="font-black text-green-600 bg-orange-50/50">RẤT THẤP</td><td class="font-black text-red-500">RẤT CAO</td></tr>
+                    <tr><td class="font-bold text-slate-800">Sự Ổn Định Lớp Học</td><td class="font-bold text-orange-700 bg-orange-50/50">Bền vững, giữ trẻ tốt</td><td class="text-slate-600">Bấp bênh, dễ "vỡ lớp"</td></tr>
+                    <tr><td class="font-bold text-slate-800">Tuyển Sinh & Hình Ảnh</td><td class="font-bold text-orange-700 bg-orange-50/50">Có Framework & Hỗ trợ</td><td class="text-slate-600">Phụ thuộc hoàn toàn cá nhân</td></tr>
+                </tbody>
+            </table>
+
+            <div class="bg-slate-900 p-8 rounded-2xl shadow-xl mt-auto relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-orange-600 rounded-full blur-[50px] opacity-40"></div>
+                <p class="font-black text-amber-400 uppercase tracking-widest text-[13px] border-b border-slate-700 pb-2 mb-4 relative z-10">Thông Điệp Lõi</p>
+                <p class="text-white text-[15px] font-medium leading-relaxed italic mb-0 relative z-10">
+                    "Việc tự triển khai không tốn 'Phí hệ thống' nhưng tốn 'Chi phí sai lầm'. Lựa chọn Sunbot thực chất là <strong class="font-black text-amber-400">ĐẦU TƯ ĐỂ ĐI NHANH VÀ ĐI CHẮC</strong> thay vì tiết kiệm ban đầu nhưng trả giá bằng thời gian và rủi ro đổ vỡ mô hình."
+                </p>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="flex items-center gap-3">
+                <img src="../../assets/img/logo-sunbot.png" alt="Sunbot Logo" class="h-5 object-contain grayscale opacity-70" onerror="this.style.display='none'"/>
+                <span class="border-l border-slate-300 pl-3 text-[9px]">Kiro Vietnam (Bản Quyền)</span>
+            </div>
+            <span>11</span>
+        </div>
+    </div>
+
+</body>
+</html>

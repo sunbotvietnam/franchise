@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tờ Trình Mẫu Chuẩn Kiro - 12pt</title>
+    <style>
+        /* RESET & CSS VARIABLES */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --font-main: 'Times New Roman', Times, serif;
+            --size-main: 12pt;
+            --line-height: 1.3; /* Giãn dòng thống nhất 1.3 */
+            --color-edit: #1d4ed8;
+            --bg-edit: #eff6ff;
+        }
+
+        body {
+            font-family: var(--font-main);
+            font-size: var(--size-main);
+            line-height: var(--line-height);
+            color: #000;
+            background-color: #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* PRINT BUTTON */
+        .print-btn-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        .print-btn {
+            background-color: #0f172a;
+            color: #fff;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .print-btn:hover { background-color: #2563eb; transform: translateY(-2px); }
+
+        /* A4 PAGE SETUP */
+        .page {
+            background-color: #fff;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 20mm 20mm 30mm;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+            text-align: justify;
+            text-justify: inter-word;
+            text-align-last: left;
+        }
+
+        /* TYPOGRAPHY */
+        .bold { font-weight: bold; }
+        .italic { font-style: italic; }
+        
+        h1 { font-size: 14pt; font-weight: bold; text-align: center; text-align-last: center; margin: 12pt 0; line-height: var(--line-height); }
+        h2 { font-size: var(--size-main); font-weight: normal; text-align: center; text-align-last: center; margin: 6pt 0; line-height: var(--line-height); }
+        
+        p { 
+            margin-bottom: 6pt; 
+            text-align: justify; 
+            text-align-last: left; 
+            text-indent: 0; 
+            line-height: var(--line-height);
+        }
+        .center-p { text-align: center; text-align-last: center; }
+
+        /* HEADER (QUỐC HIỆU - CƠ QUAN) */
+        .header-table { width: 100%; border-collapse: collapse; margin-bottom: 12pt; }
+        .header-table td { vertical-align: top; padding: 0; line-height: var(--line-height); }
+        .header-left { width: 40%; text-align: center; text-align-last: center; }
+        .header-right { width: 60%; text-align: center; text-align-last: center; }
+        
+        .line-short { border-top: 1px solid black; width: 40%; margin: 2px auto 0 auto; }
+        .line-motto { border-top: 1px solid black; width: 55%; margin: 2px auto 0 auto; }
+
+        /* INLINE EDITABLE */
+        .edit-inline {
+            color: var(--color-edit);
+            outline: none;
+            display: inline-block;
+            min-width: 10px;
+            border-bottom: 1px dashed transparent;
+            transition: all 0.2s;
+        }
+        .edit-inline:focus {
+            background-color: var(--bg-edit);
+            border-bottom: 1px dashed var(--color-edit);
+        }
+        .edit-inline:empty:before {
+            content: attr(data-placeholder);
+            color: #94a3b8;
+            pointer-events: none;
+        }
+
+        /* FORM ROWS & DOTS */
+        .form-row {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 6pt;
+            width: 100%;
+            line-height: var(--line-height);
+        }
+        .form-label { white-space: nowrap; padding-right: 5px; }
+        .form-dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted #000;
+            color: var(--color-edit);
+            outline: none;
+            padding-bottom: 1px;
+            min-height: 1.2em;
+        }
+        .form-dots:focus { background-color: var(--bg-edit); border-bottom: 1px solid var(--color-edit); }
+
+        /* DANH SÁCH - KHÔNG THỤT LỀ */
+        ul { list-style-type: none; margin: 0; padding: 0; }
+        .list-dash, .list-plus, .list-alpha { padding-left: 0; margin-bottom: 6pt; }
+        
+        .list-dash li, .list-plus li, .list-alpha li { 
+            position: relative; 
+            padding-left: 15px; 
+            margin-bottom: 4pt; 
+            text-align: justify; 
+            text-align-last: left;
+            line-height: var(--line-height);
+        }
+        
+        .list-dash li::before { content: "-"; position: absolute; left: 0; top: 0; }
+        .list-plus li::before { content: "+"; position: absolute; left: 0; top: 0; }
+
+        .list-alpha { counter-reset: alpha-counter; }
+        .list-alpha li { padding-left: 20px; }
+        .list-alpha li::before { 
+            counter-increment: alpha-counter;
+            content: counter(alpha-counter, lower-alpha) ")";
+            position: absolute; left: 0; top: 0; 
+        }
+
+        /* DATA TABLES - BẢNG GỌN GÀNG CHUYÊN NGHIỆP */
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12pt 0;
+            font-size: var(--size-main);
+            line-height: var(--line-height);
+        }
+        table.data-table th, table.data-table td {
+            border: 1px solid #000;
+            padding: 8px 10px; /* Căn chỉnh padding cho thanh thoát */
+            text-align: center;
+            vertical-align: middle;
+            text-align-last: center;
+        }
+        table.data-table td[style*="text-align: left"] {
+            text-align: justify;
+            text-align-last: left;
+        }
+        table.data-table th { font-weight: bold; }
+
+        /* SIGNATURE AREA - CĂN GIỮA CHUẨN XÁC */
+        .sign-area { 
+            width: 100%; 
+            display: flex; 
+            margin-top: 20pt; 
+            page-break-inside: avoid; 
+        }
+        .sign-left { 
+            width: 50%; 
+            text-align: left; 
+            text-align-last: left; 
+        }
+        .sign-right { 
+            width: 50%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; /* Đảm bảo mọi dòng bên phải được căn giữa tuyệt đối */
+            text-align: center; 
+            text-align-last: center; 
+        }
+
+        /* PAGE NUMBERS */
+        .page-number {
+            position: absolute;
+            bottom: 15mm;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            text-align-last: center;
+            font-size: 12pt;
+        }
+
+        /* HIỆU ỨNG CHO CÁC TRƯỜNG TÍNH TOÁN */
+        .calc-trigger {
+            border-bottom: 1px dashed var(--color-edit);
+            font-weight: bold;
+        }
+
+        /* =======================================================
+           PRINT MEDIA QUERIES - TỐI ƯU CẮT TRANG A4
+           ======================================================= */
+        @media print {
+            body { background-color: #fff; padding: 0; }
+            .print-btn-container { display: none; }
+            
+            /* Kích thước giấy chuẩn A4 và canh lề hệ thống */
+            @page { size: A4; margin: 20mm 20mm 20mm 30mm; }
+            
+            .page { 
+                box-shadow: none; 
+                margin: 0; 
+                /* Xoá padding vì @page đã đảm nhận việc lùi lề để chống nhân đôi lề */
+                padding: 0 !important; 
+                /* Chiều cao chuẩn xác của vùng hiển thị A4 (297 - 20 - 20) */
+                min-height: 257mm; 
+                page-break-after: always; 
+            }
+            
+            /* THUẬT TOÁN CHỐNG CẮT NGANG KHỐI */
+            h1, h2, p.bold { break-after: avoid; page-break-after: avoid; }
+            table, .sign-area, .form-row, ul { break-inside: avoid; page-break-inside: avoid; }
+            
+            .edit-inline, .form-dots, .calc-trigger { color: #000 !important; border-bottom-color: #000 !important; }
+            .edit-inline:empty:before { content: "......................"; color: #000; }
+            .form-dots:empty { border-bottom: 1px dotted #000 !important; }
+            
+            /* Gắn chặt số trang vào sát đáy vùng hiển thị */
+            .page-number { bottom: 0; } 
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FLOATING PRINT BUTTON -->
+    <div class="print-btn-container">
+        <button class="print-btn" onclick="smartPrint()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            XUẤT PDF / IN VĂN BẢN
+        </button>
+    </div>
+
+    <!-- ================= TRANG 1: TỜ TRÌNH ================= -->
+    <div class="page">
+        <!-- HEADER -->
+        <table class="header-table">
+            <tr>
+                <td class="header-left">
+                    <div class="bold">CÔNG TY CP CÔNG NGHỆ<br>GIÁO DỤC KIRO VIỆT NAM</div>
+                    <div class="line-short"></div>
+                    <div style="margin-top: 4pt;">Số: 0109/TTr-KIRO</div>
+                </td>
+                <td class="header-right">
+                    <div class="bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                    <div class="bold">Độc lập - Tự do - Hạnh phúc</div>
+                    <div class="line-motto"></div>
+                    <div class="italic" style="margin-top: 6pt;">
+                        Hà Nội, ngày <span class="edit-inline" contenteditable="true" data-placeholder="...">01</span> tháng <span class="edit-inline" contenteditable="true" data-placeholder="...">09</span> năm <span class="edit-inline" contenteditable="true" data-placeholder="...">2026</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- TITLE -->
+        <h1>TỜ TRÌNH</h1>
+        <h2 class="italic">V/v Đề nghị cấp phép hoạt động giáo dục STEAM<br>và hoạt động giáo dục ngoài giờ chính khóa</h2>
+        
+        <p class="bold center-p" style="margin-top: 15pt;">
+            Kính gửi: Sở Giáo dục và Đào tạo <span class="edit-inline" contenteditable="true" id="so-gd" data-placeholder="......................................................"></span>
+        </p>
+
+        <!-- CĂN CỨ -->
+        <div style="margin-top: 15pt; margin-bottom: 10pt;">
+            <p class="italic">Căn cứ Thông tư 04/2014/TT-BGDĐT ngày 28/02/2014 của Bộ Giáo dục và Đào tạo quy định về hoạt động giáo dục kỹ năng sống và hoạt động giáo dục ngoài giờ chính khóa;</p>
+            <p class="italic">Căn cứ Công văn số 463/BGDĐT-GDTX ngày 28/01/2015 của Bộ Giáo dục và Đào tạo về việc hướng dẫn triển khai thực hiện giáo dục kỹ năng sống tại các cơ sở giáo dục mầm non, giáo dục phổ thông và giáo dục thường xuyên;</p>
+            <p class="italic">Căn cứ Quyết định số 1501/QĐ-TTg ngày 28/08/2015 của Thủ tướng Chính phủ phê duyệt Đề án "Tăng cường giáo dục lý tưởng cách mạng, đạo đức, lối sống cho thanh niên, thiếu niên và nhi đồng giai đoạn 2015-2020";</p>
+            <p class="italic">Căn cứ Công văn số 4026/BGDĐT-GDCTHSSV ngày 01/09/2017 của Bộ Giáo dục và Đào tạo về tăng cường giáo dục kỹ năng sống cho học sinh;</p>
+            <p class="italic">Căn cứ Chứng nhận Chương trình "STEAM cùng Sunbot" cấp ngày 30/08/2019 của Viện Nghiên cứu Giáo dục Phát triển Tiềm năng Con người (IPD);</p>
+            <p class="italic">Căn cứ Quyết định số 01/QĐ-TTNCGDMN ngày 16/01/2020 của Trung tâm Nghiên cứu Giáo dục Mầm non (Viện Khoa học Giáo dục Việt Nam) về việc thành lập Hội đồng thẩm định Chương trình "STEAM cùng Sunbot - Lập trình tư duy cho trẻ mầm non";</p>
+            <p class="italic">Căn cứ Giấy phép số 1715/GDĐT-TC ngày 24/05/2018 của Sở Giáo dục và Đào tạo Thành phố Hồ Chí Minh về Giấy phép hoạt động giáo dục "STEAM cùng Sunbot - Lập trình tư duy cho trẻ mầm non" và hoạt động giáo dục ngoài giờ chính khóa.</p>
+        </div>
+
+        <p>Với mong muốn tiếp tục đóng góp cho sự nghiệp giáo dục và đào tạo, đáp ứng nhu cầu học tập, rèn luyện, nâng cao kỹ năng sống cho học sinh mầm non trên địa bàn <span class="edit-inline" contenteditable="true" data-placeholder="......................................................"></span>, Công ty Cổ phần Công nghệ Giáo dục Kiro Việt Nam kính trình Sở Giáo dục và Đào tạo <span class="edit-inline" contenteditable="true" id="so-gd-2" data-placeholder="........................................"></span> xem xét cấp phép hoạt động giáo dục "STEAM cùng Sunbot - Lập trình tư duy cho trẻ mầm non" và hoạt động giáo dục ngoài giờ chính khóa. Nội dung cụ thể như sau:</p>
+
+        <!-- MỤC 1 -->
+        <p class="bold" style="margin-top: 10pt;">1. Thông tin tổ chức đăng ký</p>
+        <div>
+            <div class="form-row"><div class="form-label">- Tên công ty:</div><div class="form-dots" contenteditable="true">Công ty Cổ phần Công nghệ Giáo dục Kiro Việt Nam</div></div>
+            <div class="form-row"><div class="form-label">- Giấy chứng nhận đăng ký doanh nghiệp số:</div><div class="form-dots" contenteditable="true"></div></div>
+            <div class="form-row"><div class="form-label">- Địa chỉ trụ sở chính:</div><div class="form-dots" contenteditable="true">Số 4, Lý Thường Kiệt, P. Phan Chu Trinh, Q. Hoàn Kiếm, HN</div></div>
+            <div class="form-row">
+                <div class="form-label">- Điện thoại liên hệ:</div><div class="form-dots" contenteditable="true" style="flex: 0.4;">08336 15588</div>
+                <div class="form-label" style="margin-left: 15px;">Email:</div><div class="form-dots" contenteditable="true">sunbotvietnam@gmail.com</div>
+            </div>
+        </div>
+
+        <!-- MỤC 2 -->
+        <p class="bold" style="margin-top: 10pt;">2. Địa điểm đăng ký hoạt động</p>
+        <div>
+            <div class="form-row"><div class="form-label">- Giấy chứng nhận đăng ký địa điểm kinh doanh số:</div><div class="form-dots" contenteditable="true"></div></div>
+            <div class="form-row"><div class="form-label">- Địa chỉ hoạt động:</div><div class="form-dots" contenteditable="true"></div></div>
+            <div class="form-row"><div class="form-label">- Số điện thoại cơ sở:</div><div class="form-dots" contenteditable="true"></div></div>
+        </div>
+
+        <!-- MỤC 3 -->
+        <p class="bold" style="margin-top: 10pt;">3. Mục tiêu đào tạo</p>
+        <p class="bold">3.1. Chương trình "Lập trình tư duy cùng Sunbot"</p>
+        <ul class="list-alpha">
+            <li>Kiến thức: Trẻ tiếp cận nhanh với khoa học kỹ thuật thông qua việc lập trình Robot.</li>
+            <li>Kỹ năng: Phát triển kỹ năng giải quyết vấn đề bằng lập trình tư duy.</li>
+            <li>Thái độ: Rèn luyện trí thông minh logic, sự kiên nhẫn và sáng tạo.</li>
+        </ul>
+        <p class="bold" style="margin-top: 4pt;">3.2. Chương trình "STEAM cùng Sunbot – Khoa học và tái chế"</p>
+        <ul class="list-alpha">
+            <li>Kiến thức: Phát triển nhận thức, tự tổng hợp các quy luật nguyên nhân - hệ quả thực tế.</li>
+            <li>Kỹ năng: Tự khám phá, tái chế các sản phẩm từ vật liệu đã qua sử dụng.</li>
+            <li>Thái độ: Hình thành ý thức sống xanh, bảo vệ môi trường sống.</li>
+        </ul>
+
+        <!-- PAGE NUMBER -->
+        <div class="page-number">- 1 -</div>
+    </div>
+
+    <!-- ================= TRANG 2: TỜ TRÌNH (Tiếp) ================= -->
+    <div class="page">
+        <!-- MỤC 4 -->
+        <p class="bold" style="margin-top: 0;">4. Nhiệm vụ</p>
+        <p>Góp phần giúp người học hình thành, phát triển những thói quen, hành vi, thái độ tích cực, lành mạnh trong việc ứng xử với các tình huống cá nhân và xã hội; qua đó hoàn thiện nhân cách, định hướng phát triển bản thân dựa trên nền tảng các giá trị sống, đáp ứng nhu cầu người học ngoài chương trình giáo dục chính khóa.</p>
+
+        <!-- MỤC 5 -->
+        <p class="bold" style="margin-top: 10pt;">5. Cơ sở pháp lý và Nội dung chương trình giáo dục</p>
+        <p>Chương trình "STEAM cùng Sunbot" đã trải qua quy trình đánh giá khắt khe, khẳng định tính giáo dục, sư phạm, thẩm mỹ và được công nhận bởi các cơ quan chuyên môn. Cụ thể:</p>
+        <ul class="list-dash">
+            <li>Được cấp Chứng nhận bởi Viện Nghiên cứu Giáo dục Phát triển Tiềm năng Con người (IPD) ngày 30/08/2019.</li>
+            <li>Được Hội đồng chuyên môn (thành lập theo Quyết định số 01/QĐ-TTNCGDMN ngày 16/01/2020) thuộc Trung tâm Nghiên cứu Giáo dục Mầm non – Viện Khoa học Giáo dục Việt Nam thẩm định.</li>
+        </ul>
+        <p style="margin-top: 6pt;">Nội dung đăng ký cấp phép triển khai bao gồm 02 phân hệ chính <span class="italic">(Chi tiết giáo trình đính kèm)</span>:</p>
+        <ul class="list-dash">
+            <li>Chương trình giáo dục: "Lập trình tư duy cùng robot Sunbot".</li>
+            <li>Chương trình giáo dục: "STEAM cùng Sunbot - Khoa học tái chế".</li>
+        </ul>
+
+        <!-- MỤC 6 -->
+        <p class="bold" style="margin-top: 10pt;">6. Đối tượng người học</p>
+        <p>Học sinh trong độ tuổi mầm non (từ 3 tuổi đến 6 tuổi).</p>
+
+        <!-- MỤC 7 -->
+        <p class="bold" style="margin-top: 10pt;">7. Hình thức triển khai</p>
+        <p>Công ty thông tin và triển khai chương trình đến các cơ sở giáo dục trên địa bàn <span class="edit-inline" contenteditable="true" data-placeholder="............................................."></span>, đảm bảo nguyên tắc học sinh tham gia trên tinh thần hoàn toàn tự nguyện. Các hình thức tổ chức:</p>
+        <ul class="list-dash">
+            <li>Tổ chức giảng dạy trực tiếp tại địa điểm đăng ký kinh doanh của công ty.</li>
+            <li>Phối hợp triển khai tại các cơ sở giáo dục theo Công văn số 463/BGDĐT-GDTX ngày 28/01/2015 của Bộ Giáo dục và Đào tạo. Công ty cùng các cơ sở giáo dục lập hồ sơ trình Trưởng phòng Giáo dục và Đào tạo quận/huyện xác nhận đăng ký hoạt động theo quy định.</li>
+        </ul>
+
+        <!-- MỤC 8 -->
+        <p class="bold" style="margin-top: 10pt;">8. Mức thu học phí dự kiến</p>
+        <p>Hoạt động giáo dục được tổ chức trên cơ sở xã hội hóa và sự đồng thuận bằng văn bản của phụ huynh học sinh. Kinh phí thực hiện dự kiến:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 32%;">Tên chương trình</th>
+                    <th style="width: 17%;">Tổng thu<br>(VNĐ/hs/tháng)</th>
+                    <th style="width: 15%;">Thời lượng<br>(Tiết/tháng)</th>
+                    <th style="width: 16%;">Học phí giảng dạy</th>
+                    <th style="width: 20%;">Học liệu, phần mềm & Quỹ phát triển</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: left; padding-left: 10px;">Lập trình tư duy cùng Sunbot</td>
+                    <td>150.000đ</td>
+                    <td>4 tiết</td>
+                    <td>120.000đ</td>
+                    <td>30.000đ</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; padding-left: 10px;">STEAM cùng Sunbot – Khoa học và tái chế</td>
+                    <td>150.000đ</td>
+                    <td>4 tiết</td>
+                    <td>120.000đ</td>
+                    <td>30.000đ</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- MỤC 9 -->
+        <p class="bold" style="margin-top: 10pt;">9. Đề nghị và cam kết</p>
+        <p class="italic bold">a) Về phía Đề nghị:</p>
+        <ul class="list-dash">
+            <li>Kính đề nghị Sở Giáo dục và Đào tạo <span class="edit-inline" contenteditable="true" id="so-gd-3" data-placeholder="........................................"></span> xem xét, thẩm định và cấp phép hoạt động giáo dục "Lập trình tư duy cho trẻ mầm non" cho Công ty Cổ phần Công nghệ Giáo dục Kiro Việt Nam.</li>
+            <li>Nếu được cấp phép, Công ty cam kết thực hiện nghiêm ngặt các yêu cầu chuyên môn:
+                <ul class="list-plus">
+                    <li>Triển khai giảng dạy đúng giáo trình, chương trình đã được Bộ/Viện thẩm định.</li>
+                    <li>Tuân thủ tuyệt đối các quy định chuyên môn của Sở Giáo dục và Đào tạo <span class="edit-inline" contenteditable="true" id="so-gd-4" data-placeholder="........................."></span>.</li>
+                    <li>Đảm bảo các điều kiện về cơ sở vật chất, an ninh trật tự, vệ sinh an toàn trường học.</li>
+                </ul>
+            </li>
+        </ul>
+        <p class="italic bold" style="margin-top: 6pt;">b) Cam kết trách nhiệm:</p>
+        <p>Chúng tôi cam kết thực hiện đầy đủ các quy định của Bộ Giáo dục và Đào tạo, UBND tỉnh/thành phố và Sở Giáo dục và Đào tạo <span class="edit-inline" contenteditable="true" id="so-gd-5" data-placeholder="........................................"></span> về quản lý hoạt động giáo dục kỹ năng sống, hoạt động ngoài giờ chính khóa. Công ty hoàn toàn chịu trách nhiệm trước pháp luật về những nội dung đã cam kết nêu trên./.</p>
+
+        <!-- SIGNATURE -->
+        <div class="sign-area">
+            <div class="sign-left">
+                <p class="italic bold">Nơi nhận:</p>
+                <ul class="list-dash">
+                    <li>Như kính gửi;</li>
+                    <li>Ban Giám đốc Công ty (để chỉ đạo);</li>
+                    <li>Lưu: VT, HS.</li>
+                </ul>
+            </div>
+            <div class="sign-right">
+                <p class="bold">TỔNG GIÁM ĐỐC</p>
+                <br><br><br><br>
+                <!-- Khoảng trống để ký, không để tên -->
+            </div>
+        </div>
+
+        <!-- PAGE NUMBER -->
+        <div class="page-number">- 2 -</div>
+    </div>
+
+    <!-- ================= TRANG 3: BẢNG HỌC PHÍ ================= -->
+    <div class="page">
+        <!-- HEADER TEXT ONLY -->
+        <div class="center-p" style="margin-bottom: 15pt; border-bottom: 1.5px solid #000; padding-bottom: 15pt;">
+            <div class="bold">CÔNG TY CP CÔNG NGHỆ GIÁO DỤC KIRO VIỆT NAM</div>
+            <div style="margin-top: 4pt;">Trụ sở: Số 4, Lý Thường Kiệt, P. Phan Chu Trinh, Q. Hoàn Kiếm, HN</div>
+            <div style="margin-top: 2pt;">Hotline: 08336 15588 &nbsp;|&nbsp; Email: sunbotvietnam@gmail.com</div>
+        </div>
+
+        <h1 style="font-size: 15pt; margin-top: 30pt;">MỨC THU HỌC PHÍ CHƯƠNG TRÌNH<br>"STEAM CÙNG SUNBOT"</h1>
+        <h2 class="italic" style="margin-top: 15pt;">
+            Áp dụng tại Cơ sở giáo dục: <span class="edit-inline bold" contenteditable="true" id="ten-truong" data-placeholder="................................................................................"></span>
+        </h2>
+        <h2 class="italic bold">NĂM HỌC <span class="edit-inline" contenteditable="true" data-placeholder="202...">2026 - 2027</span></h2>
+        
+        <div style="margin-top: 25pt;">
+            <div class="form-row" style="margin-bottom: 10pt;">
+                <div class="bold">- Mức học phí giảng dạy:</div>
+                <div style="margin-left: 10px;">
+                    <span class="calc-trigger edit-inline bold" contenteditable="true" id="val-hoc-phi">240.000</span> VNĐ / 1 học sinh / 1 tháng
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 10pt;">
+                <div class="bold">- Phí học cụ, học liệu, phần mềm:</div>
+                <div style="margin-left: 10px;">
+                    <span class="calc-trigger edit-inline bold" contenteditable="true" id="val-hoc-cu">60.000</span> VNĐ / 1 học sinh / 1 tháng
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 10pt;">
+                <div class="bold">- Số giờ dạy tại trường:</div>
+                <div style="margin-left: 10px;">
+                    <span class="edit-inline bold" contenteditable="true">02</span> tiết / 1 tuần (<span class="calc-trigger edit-inline bold" contenteditable="true" id="val-so-tiet">8</span> tiết / 1 tháng)
+                </div>
+            </div>
+            <div class="form-row" style="margin-bottom: 10pt;">
+                <div class="bold">- Quy định sĩ số lớp:</div>
+                <div style="margin-left: 10px;">
+                    Tối thiểu <span class="calc-trigger edit-inline bold" contenteditable="true" id="val-si-so">20</span> học sinh / 1 lớp
+                </div>
+            </div>
+        </div>
+
+        <p class="italic" style="margin-top: 25pt; margin-bottom: 10pt;">Bảng phân bổ chi tiết mức thu phí chương trình:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">STT</th>
+                    <th style="width: 12%;">Sĩ số lớp</th>
+                    <th style="width: 15%;">Số tiết/tháng</th>
+                    <th style="width: 20%;">Học phí/tiết<br>(VNĐ/hs)</th>
+                    <th style="width: 20%;">Tổng học phí/tháng<br>(VNĐ/hs)</th>
+                    <th style="width: 25%;">Phí học cụ, học liệu<br>& Phần mềm (VNĐ)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td id="tbl-si-so">20</td>
+                    <td id="tbl-so-tiet">8</td>
+                    <td id="tbl-don-gia">30.000đ</td>
+                    <td class="bold" id="tbl-tong-hoc-phi">240.000đ</td>
+                    <td id="tbl-hoc-cu">60.000đ</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="bold center-p" style="font-size: 14pt; margin-top: 40pt;">Công ty kính gửi Quý Cơ sở giáo dục xem xét và phối hợp!</p>
+
+        <div class="sign-area" style="margin-top: 30pt;">
+            <div class="sign-left"></div>
+            <div class="sign-right">
+                <span class="italic">
+                    Hà Nội, ngày <span class="edit-inline" contenteditable="true" data-placeholder="......"></span> tháng <span class="edit-inline" contenteditable="true" data-placeholder="......"></span> năm 202<span class="edit-inline" contenteditable="true" data-placeholder="..."></span>
+                </span><br>
+                <span class="bold" style="display: block; margin-top: 8pt;">CÔNG TY CP CÔNG NGHỆ GIÁO DỤC KIRO VN</span>
+                <br><br><br><br>
+                <!-- Khoảng trống để ký, không để tên -->
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT CHỨC NĂNG -->
+    <script>
+        // 1. Đồng bộ hóa Real-time cho tên Sở GD
+        const soGdElements = ['so-gd', 'so-gd-2', 'so-gd-3', 'so-gd-4', 'so-gd-5'].map(id => document.getElementById(id));
+        soGdElements[0].addEventListener('input', function() {
+            const value = this.innerText;
+            for(let i=1; i<soGdElements.length; i++) {
+                if(soGdElements[i]) soGdElements[i].innerText = value;
+            }
+        });
+
+        // 2. Logic tính toán tự động Bảng Học Phí (Trang 3)
+        const triggers = document.querySelectorAll('.calc-trigger');
+        triggers.forEach(t => {
+            t.addEventListener('input', calculateTable);
+        });
+
+        function parseNumber(str) {
+            // Lọc bỏ tất cả ký tự không phải số
+            const num = parseInt(str.replace(/\D/g, ''), 10);
+            return isNaN(num) ? 0 : num;
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString('vi-VN') + 'đ';
+        }
+
+        function calculateTable() {
+            // Lấy dữ liệu người dùng gõ vào
+            const hocPhi = parseNumber(document.getElementById('val-hoc-phi').innerText);
+            const hocCu = parseNumber(document.getElementById('val-hoc-cu').innerText);
+            const soTiet = parseNumber(document.getElementById('val-so-tiet').innerText);
+            const siSo = document.getElementById('val-si-so').innerText.trim();
+
+            // Cập nhật lại vào Bảng phân bổ
+            document.getElementById('tbl-si-so').innerText = siSo;
+            document.getElementById('tbl-so-tiet').innerText = soTiet;
+            
+            // Tính đơn giá / tiết (làm tròn số nguyên)
+            const donGia = soTiet > 0 ? Math.round(hocPhi / soTiet) : 0;
+            document.getElementById('tbl-don-gia').innerText = formatNumber(donGia);
+            
+            document.getElementById('tbl-tong-hoc-phi').innerText = formatNumber(hocPhi);
+            document.getElementById('tbl-hoc-cu').innerText = formatNumber(hocCu);
+        }
+
+        // 3. Smart Print (Lưu PDF với tên thông minh)
+        function smartPrint() {
+            const originalTitle = document.title;
+            const tenTruongElem = document.getElementById('ten-truong');
+            let textTruong = tenTruongElem.innerText.trim();
+            
+            if(!textTruong || textTruong.includes('.......')) {
+                textTruong = "Mau_Chuan";
+            } else {
+                textTruong = textTruong.replace(/\s+/g, '_');
+            }
+
+            const now = new Date();
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+            
+            document.title = `ToTrinh_Sunbot_${textTruong}_${yyyy}${mm}${dd}_${hh}${min}`;
+
+            window.print();
+            document.title = originalTitle;
+        }
+    </script>
+</body>
+</html>

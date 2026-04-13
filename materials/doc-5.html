@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đề Xuất Đầu Tư & So Sánh Gói Sunbot 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    .a4-landscape {
+        width: 297mm;
+        height: 210mm;
+        background: white;
+        margin: 20px auto;
+        padding: 12mm 15mm;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+    
+    .grid-table {
+        display: grid;
+        grid-template-columns: 1.8fr 2.5fr 3fr 3fr;
+        gap: 12px;
+        flex-grow: 1;
+    }
+
+    /* Cards Structure */
+    .card-basic {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+    }
+    .card-standard {
+        background: #ffffff;
+        border: 2px solid #f97316;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.2);
+        position: relative;
+    }
+    .card-premium {
+        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+        border: 1px solid #334155;
+        border-radius: 12px;
+        color: white;
+        position: relative;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Ribbons */
+    .ribbon {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #ea580c;
+        color: white;
+        padding: 4px 16px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 6px rgba(234, 88, 12, 0.3);
+        white-space: nowrap;
+        z-index: 10;
+    }
+
+    .premium-badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+        color: white;
+        padding: 4px 16px;
+        border-radius: 20px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
+        white-space: nowrap;
+        z-index: 10;
+    }
+
+    /* Row Layouts for Perfect Horizontal Alignment */
+    .row-header { height: 86px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-bottom: 1px solid #e2e8f0; }
+    .card-premium .row-header { border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .card-standard .row-header { border-bottom: 1px solid #fed7aa; }
+
+    .row-56 { height: 56px; display: flex; flex-direction: column; justify-content: center; padding: 0 12px; border-bottom: 1px solid #f1f5f9; }
+    .row-64 { height: 64px; display: flex; flex-direction: column; justify-content: center; padding: 0 12px; border-bottom: 1px solid #f1f5f9; }
+    .row-48 { height: 48px; display: flex; flex-direction: column; justify-content: center; padding: 0 12px; border-bottom: 1px solid #f1f5f9; }
+
+    .card-premium .row-56, .card-premium .row-64, .card-premium .row-48 { border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .card-standard .row-56, .card-standard .row-64, .card-standard .row-48 { border-bottom: 1px solid #ffedd5; }
+    
+    .row-label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; padding: 0 4px; border-bottom: 1px solid #e2e8f0; }
+    
+    /* Print optimizations */
+    @page { size: A4 landscape; margin: 0; }
+    @media print {
+        body { background: white; margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .a4-landscape { box-shadow: none; margin: 0; width: 297mm; height: 210mm; padding: 12mm 15mm; page-break-after: avoid; }
+        .no-print { display: none !important; }
+    }
+</style>
+</head>
+<body>
+
+<div class="a4-landscape">
+    
+    <!-- Header -->
+    <div class="flex justify-between items-end mb-5 border-b-2 border-orange-500 pb-3">
+        <div>
+            <div class="text-orange-600 font-bold tracking-widest text-[10px] mb-1 uppercase">Đề xuất triển khai hệ thống học tập (Kiro Việt Nam)</div>
+            <h1 class="text-[22px] font-extrabold text-slate-900 uppercase leading-tight">PHÂN TÍCH GIÁ TRỊ ĐẦU TƯ GÓI <span class="text-orange-600">SUNBOT 2026</span></h1>
+        </div>
+        <div class="text-right">
+            <div class="text-2xl font-black text-slate-800 tracking-tight leading-none">SUNBOT<span class="text-orange-500">.OS</span></div>
+            <div class="text-[9px] text-slate-500 font-bold uppercase tracking-wider mt-1">Hệ sinh thái giáo dục Mầm non</div>
+        </div>
+    </div>
+
+    <!-- Comparison Grid -->
+    <div class="grid-table">
+        
+        <!-- Column 1: Labels -->
+        <div class="flex flex-col pt-[86px]">
+            <div class="row-56 row-label">Định vị & Mục tiêu</div>
+            <div class="row-64 row-label">Nội dung cốt lõi</div>
+            <div class="row-64 row-label">Quy mô thiết bị</div>
+            <div class="row-56 row-label">Đào tạo & Vận hành</div>
+            <div class="row-56 row-label">Trải nghiệm không gian</div>
+            <div class="row-56 row-label">Truyền thông & Sự kiện</div>
+            <div class="row-48 row-label bg-slate-100 rounded-t-lg border-none text-slate-900">Đầu tư ban đầu (Năm 1)</div>
+            <div class="row-64 row-label bg-orange-100 rounded-b-lg border-none text-orange-700">TỔNG ĐẦU TƯ 3 NĂM</div>
+        </div>
+
+        <!-- Column 2: BASIC -->
+        <div class="card-basic flex flex-col">
+            <div class="row-header px-2">
+                <div class="text-slate-400 font-bold text-[10px] uppercase tracking-wider mb-1">Khởi đầu / Thử nghiệm</div>
+                <h2 class="text-xl font-black text-slate-700 leading-none">BASIC</h2>
+            </div>
+            
+            <div class="row-56 text-[11px] text-slate-600">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span class="font-medium">Triển khai chuẩn, vận hành ổn</span></div>
+            </div>
+            <div class="row-64 text-[11px] text-slate-600">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b>Chỉ 01 môn:</b> Lập trình tư duy<br><span class="text-[10px] text-slate-400 italic">Không có mảng STEAM dự án</span></div></div>
+            </div>
+            <div class="row-64 text-[11px] text-slate-600">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b>03 Robot Sunbot</b><br><span class="text-[10px] text-slate-500">Bộ sa bàn & vật cản tiêu chuẩn</span></div></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-600">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span>Đào tạo 1 chương trình (5 GV)</span></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-600">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-slate-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span>Nhận diện lớp học cơ bản</span></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-400">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-slate-300 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> <span>Không hỗ trợ</span></div>
+            </div>
+            
+            <div class="row-48 bg-slate-100/70 border-none items-center">
+                <div class="font-bold text-slate-600 text-xs">67.100.000 VNĐ</div>
+            </div>
+            <div class="row-64 bg-slate-200/50 rounded-b-xl border-none items-center">
+                <div class="font-black text-slate-800 text-lg tracking-tight">97.100.000 <span class="text-[10px] font-bold ml-0.5">VNĐ</span></div>
+            </div>
+        </div>
+
+        <!-- Column 3: STANDARD (Khuyên dùng) -->
+        <div class="card-standard flex flex-col">
+            <div class="ribbon">GÓI CHỦ LỰC - KHUYÊN DÙNG</div>
+            <div class="row-header px-2 bg-orange-50/30 rounded-t-xl">
+                <div class="text-orange-500 font-bold text-[10px] uppercase tracking-wider mb-1">Hiệu quả & Cân bằng</div>
+                <h2 class="text-[22px] font-black text-slate-900 leading-none">STANDARD</h2>
+            </div>
+            
+            <div class="row-56 text-[11px] text-slate-800">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-orange-500 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span class="font-bold">Chương trình đầy đủ, tối ưu</span></div>
+            </div>
+            <div class="row-64 text-[11px] text-slate-800 bg-orange-50/50">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-orange-500 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b>Song hành 02 môn:</b><br><span class="text-[10px] text-orange-600 font-bold uppercase">Lập trình tư duy + STEAM</span></div></div>
+            </div>
+            <div class="row-64 text-[11px] text-slate-800">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-orange-500 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b>03 Robot Sunbot</b><br><span class="text-[10px] text-slate-500">Học cụ chuẩn + Bộ STEAM Q1,2,3</span></div></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-800">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-orange-500 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span class="font-medium">Đào tạo 2 chương trình (10 GV)</span></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-800">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-orange-500 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span class="font-medium">Nhận diện lớp học chuẩn Sunbot</span></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-400">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-slate-300 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg> <span>Trường tự tổ chức sự kiện</span></div>
+            </div>
+            
+            <div class="row-48 bg-orange-50 border-none items-center">
+                <div class="font-bold text-slate-700 text-xs">98.600.000 VNĐ</div>
+            </div>
+            <div class="row-64 bg-orange-100 rounded-b-xl border-none items-center">
+                <div class="font-black text-orange-600 text-[22px] tracking-tight">194.600.000 <span class="text-[10px] font-bold text-orange-600 ml-0.5">VNĐ</span></div>
+            </div>
+        </div>
+
+        <!-- Column 4: PREMIUM -->
+        <div class="card-premium flex flex-col">
+            <div class="premium-badge">ĐẲNG CẤP DẪN ĐẦU</div>
+            <div class="row-header px-2 bg-slate-800/30 rounded-t-xl">
+                <div class="text-amber-400 font-bold text-[10px] uppercase tracking-wider mb-1">Chiến lược & Hình ảnh</div>
+                <h2 class="text-[22px] font-black text-white leading-none">PREMIUM</h2>
+            </div>
+            
+            <div class="row-56 text-[11px] text-slate-200">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span class="font-bold text-white">Mô hình toàn diện 360°</span></div>
+            </div>
+            <div class="row-64 text-[11px] text-slate-200">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b>Hệ sinh thái học tập đa năng</b><br><span class="text-[10px] text-amber-400 font-bold uppercase">Full Lập trình + STEAM Nâng cao</span></div></div>
+            </div>
+            <div class="row-64 text-[11px] text-slate-200 bg-slate-800/50">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b class="text-white">Gấp đôi thiết bị: 06 Robot</b><br><span class="text-[10px] text-slate-400">Tối ưu trải nghiệm quy mô lớn</span></div></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-200">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <span class="font-medium">Đào tạo nâng cao (Event, Showcase)</span></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-200 bg-slate-800/50">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b class="text-white">Nội thất & Không gian Lab</b><br><span class="text-[9px] text-amber-300">Bộ quà tặng, thi đua cao cấp</span></div></div>
+            </div>
+            <div class="row-56 text-[11px] text-slate-200">
+                <div class="flex items-start gap-1.5"><svg class="w-3.5 h-3.5 text-amber-400 shrink-0 mt-[1px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> <div><b class="text-white">Truyền thông 360°</b><br><span class="text-[9px] text-amber-300">Hỗ trợ sự kiện, media kit tuyển sinh</span></div></div>
+            </div>
+            
+            <div class="row-48 bg-slate-800 border-none items-center">
+                <div class="font-bold text-slate-300 text-xs">222.300.000 VNĐ</div>
+            </div>
+            <div class="row-64 bg-slate-900 rounded-b-xl border-none items-center">
+                <div class="font-black text-amber-400 text-[22px] tracking-tight">344.300.000 <span class="text-[10px] font-bold text-slate-400 ml-0.5">VNĐ</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategic Advice Footer -->
+    <div class="mt-4 pt-3">
+        <h3 class="text-xs font-bold text-slate-800 mb-2.5 uppercase tracking-wide">Góc Nhìn Vận Hành Thực Tế & Lời Khuyên Chiến Lược</h3>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                <div class="font-bold text-[11px] text-slate-700 mb-0.5">Với gói BASIC:</div>
+                <p class="text-[9px] text-slate-500 leading-relaxed text-justify">Phù hợp để thử nghiệm quy mô nhỏ. <b>Rủi ro:</b> Việc thiếu vắng hoàn toàn chương trình STEAM khiến lớp học thiếu chiều sâu, dễ gây nhàm chán, nếu không vận hành xuất sắc rất dễ bị vỡ lớp hoặc dừng giữa chừng.</p>
+            </div>
+            <div class="bg-orange-50 p-2.5 rounded-lg border border-orange-200">
+                <div class="font-bold text-[11px] text-orange-700 mb-0.5">Với gói STANDARD (Đề xuất):</div>
+                <p class="text-[9px] text-slate-700 leading-relaxed text-justify"><b>Sự lựa chọn của 90% đối tác.</b> Gói cân bằng chi phí tốt nhất, mang lại chương trình đầy đủ (Coding + STEAM). Đây là gói đảm bảo chương trình <span class="font-bold text-orange-600">"sống được và sinh lời"</span> dài hạn trong nhà trường.</p>
+            </div>
+            <div class="bg-slate-900 p-2.5 rounded-lg border border-slate-700 shadow-inner">
+                <div class="font-bold text-[11px] text-amber-400 mb-0.5">Với gói PREMIUM:</div>
+                <p class="text-[9px] text-slate-300 leading-relaxed text-justify">Không chỉ là nâng cấp, mà là <b>Chuyển cấp thương hiệu</b>. Phù hợp với trường quy mô lớn, muốn biến mảng công nghệ thành thế mạnh cạnh tranh cốt lõi để thu hút tuyển sinh và khẳng định đẳng cấp cao nhất.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-2.5 flex justify-between items-center text-[8px] text-slate-400 border-t border-slate-200 pt-2">
+        <div>* Bảng tổng đầu tư mang tính chất tham chiếu cho lộ trình 3 năm (Bao gồm học cụ, bản quyền phần mềm, đào tạo, gói đảm bảo vận hành tiêu chuẩn).</div>
+        <div class="font-bold text-slate-500 uppercase tracking-wider">Kiro Vietnam Technology JSC &copy; 2026</div>
+    </div>
+</div>
+
+<!-- Print Button Overlay (Absolutely Hidden on Print) -->
+<div class="no-print mt-6 mb-10 flex justify-center">
+    <button onclick="window.print()" class="bg-slate-800 hover:bg-black text-white px-8 py-3.5 rounded-xl font-bold shadow-xl transition-all flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        In Tài Liệu (A4 Ngang)
+    </button>
+</div>
+
+</body>
+</html>

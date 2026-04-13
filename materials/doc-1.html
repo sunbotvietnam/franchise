@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="vi" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Xuất Triển Khai Hệ Thống Sunbot - Kiro Vietnam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-orange: #ea580c;
+            --brand-orange-light: #fff7ed;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --page-width: 210mm;
+            --page-min-height: 297mm; 
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e2e8f0;
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .a4-page {
+            width: var(--page-width);
+            min-height: var(--page-min-height);
+            background-color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            box-sizing: border-box;
+            padding: 24mm; 
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .page-content {
+            flex: 1 1 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page-footer {
+            flex: 0 0 auto;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 2px solid #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+
+        h1, h2, h3, h4 { color: #0f172a; margin: 0; position: relative; z-index: 10;}
+        p { line-height: 1.75; color: var(--text-muted); font-size: 13.5px; margin: 0 0 16px 0; text-align: left; letter-spacing: -0.01em; position: relative; z-index: 10;}
+        
+        .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px; position: relative; z-index: 10; }
+        .section-number { font-size: 32px; font-weight: 900; color: var(--brand-orange); line-height: 1; letter-spacing: -0.05em; }
+        .section-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: #0f172a; letter-spacing: -0.02em; line-height: 1.2; }
+        .sub-title { font-size: 16px; font-weight: 800; color: #1e293b; margin-top: 36px; margin-bottom: 16px; position: relative; padding-left: 16px; z-index: 10;}
+        .sub-title::before { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 5px; background-color: var(--brand-orange); border-radius: 2px; }
+        .kicker { font-size: 11px; font-weight: 800; color: var(--brand-orange); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 8px; position: relative; z-index: 10;}
+
+        ul, ol { margin: 0 0 24px 0; padding-left: 0; list-style-type: none; position: relative; z-index: 10;}
+        ul li { font-size: 13.5px; line-height: 1.7; color: var(--text-muted); margin-bottom: 10px; position: relative; padding-left: 24px; }
+        ul li::before { content: ""; position: absolute; left: 4px; top: 9px; width: 6px; height: 6px; background-color: var(--brand-orange); border-radius: 50%; }
+        ol { counter-reset: custom-counter; }
+        ol li { font-size: 13.5px; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px; position: relative; padding-left: 32px; }
+        ol li::before { counter-increment: custom-counter; content: counter(custom-counter) "."; position: absolute; left: 0; top: 0; font-weight: 900; color: var(--brand-orange); font-size: 14px; }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 32px; font-size: 13px; position: relative; z-index: 10;}
+        th, td { padding: 16px; text-align: left; line-height: 1.6; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #f8fafc; font-weight: 800; color: #1e293b; text-transform: uppercase; letter-spacing: 0.05em; font-size: 11.5px; border-bottom: 2px solid var(--brand-orange); border-top: 1px solid #e2e8f0; }
+        tr:last-child td { border-bottom: 1px solid #cbd5e1; }
+        .td-highlight { font-weight: 700; color: var(--brand-orange); background-color: var(--brand-orange-light); }
+
+        .box { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 24px 32px; margin: 32px 0; border-radius: 12px; position: relative; overflow: hidden; z-index: 10;}
+        .box::before { content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background-color: var(--brand-orange); }
+        .box-dark { background-color: #0f172a; color: white; border: none; padding: 32px; border-radius: 16px; margin: 32px 0; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); position: relative; z-index: 10;}
+        .box-dark p { color: #cbd5e1; }
+
+        .page-watermark { position: absolute; top: 20mm; right: 20mm; font-size: 180px; font-weight: 900; color: #f1f5f9; line-height: 0.8; z-index: 0; user-select: none; pointer-events: none; letter-spacing: -0.05em; }
+
+        .cover-page { background-color: #0f172a; color: white; justify-content: space-between; padding: 24mm; }
+        .cover-circle-1 { position: absolute; top: -20%; right: -20%; width: 800px; height: 800px; background: radial-gradient(circle, rgba(234,88,12,0.25) 0%, rgba(234,88,12,0) 60%); border-radius: 50%; z-index: 0; }
+        .cover-circle-2 { position: absolute; bottom: 5%; left: -10%; width: 500px; height: 500px; border: 2px solid rgba(255,255,255,0.03); border-radius: 50%; z-index: 0; }
+
+        .toc-link { text-decoration: none; color: inherit; display: block; padding: 6px 0; border-radius: 8px; transition: background-color 0.2s;}
+        .toc-link:hover { background-color: #f8fafc; }
+        .toc-link:hover .toc-number { color: var(--brand-orange); }
+        .toc-link:hover .toc-text { color: var(--brand-orange); }
+
+        .print-btn-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
+
+        @page { size: A4 portrait; margin: 0; }
+        @media print {
+            body { background: none; padding: 0; gap: 0; }
+            .print-btn-container { display: none !important; }
+            .a4-page { box-shadow: none; margin: 0; height: 297mm; page-break-after: always; page-break-inside: avoid; }
+            .a4-page:last-child { page-break-after: auto; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-btn-container no-print">
+        <button onclick="window.print()" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-full font-bold shadow-2xl transition-all flex items-center gap-3 text-sm uppercase tracking-wider cursor-pointer border border-orange-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            In Proposal / Xuất PDF
+        </button>
+    </div>
+
+    <!-- PAGE 01: COVER -->
+    <div class="a4-page cover-page">
+        <div class="cover-circle-1"></div>
+        <div class="cover-circle-2"></div>
+        <div class="page-content flex flex-col justify-between">
+            <div class="w-full text-right pt-4">
+                <div class="text-4xl font-black text-white tracking-tighter">SUNBOT<span class="text-orange-500">.OS</span></div>
+                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em] mt-2">Hệ Sinh Thái Giáo Dục</div>
+            </div>
+
+            <div class="w-full mb-20 border-l-4 border-orange-500 pl-8">
+                <p class="text-orange-500 font-extrabold tracking-[0.4em] text-[12px] mb-6 uppercase">Đề Xuất Dành Cho Trường</p>
+                <h1 class="text-[64px] font-black text-white leading-[1.05] mb-8 uppercase tracking-tight">
+                    Triển Khai<br>Hệ Thống<br>Học Tập<br><span class="text-orange-500">Sunbot</span>
+                </h1>
+                <div class="w-[85%]">
+                    <p class="text-[18px] text-slate-300 font-medium leading-[1.7] mb-0">
+                        Triển khai chương trình STEAM & Tư duy lập trình cho trẻ mầm non theo mô hình hệ thống có kiểm soát.
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full flex justify-between items-end border-t border-slate-700 pt-8">
+                <div>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Đơn vị đề xuất</p>
+                    <p class="text-[13px] font-black text-white tracking-widest uppercase mb-0">Công Ty Cổ Phần Công Nghệ Giáo Dục<br><span class="text-orange-500">Kiro Việt Nam</span></p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Tài liệu</p>
+                    <p class="text-[13px] font-black text-white tracking-widest uppercase mb-0">Phiên Bản 2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 02: MỤC LỤC -->
+    <div class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-title mb-0">Nội dung Đề xuất</div>
+            </div>
+            
+            <div class="mt-12 space-y-6">
+                <a href="#sec-1" class="toc-link">
+                    <div class="flex items-start gap-6 border-b border-slate-100 pb-5 px-2">
+                        <span class="toc-number text-slate-300 font-black text-[28px] leading-none w-10 transition-colors mt-1">01</span>
+                        <div class="w-full pt-1">
+                            <p class="toc-text font-bold text-slate-800 text-[16px] mb-0 transition-colors uppercase tracking-wide">SUNBOT: Câu chuyện và Triết lý Giáo dục</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#sec-2" class="toc-link">
+                    <div class="flex items-start gap-6 border-b border-slate-100 pb-5 px-2">
+                        <span class="toc-number text-slate-300 font-black text-[28px] leading-none w-10 transition-colors mt-1">02</span>
+                        <div class="w-full pt-1">
+                            <p class="toc-text font-bold text-slate-800 text-[16px] mb-5 transition-colors uppercase tracking-wide">Proposal Triển khai Sunbot</p>
+                            <div class="grid grid-cols-1 gap-4 pl-4 border-l-2 border-orange-200">
+                                <p class="text-[14px] text-slate-600 mb-0 font-medium tracking-wide">GÓI BASIC <span class="text-[11px] text-slate-400 ml-2 normal-case">(Khởi đầu)</span></p>
+                                <p class="text-[14px] text-slate-600 mb-0 font-medium tracking-wide">GÓI STANDARD <span class="text-orange-500 font-bold text-[10px] uppercase ml-2 bg-orange-50 px-2 py-1 rounded">Khuyên dùng</span></p>
+                                <p class="text-[14px] text-slate-600 mb-0 font-medium tracking-wide">GÓI PREMIUM <span class="text-[11px] text-slate-400 ml-2 normal-case">(Chiến lược)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#sec-3" class="toc-link">
+                    <div class="flex items-start gap-6 border-b border-slate-100 pb-5 px-2">
+                        <span class="toc-number text-slate-300 font-black text-[28px] leading-none w-10 transition-colors mt-1">03</span>
+                        <div class="w-full pt-1">
+                            <p class="toc-text font-bold text-slate-800 text-[16px] mb-0 transition-colors uppercase tracking-wide">So sánh: Sunbot vs Tự triển khai lớp STEAM</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#sec-4" class="toc-link">
+                    <div class="flex items-start gap-6 border-b border-slate-100 pb-5 px-2">
+                        <span class="toc-number text-slate-300 font-black text-[28px] leading-none w-10 transition-colors mt-1">04</span>
+                        <div class="w-full pt-1">
+                            <p class="toc-text font-bold text-slate-800 text-[16px] mb-0 transition-colors uppercase tracking-wide">Bảng so sánh 3 Gói triển khai Sunbot</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#sec-5" class="toc-link">
+                    <div class="flex items-start gap-6 pb-2 px-2">
+                        <span class="toc-number text-slate-300 font-black text-[28px] leading-none w-10 transition-colors mt-1">05</span>
+                        <div class="w-full pt-1">
+                            <p class="toc-text font-bold text-slate-800 text-[16px] mb-0 transition-colors uppercase tracking-wide">Ma trận Quyền & Nghĩa vụ</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>02</span>
+        </div>
+    </div>
+
+    <!-- PAGE 03: STORY & PHILOSOPHY -->
+    <div class="a4-page" id="sec-1">
+        <div class="page-watermark">01</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">01</div>
+                <div class="section-title mb-0">Sunbot: Câu chuyện và Triết lý</div>
+            </div>
+            
+            <div class="sub-title mt-2">1. Câu chuyện Sunbot</div>
+            <p>Sunbot được xây dựng với một mục tiêu rõ ràng: <strong class="text-slate-900">Đưa tư duy công nghệ đến với trẻ em Việt Nam từ sớm, theo cách dễ hiểu, gần gũi và thực tế.</strong></p>
+            <p>Trong nhiều năm triển khai tại các trường mầm non: Trẻ em thích robot. Nhưng nếu chỉ dừng ở việc "chơi robot" thì sẽ không tạo ra giá trị giáo dục thực sự. Sunbot được phát triển để giải quyết vấn đề đó: Robot chỉ là công cụ. Điều quan trọng là:</p>
+            <ul class="mb-10">
+                <li>Tư duy logic</li>
+                <li>Khả năng giải quyết vấn đề</li>
+                <li>Kỹ năng hợp tác</li>
+            </ul>
+
+            <div class="sub-title">2. Triết lý giáo dục</div>
+            <div class="box mb-10 border-orange-200 bg-orange-50/50">
+                <p class="font-black text-orange-700 text-[16px] mb-3 uppercase tracking-tight">Sunbot không dạy trẻ trở thành "người biết lập trình".</p>
+                <p class="mb-0 text-slate-700">Sunbot giúp trẻ: hiểu cách suy nghĩ, hiểu cách thử và sai, hiểu cách làm việc cùng người khác. Đây là nền tảng quan trọng cho học tập sau này, thích nghi với công nghệ và phát triển lâu dài.</p>
+            </div>
+
+            <div class="sub-title">3. Định vị Sunbot</div>
+            <div class="grid grid-cols-2 gap-8 mt-6">
+                <div class="border border-slate-200 p-8 rounded-2xl bg-slate-50">
+                    <p class="font-black text-slate-800 text-[14px] uppercase tracking-widest mb-6">Sunbot KHÔNG phải là:</p>
+                    <ul class="mb-0">
+                        <li>Một bộ robot</li>
+                        <li>Một khóa học ngắn hạn</li>
+                    </ul>
+                </div>
+                <div class="border border-orange-200 p-8 rounded-2xl bg-orange-50">
+                    <p class="font-black text-orange-700 text-[14px] uppercase tracking-widest mb-6">Sunbot LÀ:</p>
+                    <p class="text-orange-900 font-bold mb-0 text-[14.5px] leading-relaxed">Một chương trình giáo dục có thể triển khai lâu dài trong nhà trường.</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>03</span>
+        </div>
+    </div>
+
+    <!-- PAGE 04: WHY SUNBOT -->
+    <div class="a4-page">
+        <div class="page-watermark">01</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Câu chuyện và Triết lý (Tiếp)</div>
+            
+            <div class="sub-title mt-6">4. Vì sao Sunbot khác biệt</div>
+            <ol class="mb-10">
+                <li><strong class="text-slate-900 text-[14px]">Không phụ thuộc vào thiết bị:</strong> Robot chỉ là phương tiện. Giá trị nằm ở chương trình. Không bị lỗi thời theo công nghệ.</li>
+                <li><strong class="text-slate-900 text-[14px]">Thiết kế cho mầm non:</strong> Nội dung phù hợp 3-7 tuổi. Cách dạy phù hợp với giáo viên mầm non. Dễ triển khai thực tế.</li>
+                <li><strong class="text-slate-900 text-[14px]">Đã được kiểm chứng trong hệ thống trường học:</strong> Triển khai tại nhiều trường. Phù hợp với điều kiện vận hành tại Việt Nam → Không phải mô hình thử nghiệm.</li>
+                <li><strong class="text-slate-900 text-[14px]">Mô hình kinh doanh rõ ràng:</strong> Có dòng tiền hàng tháng. Có thể mở rộng theo lớp và trường → Không phụ thuộc bán hàng một lần.</li>
+                <li><strong class="text-slate-900 text-[14px]">Hệ thống hỗ trợ đầy đủ:</strong> Đào tạo giáo viên, giáo án chuẩn, quy trình vận hành → Có thể triển khai ngay.</li>
+            </ol>
+
+            <div class="sub-title">5. Why Sunbot Wins</div>
+            <p>Sunbot có lợi thế vì kết hợp được 3 yếu tố mà thị trường thường thiếu:</p>
+            <ul class="mb-10">
+                <li><strong>Giáo dục thật:</strong> Không chạy theo hình thức. Tập trung vào giá trị học.</li>
+                <li><strong>Vận hành được:</strong> Phù hợp với trường mầm non, trung tâm. Có thể triển khai ngay.</li>
+                <li><strong>Kinh doanh được:</strong> Có dòng tiền rõ ràng, thu học phí hàng tháng. Dễ dàng nhân rộng theo lớp.</li>
+            </ul>
+
+            <div class="sub-title">6. Tầm nhìn & Lời Kết</div>
+            <p class="mb-6">Khi triển khai Sunbot, đối tác có: một chương trình giáo dục hoàn chỉnh, một mô hình kinh doanh rõ ràng, một hệ thống đã được kiểm chứng. Sunbot hướng tới việc trở thành chương trình công nghệ nền tảng trong mầm non, mở rộng trên toàn quốc.</p>
+            
+            <div class="box-dark mt-8 p-8">
+                <p class="font-black text-white text-[18px] mb-3 uppercase tracking-wide">Sunbot không chỉ là một sản phẩm.</p>
+                <p class="mb-0 text-[15px] font-medium leading-relaxed">Sunbot là: một mô hình giáo dục + một hệ thống kinh doanh + một cơ hội mở rộng dài hạn.</p>
+            </div>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>04</span>
+        </div>
+    </div>
+
+    <!-- PAGE 05: PROPOSAL INTRO -->
+    <div class="a4-page" id="sec-2">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">02</div>
+                <div>
+                    <div class="kicker mb-1">Chương trình STEAM & Lập trình tư duy</div>
+                    <div class="section-title mb-0">Proposal Triển khai Sunbot</div>
+                </div>
+            </div>
+            
+            <div class="sub-title mt-2">1. Giới thiệu chung</div>
+            <p>Sunbot là chương trình giáo dục tích hợp STEAM và tư duy lập trình, được thiết kế dành riêng cho trẻ từ 3-7 tuổi.</p>
+            <p>Chương trình hướng tới việc phát triển toàn diện cho trẻ thông qua trải nghiệm thực hành, giúp hình thành các năng lực nền tảng như: Tư duy logic và giải quyết vấn đề, Khả năng quan sát và phân tích, Kỹ năng làm việc nhóm và giao tiếp, Tư duy công nghệ trong bối cảnh giáo dục hiện đại.</p>
+            <p class="mb-10">Sunbot không chỉ là một bộ thiết bị, mà là một hệ thống chương trình học được chuẩn hóa, có lộ trình rõ ràng và khả năng triển khai ổn định trong môi trường nhà trường.</p>
+
+            <div class="sub-title">2. Mục tiêu triển khai</div>
+            <p class="mb-10">Việc triển khai Sunbot tại nhà trường nhằm: Bổ sung chương trình giáo dục công nghệ và STEAM theo hướng hiện đại, Tạo điểm khác biệt trong chương trình đào tạo, Nâng cao trải nghiệm học tập cho trẻ, Hỗ trợ hoạt động tuyển sinh và truyền thông của nhà trường.</p>
+
+            <div class="sub-title">3. Mô hình triển khai tiêu chuẩn</div>
+            <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 mb-8 flex justify-between items-center shadow-sm">
+                <div class="text-center w-1/4 border-r border-slate-200">
+                    <p class="text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-widest">Quy mô</p>
+                    <p class="text-[18px] font-black text-slate-800 mb-0">6-8 lớp</p>
+                </div>
+                <div class="text-center w-1/4 border-r border-slate-200">
+                    <p class="text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-widest">Sĩ số</p>
+                    <p class="text-[18px] font-black text-slate-800 mb-0">25-30 trẻ/lớp</p>
+                </div>
+                <div class="text-center w-1/4 border-r border-slate-200">
+                    <p class="text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-widest">Thời lượng</p>
+                    <p class="text-[18px] font-black text-slate-800 mb-0">30-35 phút</p>
+                </div>
+                <div class="text-center w-1/4">
+                    <p class="text-[11px] uppercase font-bold text-slate-400 mb-2 tracking-widest">Hình thức</p>
+                    <p class="text-[18px] font-black text-slate-800 mb-0">Nhóm 3-6 trẻ</p>
+                </div>
+            </div>
+            <p>Hoạt động học được thiết kế theo hướng: Trải nghiệm thực hành, Luân phiên tương tác thiết bị, Kết hợp giữa tư duy và vận động.</p>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>05</span>
+        </div>
+    </div>
+
+    <!-- PAGE 06: PROPOSAL INTRO (CẤU TRÚC CT) -->
+    <div class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Proposal Triển khai (Tiếp)</div>
+            
+            <div class="sub-title mt-6">4. Cấu trúc chương trình</div>
+            <p>Chương trình Sunbot được xây dựng theo lộ trình 3 năm. Mỗi năm: 35-40 tuần học. Tổng số bài học: khoảng 100-120 bài. Bao gồm 2 cấu phần chính:</p>
+            <ul class="mb-10">
+                <li><strong>Tư duy lập trình (Coding):</strong> Làm quen với logic điều khiển, Hiểu nguyên lý "lệnh – hành động", Phát triển tư duy tuần tự và điều kiện.</li>
+                <li><strong>STEAM theo dự án:</strong> Ứng dụng kiến thức vào thực tế, Tăng khả năng sáng tạo, Kết hợp đa lĩnh vực khoa học, kỹ thuật, toán học và nghệ thuật.</li>
+            </ul>
+
+            <div class="sub-title">5. Các Gói Triển khai (Overview)</div>
+            <p>Sunbot cung cấp 3 gói triển khai được chuẩn hóa, phù hợp với từng giai đoạn và định hướng chiến lược của nhà trường:</p>
+            
+            <div class="grid grid-cols-1 gap-6 mt-8">
+                <div class="p-6 border border-slate-200 rounded-xl bg-slate-50 flex gap-6 items-center">
+                    <div class="w-16 font-black text-slate-400 text-xl tracking-widest">BASIC</div>
+                    <div class="border-l border-slate-300 pl-6">
+                        <p class="font-bold text-slate-800 mb-1">Gói Cơ Bản (Khởi đầu)</p>
+                        <p class="mb-0 text-[13.5px]">Triển khai chương trình cơ bản, tập trung vào môn lập trình. Tối ưu chi phí ban đầu, vận hành ổn định.</p>
+                    </div>
+                </div>
+                
+                <div class="p-6 border-2 border-orange-400 rounded-xl bg-orange-50 flex gap-6 items-center shadow-md">
+                    <div class="w-16 font-black text-orange-600 text-xl tracking-widest">STD</div>
+                    <div class="border-l border-orange-300 pl-6">
+                        <p class="font-bold text-orange-900 mb-1">Gói Chuẩn (Khuyến nghị)</p>
+                        <p class="mb-0 text-[13.5px] text-orange-800">Triển khai đầy đủ Lập trình & STEAM. Giải pháp cân bằng, hiệu quả nhất giúp chương trình phát triển bền vững.</p>
+                    </div>
+                </div>
+
+                <div class="p-6 border border-slate-700 rounded-xl bg-slate-900 flex gap-6 items-center shadow-lg">
+                    <div class="w-16 font-black text-amber-400 text-xl tracking-widest">PREM</div>
+                    <div class="border-l border-slate-600 pl-6">
+                        <p class="font-bold text-white mb-1">Gói Cao Cấp (Chiến lược)</p>
+                        <p class="mb-0 text-[13.5px] text-slate-300">Nâng cao toàn diện trải nghiệm, sự kiện, truyền thông và nhận diện. Định vị hình ảnh trường chất lượng cao.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>06</span>
+        </div>
+    </div>
+
+    <!-- PAGE 07: BASIC PACKAGE -->
+    <div class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Phân tích Gói Triển khai</div>
+            <h2 class="text-[40px] font-black text-slate-900 uppercase tracking-tight mb-10 border-b-4 border-slate-200 inline-block pb-2 pr-10">GÓI CƠ BẢN <span class="text-slate-400 text-[30px] font-bold ml-2">(BASIC)</span></h2>
+            
+            <div class="sub-title mt-0">1. Mục tiêu của gói triển khai</div>
+            <p>Gói Basic được xây dựng nhằm giúp nhà trường: Triển khai chương trình giáo dục công nghệ một cách đúng phương pháp ngay từ đầu. Đảm bảo giáo viên có thể vận hành độc lập. Duy trì chất lượng giảng dạy ổn định theo thời gian. Tối ưu chi phí đầu tư ban đầu nhưng vẫn đảm bảo hiệu quả triển khai thực tế.</p>
+            <p class="mb-10">Khác với việc mua lẻ thiết bị hoặc nội dung, gói Basic được thiết kế như một hệ thống hoàn chỉnh, trong đó các thành phần có mối liên kết chặt chẽ và không thể tách rời.</p>
+
+            <div class="sub-title">2. Cấu trúc hệ thống triển khai (5 Lớp)</div>
+            <ol class="mb-10">
+                <li><strong><span class="text-orange-600">Lớp 1:</span> Học cụ & trải nghiệm học tập:</strong> Cấu hình học cụ tối ưu nhóm nhỏ (3-6 trẻ/nhóm). 1 robot tương ứng 1 bản đồ.</li>
+                <li><strong><span class="text-orange-600">Lớp 2:</span> Chương trình & nội dung số:</strong> Lộ trình 3 năm (Làm quen, Phát triển logic, Ứng dụng). Giáo án chi tiết và bài giảng số hoàn chỉnh.</li>
+                <li><strong><span class="text-orange-600">Lớp 3:</span> Đào tạo & chuẩn hóa giáo viên:</strong> Đào tạo tập trung, hướng dẫn thực tế. Đánh giá và cấp chứng nhận năng lực giảng dạy.</li>
+                <li><strong><span class="text-orange-600">Lớp 4:</span> Đảm bảo vận hành & chất lượng:</strong> Đồng hành chuyên môn, hỗ trợ xử lý vấn đề, đánh giá định kỳ trực tuyến/trực tiếp.</li>
+                <li><strong><span class="text-orange-600">Lớp 5:</span> Trải nghiệm & nhận diện:</strong> Bộ nhận diện lớp học, học liệu bổ trợ cơ bản.</li>
+            </ol>
+
+            <div class="sub-title">3. Phù hợp với đơn vị nào?</div>
+            <div class="box mb-6 p-6">
+                <p class="font-bold text-slate-800 mb-0 leading-relaxed text-[14px]">Gói Basic phù hợp với: Trường mầm non muốn triển khai chương trình công nghệ bài bản, đơn vị chưa có kinh nghiệm về STEAM/Coding, hoặc trường muốn bắt đầu với mô hình chuẩn trước khi mở rộng dần.</p>
+            </div>
+            
+            <p><strong>Kết luận:</strong> Gói Basic là bước khởi đầu mang tính nền tảng: Đủ để triển khai thực tế, Đủ để vận hành ổn định, Đủ để tạo ra giá trị giáo dục.</p>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>07</span>
+        </div>
+    </div>
+
+    <!-- PAGE 08: STANDARD PACKAGE -->
+    <div class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Phân tích Gói Triển khai</div>
+            <div class="flex items-center gap-6 mb-8">
+                <h2 class="text-[40px] font-black text-slate-900 uppercase tracking-tight border-b-4 border-orange-500 pb-2 m-0">GÓI CHUẨN <span class="text-orange-500 text-[30px] font-bold ml-2">(STANDARD)</span></h2>
+                <div class="bg-orange-500 text-white text-[12px] px-5 py-2 rounded-full tracking-widest font-black uppercase shadow-md mb-2">
+                    Khuyên Dùng
+                </div>
+            </div>
+            
+            <div class="sub-title mt-0">1. Định vị gói triển khai</div>
+            <p>Gói Standard là cấp độ triển khai mở rộng và hoàn thiện hơn, không chỉ triển khai chương trình công nghệ mà xây dựng một hệ sinh thái học tập tích hợp giữa: <strong class="text-slate-900">Lập trình tư duy (Coding)</strong> và <strong class="text-slate-900">Giáo dục STEAM theo dự án.</strong></p>
+            
+            <div class="bg-orange-50 p-8 rounded-2xl border border-orange-200 my-8 shadow-sm">
+                <p class="font-black text-orange-800 uppercase text-[13px] tracking-widest mb-3">Khác biệt cốt lõi so với Basic:</p>
+                <p class="text-[14px] text-orange-900 font-medium mb-0 leading-relaxed">Nếu gói Basic tập trung vào "Triển khai đúng và vận hành ổn định", thì Standard tập trung vào <strong class="font-bold">"Mở rộng chiều sâu học tập và nâng cao chất lượng trải nghiệm"</strong>. Bao gồm cả Coding và STEAM (3 năm), đào tạo 2 chương trình và trải nghiệm mở rộng.</p>
+            </div>
+
+            <div class="sub-title">2. Cấu trúc hệ thống triển khai (6 Lớp tích hợp)</div>
+            <ol class="mb-8">
+                <li><strong><span class="text-orange-600">Lớp 1:</span> Học cụ & trải nghiệm đa dạng:</strong> Bổ sung bộ học liệu STEAM theo chủ đề. Trẻ học "cách điều khiển" và "cách tạo ra".</li>
+                <li><strong><span class="text-orange-600">Lớp 2:</span> Chương trình tích hợp Coding + STEAM:</strong> Thiết kế theo 2 trục song song tương hỗ.</li>
+                <li><strong><span class="text-orange-600">Lớp 3:</span> Nội dung số & lộ trình 3 năm:</strong> Hệ thống giáo án Coding và STEAM đầy đủ.</li>
+                <li><strong><span class="text-orange-600">Lớp 4:</span> Đào tạo giáo viên kép:</strong> Đào tạo cả Coding và STEAM. Giáo viên vận hành lớp đa hoạt động.</li>
+                <li><strong><span class="text-orange-600">Lớp 5:</span> Đảm bảo vận hành & chất lượng:</strong> Đảm bảo "dạy hiệu quả với chương trình mở rộng".</li>
+                <li><strong><span class="text-orange-600">Lớp 6:</span> Trải nghiệm & nhận diện nâng cao:</strong> Tăng tính trực quan, phụ huynh dễ hiểu chương trình.</li>
+            </ol>
+
+            <div class="sub-title">3. Phù hợp với đơn vị nào?</div>
+            <p>Trường mầm non muốn nâng cấp chương trình học, đơn vị đã có định hướng giáo dục hiện đại, trường muốn tạo sự khác biệt rõ ràng với phụ huynh.</p>
+            
+            <p class="mt-6 border-t border-slate-200 pt-6 font-medium text-slate-800"><strong>Kết luận:</strong> Lựa chọn tuyệt vời để xây dựng chương trình có chiều sâu, mang lại giá trị bền vững cho nhà trường.</p>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>08</span>
+        </div>
+    </div>
+
+    <!-- PAGE 09: PREMIUM PACKAGE -->
+    <div class="a4-page">
+        <div class="page-watermark">02</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Phân tích Gói Triển khai</div>
+            <div class="flex items-center gap-6 mb-10">
+                <h2 class="text-[40px] font-black text-slate-900 uppercase tracking-tight border-b-4 border-slate-900 pb-2 m-0">GÓI CAO CẤP <span class="text-slate-400 text-[30px] font-bold ml-2">(PREM)</span></h2>
+                <div class="bg-slate-900 text-amber-400 text-[12px] px-5 py-2 rounded-full tracking-widest font-black uppercase shadow-lg mb-2">
+                    Chiến lược
+                </div>
+            </div>
+            
+            <div class="sub-title mt-0">1. Định vị gói triển khai</div>
+            <p>Gói Premium là cấp độ triển khai cao nhất, được thiết kế dành cho các nhà trường muốn xây dựng chương trình giáo dục công nghệ toàn diện và nổi bật. Không chỉ triển khai chương trình học mà hướng tới tăng trưởng quy mô, nâng cao hình ảnh và hiệu quả tuyển sinh.</p>
+            
+            <div class="box-dark my-8 p-8">
+                <p class="font-black text-amber-400 uppercase text-[13px] tracking-widest mb-4">Khác biệt cốt lõi so với Standard:</p>
+                <p class="text-[14px] text-slate-300 font-medium mb-0 leading-relaxed">Premium không chỉ là "dạy tốt hơn", mà là <strong class="text-white">"vận hành tốt hơn và phát triển tốt hơn"</strong>. Bao gồm tối ưu toàn diện trải nghiệm, không gian lớp học chuẩn hóa, và các sự kiện, truyền thông, hỗ trợ tuyển sinh chuyên sâu.</p>
+            </div>
+
+            <div class="sub-title">2. Cấu trúc hệ thống triển khai (7 Lớp tích hợp)</div>
+            <ol class="mb-10">
+                <li><strong><span class="text-orange-600">Lớp 1:</span> Học cụ quy mô lớn:</strong> Tăng số lượng robot và học cụ, phù hợp điểm trường quy mô trẻ đông.</li>
+                <li><strong><span class="text-orange-600">Lớp 2:</span> Chương trình tích hợp:</strong> Trẻ có cơ hội thể hiện sản phẩm và kết quả học tập qua dự án lớn.</li>
+                <li><strong><span class="text-orange-600">Lớp 3:</span> Đào tạo GV & vận hành nâng cao:</strong> Chuẩn bị kỹ năng cho các hoạt động quy mô lớn (event, showcase).</li>
+                <li><strong><span class="text-orange-600">Lớp 4:</span> Đảm bảo vận hành:</strong> Không chỉ giúp "duy trì" mà còn giúp "nâng cấp liên tục" chất lượng.</li>
+                <li><strong><span class="text-orange-600">Lớp 5:</span> Trải nghiệm & sự kiện:</strong> Giao lưu, thi đấu, trình diễn sản phẩm. Tăng gắn kết phụ huynh.</li>
+                <li><strong><span class="text-orange-600">Lớp 6:</span> Truyền thông & tuyển sinh:</strong> Bộ tài liệu chuẩn, kịch bản, tư vấn chiến dịch quảng bá tuyển sinh.</li>
+                <li><strong><span class="text-orange-600">Lớp 7:</span> Không gian & nhận diện:</strong> Nội thất lớp học chuyên biệt, hệ thống thi đua tạo không gian chuyên nghiệp.</li>
+            </ol>
+
+            <div class="sub-title">3. Phù hợp với đơn vị nào?</div>
+            <p class="mb-6">Trường quy mô vừa và lớn, đơn vị có định hướng xây thương hiệu rõ ràng, muốn phát triển mạnh về tuyển sinh và hình ảnh, hoặc các hệ thống chuỗi trường.</p>
+            <p class="border-t border-slate-200 pt-6 font-medium text-slate-800"><strong>Kết luận:</strong> Một mô hình hoàn chỉnh giúp nhà trường triển khai chương trình, nâng cao trải nghiệm, và phát triển hình ảnh quy mô lớn.</p>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>09</span>
+        </div>
+    </div>
+
+    <!-- PAGE 10: DIY COMPARISON P1 -->
+    <div class="a4-page" id="sec-3">
+        <div class="page-watermark">03</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">03</div>
+                <div class="section-title mb-0">So Sánh Mô Hình:<br>Sunbot vs Tự Triển Khai</div>
+            </div>
+            
+            <p class="text-[14px] mb-8">Việc nhà trường tự xây dựng và triển khai một lớp học STEAM nội bộ thường đối mặt với nhiều rủi ro về chuẩn hóa và tính bền vững. Dưới đây là bảng phân tích chi tiết so sánh giữa hai mô hình.</p>
+
+            <table class="shadow-sm border border-slate-200 rounded-xl overflow-hidden mb-12">
+                <thead>
+                    <tr>
+                        <th width="24%">Tiêu chí</th>
+                        <th width="38%" class="bg-orange-50 border-b-2 border-orange-500">Sunbot (Hệ thống chuẩn)</th>
+                        <th width="38%" class="bg-slate-100 border-b-2 border-slate-400">Tự triển khai lớp STEAM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-bold text-slate-800">Thời gian triển khai</td><td class="td-highlight">Có thể vận hành sau 2-4 tuần</td><td class="text-slate-500">3-6 tháng (thậm chí lâu hơn)</td></tr>
+                    <tr><td class="font-bold text-slate-800">Chương trình học</td><td class="td-highlight">Đã hoàn thiện, có lộ trình rõ</td><td class="text-slate-500">Phải tự xây dựng, dễ rời rạc</td></tr>
+                    <tr><td class="font-bold text-slate-800">Chất lượng đầu ra</td><td class="td-highlight">Có chuẩn đánh giá, chứng nhận</td><td class="text-slate-500">Không có chuẩn, phụ thuộc GV</td></tr>
+                    <tr><td class="font-bold text-slate-800">Đào tạo giáo viên</td><td class="td-highlight">Quy trình đào tạo, cập nhật</td><td class="text-slate-500">Tự đào tạo, không đồng bộ</td></tr>
+                    <tr><td class="font-bold text-slate-800">Vận hành ổn định</td><td class="td-highlight">Cao (đã được chuẩn hóa)</td><td class="text-slate-500">Rất dễ “vỡ lớp” sau 3-6 tháng</td></tr>
+                    <tr><td class="font-bold text-slate-800">Tuyển sinh</td><td class="td-highlight">Có framework nội dung, SP</td><td class="text-slate-500">Phụ thuộc hoàn toàn cá nhân</td></tr>
+                    <tr><td class="font-bold text-slate-800">Học cụ & STEAM</td><td class="td-highlight">Đồng bộ, có hệ thống</td><td class="text-slate-500">Tự mua lẻ, thiếu nhất quán</td></tr>
+                    <tr><td class="font-bold text-slate-800">Kiểm soát chất lượng</td><td class="td-highlight">Có audit, chuẩn vận hành</td><td class="text-slate-500">Gần như không kiểm soát được</td></tr>
+                    <tr><td class="font-bold text-slate-800">Khả năng mở rộng</td><td class="td-highlight">Dễ nhân rộng nhiều lớp/điểm</td><td class="text-slate-500">Rất khó scale đồng bộ</td></tr>
+                </tbody>
+            </table>
+
+            <div class="sub-title">Phân tích Chi phí Thực tế (Chi phí ẩn)</div>
+            <p class="text-[14px] mb-4">Tự triển khai thường "có vẻ rẻ" về thiết bị ban đầu, nhưng thực tế nhà trường sẽ phải đối mặt với rất nhiều <strong class="text-red-600">Chi phí ẩn (Hidden Costs)</strong>:</p>
+            <ul class="mb-0">
+                <li>Chi phí xây dựng chương trình (thời gian, chất xám ban giám hiệu).</li>
+                <li>Chi phí thử nghiệm sai và phải đập đi làm lại nhiều lần.</li>
+                <li>Chi phí đào tạo giáo viên không hiệu quả, rủi ro khi GV nghỉ việc.</li>
+                <li>Lớp học không ổn định dẫn đến mất uy tín, mất học sinh.</li>
+                <li>Marketing không hiệu quả do thiếu chuẩn mực, khó giữ chân phụ huynh.</li>
+            </ul>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>10</span>
+        </div>
+    </div>
+
+    <!-- PAGE 11: DIY COMPARISON P2 -->
+    <div class="a4-page">
+        <div class="page-watermark">03</div>
+        <div class="page-content flex flex-col h-full">
+            <div class="kicker mt-2">So Sánh Mô Hình (Tiếp theo)</div>
+            
+            <div class="sub-title mt-6">Hiệu Quả Kinh Doanh (Mô phỏng 1 điểm / 6 lớp / 150 trẻ)</div>
+            
+            <table class="mt-6 shadow-sm border border-slate-200 rounded-xl overflow-hidden mb-10">
+                <thead>
+                    <tr>
+                        <th width="30%">Tiêu chí</th>
+                        <th width="35%" class="bg-orange-50 border-b-2 border-orange-500">Sunbot</th>
+                        <th width="35%" class="bg-slate-100 border-b-2 border-slate-400">Tự triển khai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-bold text-slate-800">Doanh thu dự kiến</td><td>42 - 60 triệu</td><td class="text-slate-500">Tương đương (nếu làm tốt)</td></tr>
+                    <tr><td class="font-bold text-slate-800">Chi phí hệ thống/tháng</td><td>~9 - 10 triệu</td><td class="text-slate-500">0 (nhìn bề ngoài)</td></tr>
+                    <tr><td class="font-black text-red-600">Chi phí rủi ro/sai lầm</td><td class="font-black text-green-600 bg-green-50">Rất thấp</td><td class="font-black text-red-600 bg-red-50">Rất cao</td></tr>
+                    <tr><td class="font-bold text-slate-800">Độ ổn định lớp học</td><td class="font-bold text-slate-700">Cao</td><td class="text-slate-500">Thấp</td></tr>
+                    <tr><td class="font-bold text-slate-800">Khả năng giữ học sinh</td><td class="font-bold text-slate-700">Cao (>85%)</td><td class="text-slate-500">Không ổn định</td></tr>
+                </tbody>
+            </table>
+
+            <div class="sub-title">Góc nhìn chiến lược</div>
+            <div class="grid grid-cols-2 gap-8 mt-6 mb-10">
+                <div class="p-6 bg-orange-50 border border-orange-100 rounded-xl">
+                    <p class="font-bold text-orange-700 mb-4 uppercase text-[12px] tracking-widest border-b border-orange-200 pb-2">Sunbot phù hợp với:</p>
+                    <ul class="mb-0">
+                        <li>Đơn vị muốn làm bài bản từ đầu.</li>
+                        <li>Muốn có hệ thống rõ ràng, quy chuẩn.</li>
+                        <li>Định hướng mở rộng quy mô.</li>
+                        <li>Muốn kiểm soát và giảm thiểu rủi ro.</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl">
+                    <p class="font-bold text-slate-500 mb-4 uppercase text-[12px] tracking-widest border-b border-slate-200 pb-2">Tự triển khai phù hợp với:</p>
+                    <ul class="mb-0">
+                        <li>Thử nghiệm quy mô rất nhỏ.</li>
+                        <li>Chưa có ngân sách đầu tư nghiêm túc.</li>
+                        <li>Chấp nhận rủi ro vỡ lớp cao.</li>
+                        <li>Phụ thuộc hoàn toàn năng lực 1-2 cá nhân.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="box mt-auto border-orange-400 bg-orange-50/80 p-8 shadow-sm">
+                <p class="font-black text-orange-800 mb-4 uppercase text-[12px] tracking-widest text-center border-b border-orange-200 pb-3">Thông Điệp Tư Vấn Chiến Lược</p>
+                <p class="italic text-orange-900 font-semibold mb-0 text-[15px] leading-relaxed text-center px-4">"Sunbot không giúp anh/chị tiết kiệm chi phí ngay từ đầu,<br>mà giúp anh/chị tránh mất tiền trong quá trình làm sai<br>và đi nhanh hơn đến một mô hình ổn định có thể mở rộng."</p>
+            </div>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>11</span>
+        </div>
+    </div>
+
+    <!-- PAGE 12: 3-PACK COMPARISON P1 -->
+    <div class="a4-page" id="sec-4">
+        <div class="page-watermark">04</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">04</div>
+                <div class="section-title mb-0">Bảng So Sánh 3 Gói Triển Khai</div>
+            </div>
+            
+            <p class="text-[14px] mb-8">Ba gói triển khai không đơn thuần là 3 mức giá, mà là 3 cấp độ phát triển chiến lược của nhà trường: Từ mức độ triển khai được (Basic), đến vận hành tốt (Standard) và phát triển mạnh mẽ (Premium).</p>
+
+            <table class="shadow-md border border-slate-200 rounded-xl overflow-hidden">
+                <thead>
+                    <tr>
+                        <th width="22%">Tiêu chí</th>
+                        <th width="26%" class="bg-slate-50 border-b-2 border-slate-300">BASIC <span class="text-[9px] font-normal block mt-1 text-slate-500 uppercase tracking-widest">(Khởi đầu)</span></th>
+                        <th width="26%" class="bg-orange-500 text-white border-b-2 border-orange-600">STANDARD <span class="text-[9px] font-normal block mt-1 text-orange-200 uppercase tracking-widest">(Khuyến nghị)</span></th>
+                        <th width="26%" class="bg-slate-900 text-amber-400 border-b-2 border-slate-800">PREMIUM <span class="text-[9px] font-normal block mt-1 text-slate-400 uppercase tracking-widest">(Chiến lược)</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="font-bold text-slate-800">Mục tiêu chính</td><td class="text-slate-600">Triển khai cơ bản</td><td class="font-bold text-orange-800 bg-orange-50">Triển khai đầy đủ & ổn định</td><td class="bg-slate-50 text-slate-700">Nâng cao hình ảnh</td></tr>
+                    <tr><td class="font-bold text-slate-800">Chương trình Coding</td><td class="text-slate-600">Có</td><td class="font-bold text-orange-800 bg-orange-50">Có</td><td class="bg-slate-50 text-slate-700">Có (Mở rộng)</td></tr>
+                    <tr><td class="font-bold text-slate-800">Chương trình STEAM</td><td class="text-slate-400">Không</td><td class="font-bold text-orange-800 bg-orange-50">Có (3 năm)</td><td class="bg-slate-50 text-slate-700">Có (3 năm)</td></tr>
+                    <tr><td class="font-bold text-slate-800">Lộ trình học tập</td><td class="text-slate-600">3 năm</td><td class="font-bold text-orange-800 bg-orange-50">3 năm</td><td class="bg-slate-50 text-slate-700">3 năm</td></tr>
+                    <tr><td class="font-bold text-slate-800">Đào tạo & C/nhận GV</td><td class="text-slate-600">Có (1 Chương trình)</td><td class="font-bold text-orange-800 bg-orange-50">Có (2 Chương trình)</td><td class="bg-slate-50 text-slate-700">Có + Nâng cao</td></tr>
+                    <tr><td class="font-bold text-slate-800">Đồng hành vận hành</td><td class="text-slate-600">Có</td><td class="font-bold text-orange-800 bg-orange-50">Có</td><td class="bg-slate-50 text-slate-700">Tăng cường</td></tr>
+                    <tr><td class="font-bold text-slate-800">Trải nghiệm học tập</td><td class="text-slate-600">Cơ bản</td><td class="font-bold text-orange-800 bg-orange-50">Đầy đủ</td><td class="bg-slate-50 text-slate-700">Toàn diện</td></tr>
+                    <tr><td class="font-bold text-slate-800">Quy mô triển khai</td><td class="text-slate-600">Nhỏ - Trung bình</td><td class="font-bold text-orange-800 bg-orange-50">Trung bình - Lớn</td><td class="bg-slate-50 text-slate-700">Lớn</td></tr>
+                    <tr><td class="font-bold text-slate-800">Hoạt động sự kiện</td><td class="text-slate-400">Không</td><td class="text-orange-600 bg-orange-50">Hạn chế</td><td class="font-bold bg-slate-50 text-slate-800">Có (Cấp trường)</td></tr>
+                    <tr><td class="font-bold text-slate-800">Hỗ trợ truyền thông</td><td class="text-slate-400">Không</td><td class="text-orange-600 bg-orange-50">Không</td><td class="font-bold bg-slate-50 text-slate-800">Có</td></tr>
+                    <tr><td class="font-bold text-slate-800">Không gian lớp học</td><td class="text-slate-600">Cơ bản</td><td class="text-orange-700 bg-orange-50">Cơ bản</td><td class="font-bold bg-slate-50 text-slate-800">Chuẩn hóa đầy đủ</td></tr>
+                    <tr><td class="font-bold text-slate-800 border-none">Định vị phù hợp</td><td class="text-slate-600 font-medium border-none">Trường mới bắt đầu</td><td class="font-black text-orange-700 bg-orange-50 uppercase text-[10px] tracking-widest border-none">Trường triển khai chính</td><td class="bg-slate-50 text-slate-700 font-medium border-none">Trường chất lượng cao</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>12</span>
+        </div>
+    </div>
+
+    <!-- PAGE 13: 3-PACK COMPARISON P2 -->
+    <div class="a4-page">
+        <div class="page-watermark">04</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Bảng So Sánh 3 Gói (Tiếp theo)</div>
+            
+            <div class="sub-title mt-6">Góc nhìn vận hành thực tế & Khuyến nghị lựa chọn</div>
+            <div class="grid grid-cols-1 gap-6 mt-6">
+                <!-- Basic -->
+                <div class="p-8 bg-slate-50 border border-slate-200 rounded-2xl flex items-start gap-8">
+                    <div class="w-32 shrink-0 pt-1">
+                        <p class="font-black text-slate-500 uppercase tracking-widest text-[14px] mb-1">Gói Basic</p>
+                        <p class="text-[10px] uppercase text-slate-400 font-bold mb-0">Khởi đầu</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-slate-800 mb-2 text-[15px]">Phù hợp để bắt đầu, thử nghiệm</p>
+                        <p class="mb-0 text-[14px] text-slate-600 leading-relaxed"><strong class="text-red-500">Rủi ro:</strong> Nếu nhà trường không vận hành tốt hoặc thiếu nguồn lực, chương trình dễ bị dừng giữa chừng do thiếu chiều sâu (không có các hoạt động STEAM dự án bổ trợ để duy trì hứng thú dài hạn).</p>
+                    </div>
+                </div>
+                
+                <!-- Standard -->
+                <div class="p-8 bg-orange-50 border-2 border-orange-400 rounded-2xl flex items-start gap-8 shadow-md relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-orange-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-bl-xl shadow-sm">90% Lựa chọn</div>
+                    <div class="w-32 shrink-0 pt-1">
+                        <p class="font-black text-orange-600 uppercase tracking-widest text-[14px] mb-1">Standard</p>
+                        <p class="text-[10px] uppercase text-orange-400 font-bold mb-0">Gói Khuyến nghị</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-orange-900 mb-2 text-[15px]">Đây là gói Cân bằng và Hiệu quả nhất</p>
+                        <p class="mb-3 text-[14px] text-orange-800 leading-relaxed">Đủ chiều sâu (Có chương trình STEAM 3 năm), đủ khả năng triển khai lâu dài, và chi phí cực kỳ hợp lý so với hệ giá trị mang lại.</p>
+                        <p class="mb-0 text-[14px] text-orange-900 font-bold bg-white/60 inline-block px-3 py-1.5 rounded border border-orange-200">Quan trọng nhất: Giúp chương trình "Sống được và Sinh lời" trong nhà trường.</p>
+                    </div>
+                </div>
+                
+                <!-- Premium -->
+                <div class="p-8 bg-slate-900 border border-slate-700 rounded-2xl flex items-start gap-8 shadow-xl">
+                    <div class="w-32 shrink-0 pt-1">
+                        <p class="font-black text-amber-400 uppercase tracking-widest text-[14px] mb-1">Premium</p>
+                        <p class="text-[10px] uppercase text-slate-400 font-bold mb-0">Chiến lược</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-white mb-2 text-[15px]">Không chỉ là Nâng cấp, mà là Chuyển cấp</p>
+                        <p class="mb-3 text-[14px] text-slate-300 leading-relaxed">Sở hữu toàn diện công cụ trải nghiệm, truyền thông tuyển sinh và khả năng tạo điểm nhấn thị giác đẳng cấp.</p>
+                        <p class="mb-0 text-[14px] text-slate-400 leading-relaxed">Phù hợp khi: Nhà trường muốn làm chương trình mũi nhọn, muốn dùng công nghệ làm công cụ tăng tuyển sinh, và xây dựng hình ảnh dẫn đầu.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-title mt-12 border-t border-slate-200 pt-8">Kết Luận Định Hướng</div>
+            <p class="text-[14.5px] font-medium text-slate-700">Lộ trình nâng cấp chiến lược của Sunbot được thiết kế theo tư duy:</p>
+            <ul class="text-[14.5px] mt-4 space-y-2">
+                <li><strong class="text-slate-900">BASIC</strong> ➔ Đảm bảo triển khai đúng chương trình.</li>
+                <li><strong class="text-orange-600">STANDARD</strong> ➔ Đảm bảo vận hành hiệu quả, chiều sâu và ổn định.</li>
+                <li><strong class="text-amber-500">PREMIUM</strong> ➔ Tăng cường trải nghiệm, tối đa hóa giá trị thương hiệu.</li>
+            </ul>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>13</span>
+        </div>
+    </div>
+
+    <!-- PAGE 14: RIGHTS & OBLIGATIONS P1 -->
+    <div class="a4-page" id="sec-5">
+        <div class="page-watermark">05</div>
+        <div class="page-content">
+            <div class="section-header">
+                <div class="section-number">05</div>
+                <div class="section-title mb-0">Ma Trận Quyền & Nghĩa Vụ</div>
+            </div>
+            <p class="text-[14px] mb-10">Áp dụng cho đơn vị triển khai chương trình Sunbot. Việc triển khai cần đảm bảo tính nhất quán về chất lượng, chuẩn hóa vận hành và bảo vệ giá trị thương hiệu.</p>
+            
+            <div class="sub-title text-[18px] text-slate-800">1. Quyền của Nhà Trường</div>
+            <div class="space-y-5 mb-12 pl-5 border-l-2 border-slate-200">
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Triển khai chương trình</p>
+                    <p class="mb-0 text-[13.5px]">Tổ chức giảng dạy tại điểm trường đã đăng ký. Phân bổ lớp học, thời khóa biểu phù hợp với thực tế vận hành.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Sử dụng chương trình</p>
+                    <p class="mb-0 text-[13.5px]">Sử dụng giáo án, phần mềm và học liệu trong phạm vi được cấp quyền. Triển khai theo lộ trình cung cấp.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Tổ chức lớp học</p>
+                    <p class="mb-0 text-[13.5px]">Chủ động sắp xếp giáo viên, lớp học và phương thức tổ chức. Điều chỉnh linh hoạt trong khuôn khổ phương pháp.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Tối ưu chi phí vận hành</p>
+                    <p class="mb-0 text-[13.5px]">Sử dụng thiết bị hiển thị sẵn có (TV, tablet...). Chủ động chuẩn bị nguyên vật liệu phổ thông trong hoạt động STEAM.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Truyền thông tại trường</p>
+                    <p class="mb-0 text-[13.5px]">Sử dụng Sunbot như một nội dung truyền thông tuyển sinh (trong phạm vi điểm trường).</p>
+                </div>
+            </div>
+
+            <div class="sub-title text-[18px] text-slate-800">2. Nghĩa Vụ của Nhà Trường</div>
+            <div class="space-y-5 pl-5 border-l-2 border-orange-400">
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Tuân thủ chương trình</p>
+                    <p class="mb-0 text-[13.5px]">Triển khai đúng nội dung và lộ trình. Không tự ý thay đổi cấu trúc bài học hoặc phương pháp giảng dạy.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Đảm bảo chất lượng giảng dạy</p>
+                    <p class="mb-0 text-[13.5px]">Giáo viên phải được đào tạo và đánh giá theo tiêu chuẩn. Duy trì chất lượng lớp học theo hướng dẫn chuyên môn.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Tuân thủ quy trình vận hành</p>
+                    <p class="mb-0 text-[13.5px]">Thực hiện kiểm tra định kỳ. Phối hợp theo dõi và cải tiến chất lượng cùng đơn vị phát triển.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Thanh toán & duy trì dịch vụ</p>
+                    <p class="mb-0 text-[13.5px]">Thanh toán đầy đủ theo hợp đồng. Duy trì các gói dịch vụ bắt buộc để đảm bảo chất lượng triển khai.</p>
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>14</span>
+        </div>
+    </div>
+
+    <!-- PAGE 15: RIGHTS & OBLIGATIONS P2 -->
+    <div class="a4-page">
+        <div class="page-watermark">05</div>
+        <div class="page-content">
+            <div class="kicker mt-2">Ma Trận Quyền & Nghĩa Vụ (Tiếp)</div>
+            
+            <div class="sub-title mt-8 text-[18px] text-red-600">3. Các Giới Hạn (Nhà trường KHÔNG được phép)</div>
+            <div class="bg-red-50 p-8 rounded-2xl border border-red-200 mt-6 mb-12 shadow-sm">
+                <div class="grid grid-cols-1 gap-8 text-[14px]">
+                    <div class="flex gap-5 items-start">
+                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-black shrink-0 mt-0.5">1</div>
+                        <div>
+                            <p class="font-bold text-red-900 mb-1">Sao chép và phân phối chương trình</p>
+                            <p class="text-red-800 mb-0 leading-relaxed">Nghiêm cấm sao chép, chia sẻ hoặc chuyển giao giáo án, phần mềm cho bên thứ ba. Tuyệt đối không sử dụng ngoài phạm vi điểm trường đã được cấp quyền.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 items-start">
+                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-black shrink-0 mt-0.5">2</div>
+                        <div>
+                            <p class="font-bold text-red-900 mb-1">Tự ý thay đổi nội dung lõi</p>
+                            <p class="text-red-800 mb-0 leading-relaxed">Không tự chỉnh sửa giáo án, nội dung hoặc cấu trúc chương trình. Không tự xây dựng các phiên bản "biến thể" gây ảnh hưởng đến triết lý gốc.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 items-start">
+                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-black shrink-0 mt-0.5">3</div>
+                        <div>
+                            <p class="font-bold text-red-900 mb-1">Sử dụng thương hiệu sai mục đích</p>
+                            <p class="text-red-800 mb-0 leading-relaxed">Không sử dụng tên gọi, logo, hình ảnh Sunbot sai mục đích. Không thực hiện các hoạt động truyền thông vượt phạm vi hoặc gây hiểu nhầm về quan hệ hợp tác.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-5 items-start">
+                        <div class="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-black shrink-0 mt-0.5">4</div>
+                        <div>
+                            <p class="font-bold text-red-900 mb-1">Triển khai sai chuẩn & Tách rời hệ thống</p>
+                            <p class="text-red-800 mb-0 leading-relaxed">Không cho phép giáo viên đứng lớp khi chưa đạt chuẩn đào tạo. Không chỉ sử dụng một phần chương trình mà loại bỏ các thành phần cốt lõi ảnh hưởng chất lượng.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sub-title text-[18px] text-slate-800">4. Quyền của Sunbot & Nguyên tắc Bảo vệ</div>
+            <div class="p-8 bg-slate-50 rounded-2xl border border-slate-200">
+                <p class="mb-6 text-[14px] leading-relaxed"><strong class="text-slate-900">Kiro Việt Nam (Sunbot) có quyền:</strong> Tiến hành kiểm tra, đánh giá chất lượng triển khai thực tế tại điểm trường; Đưa ra các báo cáo và khuyến nghị cải tiến; Tạm dừng hoặc điều chỉnh quyền sử dụng trong trường hợp phát hiện vi phạm nghiêm trọng các điều khoản trên.</p>
+                <div class="w-20 h-1 bg-slate-300 my-6"></div>
+                <p class="mb-3 text-[14px]"><strong class="text-slate-900">Hai bên thống nhất nguyên tắc tối thượng:</strong></p>
+                <ul class="text-[14px] mb-0 space-y-2">
+                    <li>Chất lượng giáo dục và kết quả của chương trình là yếu tố cốt lõi nhất.</li>
+                    <li>Việc tuân thủ tiêu chuẩn triển khai là điều kiện bắt buộc để đạt hiệu quả.</li>
+                    <li>Mọi điều chỉnh trong quá trình vận hành cần được thống nhất từ hai phía.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-footer">
+            <span>Kiro Vietnam JSC</span>
+            <span>15</span>
+        </div>
+    </div>
+
+</body>
+</html>
