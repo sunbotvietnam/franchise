@@ -63,29 +63,8 @@
 </head>
 <body class="relative">
 
-    <!-- LỚP MẶT NẠ BẢO MẬT (PASSCODE OVERLAY) -->
-    <div id="auth-overlay" class="fixed inset-0 z-[100] bg-[#0b1120] flex items-center justify-center p-6">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-600 rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
-        <div class="bg-slate-900/80 backdrop-blur-xl border border-slate-700 p-10 rounded-3xl shadow-2xl w-full max-w-md text-center relative overflow-hidden" style="animation: fadeIn 0.5s ease-out forwards;">
-            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-600 via-amber-500 to-orange-600"></div>
-            <img src="../../assets/img/logo-sunbot.png" alt="Sunbot" class="h-14 mx-auto mb-8 drop-shadow-md" onerror="this.src='https://placehold.co/150x50/transparent/ea580c?text=SUNBOT+LOGO'">
-            <h2 class="text-2xl font-black text-white mb-2 uppercase tracking-widest">Nhà Đầu Tư & Nhượng Quyền</h2>
-            <p class="text-slate-400 text-[13px] mb-8 leading-relaxed">Tài liệu định hướng kinh doanh và mô hình tài chính bảo mật. Vui lòng nhập mã truy cập.</p>
-            <form id="auth-form" class="space-y-5">
-                <div class="relative">
-                    <input type="password" id="auth-pass" class="w-full px-5 py-4 rounded-xl bg-[#0f172a] border border-slate-600 text-white font-bold tracking-widest focus:outline-none focus:border-orange-500 text-center placeholder:text-slate-600 transition-all outline-none" placeholder="Mã truy cập hệ thống..." required>
-                    <p id="auth-error" class="text-red-400 text-[12px] font-bold mt-2 hidden text-left px-2">⚠️ Mã truy cập không chính xác!</p>
-                </div>
-                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black uppercase tracking-widest hover:from-orange-500 hover:to-orange-400 transition-colors shadow-[0_10px_20px_-10px_rgba(234,88,12,0.5)] outline-none">Xác Thực Truy Cập</button>
-            </form>
-            <div class="mt-8 pt-6 border-t border-slate-800">
-                <a href="../index.html" class="text-xs text-slate-500 hover:text-orange-500 transition-colors font-medium">← Quay lại Cổng đầu tư</a>
-            </div>
-        </div>
-    </div>
-
     <!-- NỘI DUNG CHÍNH -->
-    <div id="main-wrapper" class="hidden flex-col min-h-screen w-full">
+    <div id="main-wrapper" class="flex flex-col min-h-screen w-full">
         <!-- TOP NAV -->
         <nav class="fixed w-full z-50 glass-nav shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -306,7 +285,7 @@
                         <div>
                             <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Tầm Nhìn Mở Rộng</p>
                             <p class="text-[13px] text-slate-300 mb-4 leading-relaxed">Mô hình không bị giới hạn trần. Nhân bản số lớp hoặc số điểm trường để gia tăng lợi nhuận theo cấp số nhân mà chi phí bộ máy quản lý tăng cực kỳ thấp.</p>
-                            <a href="../roi-calculator/index.html" target="_blank" class="block w-full py-3 rounded-xl bg-slate-800 text-amber-400 border border-amber-500/50 text-center font-bold text-sm uppercase tracking-wider hover:bg-slate-700 transition-colors">
+                            <a href="../calculator/index.html" target="_blank" class="block w-full py-3 rounded-xl bg-slate-800 text-amber-400 border border-amber-500/50 text-center font-bold text-sm uppercase tracking-wider hover:bg-slate-700 transition-colors">
                                 Bật Máy Tính Lợi Nhuận ➔
                             </a>
                         </div>
@@ -405,7 +384,7 @@
                     </div>
                     <div class="glass-panel p-6 text-center hover:-translate-y-2 transition-transform">
                         <div class="text-4xl mb-4">🚀</div>
-                        <h4 class="text-white font-bold mb-2">Mo Hình Đã Xong</h4>
+                        <h4 class="text-white font-bold mb-2">Mô Hình Đã Xong</h4>
                         <p class="text-[12px] text-slate-400">Tránh được mọi rủi ro xây từ số 0. Giáo án, quy trình, nền tảng đều đã sẵn sàng để bạn scale.</p>
                     </div>
                     <div class="glass-panel p-6 text-center hover:-translate-y-2 transition-transform">
@@ -459,7 +438,7 @@
 
                 <div class="mt-8 bg-gradient-to-r from-orange-600 to-orange-500 p-8 rounded-2xl shadow-xl text-center">
                     <p class="text-white text-[16px] font-medium leading-relaxed mb-6">"Việc tự triển khai không tốn 'Phí hệ thống' nhưng tốn 'Chi phí sai lầm'. Lựa chọn Sunbot thực chất là <strong class="font-black text-xl">ĐẦU TƯ ĐỂ ĐI NHANH VÀ ĐI CHẮC</strong> thay vì tiết kiệm ban đầu nhưng trả giá bằng thời gian và rủi ro đổ vỡ mô hình."</p>
-                    <a href="../roi-calculator/index.html" class="inline-block bg-white text-orange-600 font-black px-8 py-4 rounded-full uppercase tracking-widest text-sm hover:scale-105 transition-transform shadow-lg">
+                    <a href="../calculator/index.html" class="inline-block bg-white text-orange-600 font-black px-8 py-4 rounded-full uppercase tracking-widest text-sm hover:scale-105 transition-transform shadow-lg">
                         Lập Kế Hoạch Lợi Nhuận Ngay ➔
                     </a>
                 </div>
@@ -476,53 +455,6 @@
     </div>
 
     <script>
-        // Authentication Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const CORRECT_PASSCODE = "invest2026"; 
-            const authOverlay = document.getElementById('auth-overlay');
-            const mainWrapper = document.getElementById('main-wrapper');
-            const authForm = document.getElementById('auth-form');
-            const authPassInput = document.getElementById('auth-pass');
-            const authError = document.getElementById('auth-error');
-            const btnLogout = document.getElementById('btn-logout');
-
-            if (sessionStorage.getItem('franchise_authenticated') === 'true') {
-                authOverlay.style.display = 'none';
-                mainWrapper.classList.remove('hidden');
-                mainWrapper.classList.add('flex');
-            }
-
-            authForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (authPassInput.value.trim() === CORRECT_PASSCODE) {
-                    sessionStorage.setItem('franchise_authenticated', 'true');
-                    authOverlay.style.opacity = '0';
-                    authOverlay.style.transition = 'opacity 0.4s ease';
-                    setTimeout(() => { 
-                        authOverlay.style.display = 'none'; 
-                        mainWrapper.classList.remove('hidden'); 
-                        mainWrapper.classList.add('flex'); 
-                    }, 400);
-                } else {
-                    authError.classList.remove('hidden');
-                    authPassInput.classList.add('border-red-500', 'ring-1', 'ring-red-500');
-                    authPassInput.value = '';
-                }
-            });
-
-            authPassInput.addEventListener('input', () => {
-                authError.classList.add('hidden');
-                authPassInput.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
-            });
-
-            if(btnLogout) {
-                btnLogout.addEventListener('click', () => {
-                    sessionStorage.removeItem('franchise_authenticated');
-                    window.location.reload(); 
-                });
-            }
-        });
-
         // Tabs Logic
         function switchTab(tabId, element) {
             document.querySelectorAll('.tab-content').forEach(el => {
